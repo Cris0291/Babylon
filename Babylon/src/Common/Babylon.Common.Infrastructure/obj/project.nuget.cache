@@ -1,14 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "+p1Z0PNUQStWCNtGd+y2GFkQZb1ENfBEzPDT3GQsw8aZnyJ9B6Q+Bd6D8dPeiD98w1TnLE0cBWo3Pcdwxwvbuw==",
-  "success": false,
+  "dgSpecHash": "F21bXqfPsHp0PylAaXqbdhHYQSFsp571opzM4nBxct0lHUrafoQG3FZ9va071dLKAVuBH1icODPGLJarpebI6w==",
+  "success": true,
   "projectFilePath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Infrastructure\\Babylon.Common.Infrastructure.csproj",
-  "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "NU1105",
-      "level": "Error",
-      "message": "Unable to read project information for 'Babylon.Common.Infrastructure': Invalid framework identifier ''."
-    }
-  ]
+  "expectedPackageFiles": [
+    "C:\\Users\\cris0\\.nuget\\packages\\sonaranalyzer.csharp\\10.7.0.110445\\sonaranalyzer.csharp.10.7.0.110445.nupkg.sha512"
+  ],
+  "logs": []
 }

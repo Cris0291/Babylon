@@ -1,0 +1,12 @@
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\bin\Debug\net8.0\Babylon.Common.Application.deps.json
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\bin\Debug\net8.0\Babylon.Common.Application.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\bin\Debug\net8.0\Babylon.Common.Application.pdb
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon.Common.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon.Common.Application.AssemblyInfoInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon.Common.Application.AssemblyInfo.cs
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon.Common.Application.csproj.CoreCompileInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon.Common.Application.sourcelink.json
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon.Common.Application.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\refint\Babylon.Common.Application.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon.Common.Application.pdb
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\ref\Babylon.Common.Application.dll
