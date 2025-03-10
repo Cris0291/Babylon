@@ -1,4 +1,4 @@
-﻿namespace Babylon.Modules.Channels.Domain.MessageChannel;
+﻿namespace Babylon.Modules.Channels.Domain.MessageChannels;
 
 public sealed class MessageChannel
 {

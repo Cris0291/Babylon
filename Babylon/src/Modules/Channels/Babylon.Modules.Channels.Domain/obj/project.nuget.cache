@@ -1,14 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "xAgSA6ghBFuN/Qvf8Ba6inHEK3agAedYIcokwkIe2O6oSX2TLP9dFWcA9ler1T9R0k/sZ/tHwQf6Oaa2DLGCYA==",
-  "success": false,
+  "dgSpecHash": "oihbhzAhB+DH7J/QiHrjchmvyfDGLzQzGdI+peqTnNddYwIFlyry9BUp48On1mbj5zPBPso2iRdgpUfVQSx5Nw==",
+  "success": true,
   "projectFilePath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Channels\\Babylon.Modules.Channels.Domain\\Babylon.Modules.Channels.Domain.csproj",
-  "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "NU1105",
-      "level": "Error",
-      "message": "Unable to read project information for 'Babylon.Modules.Channels.Domain': Invalid framework identifier ''."
-    }
-  ]
+  "expectedPackageFiles": [
+    "C:\\Users\\cris0\\.nuget\\packages\\sonaranalyzer.csharp\\10.7.0.110445\\sonaranalyzer.csharp.10.7.0.110445.nupkg.sha512"
+  ],
+  "logs": []
 }
