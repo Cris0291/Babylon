@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "qZ1QjUDi2t/D7ersQe3V9C3l5JTj1PWGBtn7ZR+EDpqawVTwL3xP1oI+7v9xNLKCkKn/uTlbAdCY7gOgSs6QcQ==",
+  "success": false,
+  "projectFilePath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Presentation\\Babylon.Common.Presentation.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Unable to read project information for 'Babylon.Common.Presentation': Invalid framework identifier ''."
+    }
+  ]
+}

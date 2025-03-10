@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "awuaJ4C9ipdJK9ITzDDEPjtKynUt+DbvOqonKJsKEha9TMX0+ouJSU5NIlXCS/Gfl2BDGB4c1rP6GOlTkxVayw==",
+  "success": false,
+  "projectFilePath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Application\\Babylon.Common.Application.csproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1105",
+      "level": "Error",
+      "message": "Unable to read project information for 'Babylon.Common.Application': Invalid framework identifier ''."
+    }
+  ]
+}
