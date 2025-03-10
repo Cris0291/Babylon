@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "ba+Logoe3j8FaZwI2q8Dpzx7LsrqevSCcF1Rkdw3v1iK+Z7Wj3jVw3BZ/DNEIivt6ABvPRhZOJRTq6KVmkilog==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Channels\\Babylon.Modules.Channels.Presentation\\Babylon.Modules.Channels.Presentation.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\cris0\\.nuget\\packages\\sonaranalyzer.csharp\\10.7.0.110445\\sonaranalyzer.csharp.10.7.0.110445.nupkg.sha512"
+  ],
+  "logs": []
+}

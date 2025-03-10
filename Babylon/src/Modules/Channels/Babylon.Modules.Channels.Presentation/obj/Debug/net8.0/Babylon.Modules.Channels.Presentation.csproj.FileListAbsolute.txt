@@ -1,0 +1,12 @@
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\bin\Debug\net8.0\Babylon.Modules.Channels.Presentation.deps.json
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\bin\Debug\net8.0\Babylon.Modules.Channels.Presentation.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\bin\Debug\net8.0\Babylon.Modules.Channels.Presentation.pdb
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\obj\Debug\net8.0\Babylon.Modules.Channels.Presentation.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\obj\Debug\net8.0\Babylon.Modules.Channels.Presentation.AssemblyInfoInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\obj\Debug\net8.0\Babylon.Modules.Channels.Presentation.AssemblyInfo.cs
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\obj\Debug\net8.0\Babylon.Modules.Channels.Presentation.csproj.CoreCompileInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\obj\Debug\net8.0\Babylon.Modules.Channels.Presentation.sourcelink.json
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\obj\Debug\net8.0\Babylon.Modules.Channels.Presentation.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\obj\Debug\net8.0\refint\Babylon.Modules.Channels.Presentation.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\obj\Debug\net8.0\Babylon.Modules.Channels.Presentation.pdb
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Presentation\obj\Debug\net8.0\ref\Babylon.Modules.Channels.Presentation.dll
