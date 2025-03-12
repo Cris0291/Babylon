@@ -22,4 +22,8 @@
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Babylon.Modules.Channels.Application\Babylon.Modules.Channels.Application.csproj" />
+	</ItemGroup>
+
 </Project>
