@@ -12,14 +12,8 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.7.0.110445">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-		<FrameworkReference Include="Microsoft.AspNetCore.App"/>
+	  <ProjectReference Include="..\..\..\Common\Babylon.Common.Presentation\Babylon.Common.Presentation.csproj" />
+	  <ProjectReference Include="..\Babylon.Modules.Channels.Application\Babylon.Modules.Channels.Application.csproj" />
 	</ItemGroup>
 
 </Project>
