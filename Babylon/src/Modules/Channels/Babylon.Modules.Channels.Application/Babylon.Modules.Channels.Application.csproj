@@ -1,5 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+	
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -10,12 +10,14 @@
 		<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
-
+	
 	<ItemGroup>
-	  <PackageReference Include="SonarAnalyzer.CSharp" Version="10.7.0.110445">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
+	  <ProjectReference Include="..\..\..\Common\Babylon.Common.Application\Babylon.Common.Application.csproj" />
+	  <ProjectReference Include="..\Babylon.Modules.Channels.Domain\Babylon.Modules.Channels.Domain.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Folder Include="Channels\" />
 	</ItemGroup>
 
 </Project>
