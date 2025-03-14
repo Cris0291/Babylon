@@ -10,3 +10,7 @@ C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.App
 C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\refint\Babylon.Common.Application.dll
 C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon.Common.Application.pdb
 C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\ref\Babylon.Common.Application.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\bin\Debug\net8.0\Babylon.Common.Domain.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\bin\Debug\net8.0\Babylon.Common.Domain.pdb
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon.Common.Application.csproj.AssemblyReference.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Common\Babylon.Common.Application\obj\Debug\net8.0\Babylon..FA391EE3.Up2Date

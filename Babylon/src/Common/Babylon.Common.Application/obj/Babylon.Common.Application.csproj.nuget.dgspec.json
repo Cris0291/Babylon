@@ -27,6 +27,91 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Domain\\Babylon.Common.Domain.csproj": {
+                "projectPath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Domain\\Babylon.Common.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "allWarningsAsErrors": true,
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.66, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.11.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.4.1, )"
+            },
+            "SonarAnalyzer.CSharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.7.0.110445, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Domain\\Babylon.Common.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Domain\\Babylon.Common.Domain.csproj",
+        "projectName": "Babylon.Common.Domain",
+        "projectPath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Domain\\Babylon.Common.Domain.csproj",
+        "packagesPath": "C:\\Users\\cris0\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\cris0\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
