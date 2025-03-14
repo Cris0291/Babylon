@@ -19,4 +19,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\Channels\Babylon.Modules.Channels.Infrastructure\Babylon.Modules.Channels.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
