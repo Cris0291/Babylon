@@ -1,0 +1,16 @@
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\bin\Debug\net8.0\Babylon.Modules.Channels.Domain.deps.json
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\bin\Debug\net8.0\Babylon.Modules.Channels.Domain.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\bin\Debug\net8.0\Babylon.Modules.Channels.Domain.pdb
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\bin\Debug\net8.0\Babylon.Common.Domain.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\bin\Debug\net8.0\Babylon.Common.Domain.pdb
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\Babylon.Modules.Channels.Domain.csproj.AssemblyReference.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\Babylon.Modules.Channels.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\Babylon.Modules.Channels.Domain.AssemblyInfoInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\Babylon.Modules.Channels.Domain.AssemblyInfo.cs
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\Babylon.Modules.Channels.Domain.csproj.CoreCompileInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\Babylon.Modules.Channels.Domain.sourcelink.json
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\Babylon..A28E75D9.Up2Date
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\Babylon.Modules.Channels.Domain.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\refint\Babylon.Modules.Channels.Domain.dll
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\Babylon.Modules.Channels.Domain.pdb
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Domain\obj\Debug\net8.0\ref\Babylon.Modules.Channels.Domain.dll

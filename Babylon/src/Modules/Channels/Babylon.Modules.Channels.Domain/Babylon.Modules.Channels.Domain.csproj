@@ -18,4 +18,8 @@
 		</PackageReference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\..\Common\Babylon.Common.Domain\Babylon.Common.Domain.csproj" />
+	</ItemGroup>
+
 </Project>
