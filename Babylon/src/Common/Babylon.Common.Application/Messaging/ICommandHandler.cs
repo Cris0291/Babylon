@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Babylon.Common.Domain;
+using MediatR;
 
 namespace Babylon.Common.Application.Messaging;
-internal interface ICommandHandler
-{
-}
+public interface ICommandHandler<in TCommand, TResponse> : IRequestHandler<TCommand, Result<TResponse>> where TCommand : ICommand<TResponse>;
+public interface ICommandHandler<in TCommnad> : IRequestHandler<TCommnad, Result> where TCommnad: ICommand;

@@ -18,5 +18,10 @@
 		</PackageReference>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Babylon.Common.Application\Babylon.Common.Application.csproj" />
+	  <ProjectReference Include="..\Babylon.Common.Presentation\Babylon.Common.Presentation.csproj" />
+	</ItemGroup>
+
 </Project>
 

@@ -52,5 +52,10 @@ public class Error
         string description = "A forbidden error has occurred",
         Dictionary<string, object>? metadata = null
         ) => new(code, description, ErrorType.Forbbiden, metadata);
+    public static Error NullValue(
+        string code = "General.Null",
+        string description = "Null value was provided",
+        Dictionary<string, object>? metadata = null
+        ) => new(code, description, ErrorType.NullValue, metadata);
 
 }

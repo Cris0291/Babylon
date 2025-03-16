@@ -1,15 +1,25 @@
-﻿namespace Babylon.Common.Domain;
+﻿using System.Collections.Generic;
+
+namespace Babylon.Common.Domain;
 public sealed class ValidationError : Error
 {
-    private ValidationError(string code, string description, ErrorType type, Dictionary<string, object>? metadata, List<Error> errors) : base(code, description, type, metadata)
+    private ValidationError(IEnumerable<Error> errors, Dictionary<string, object>? metadata) : base("General.Validation", "One or more validation errors occurred", ErrorType.Validation, metadata)
     {
         Errors = errors;
     }
 
-    public List<Error> Errors { get;}
+    public IEnumerable<Error> Errors { get;}
 
-    public static ValidationError Validation(List<string> errors, Dictionary<string, object>? metadata = null) {
-        foreach(string error in errors){
-            Errors.Add(new ValidationError("General.Validation", error, ErrorType.Validation, metadata));
+    public static ValidationError FromResults(IEnumerable<Result> errors, Dictionary<string, object>? metadata = null)
+    {
+        foreach (Result error in errors)
+        {
+            if (error.IsSuccess || error.Error is null || error.Error.Type != ErrorType.Validation)
+            {
+                throw new InvalidOperationException("All errors must be of validation type");
+            }
         }
+
+        return new(errors.Select(x => x.Error!), metadata);
+    }
 }

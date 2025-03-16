@@ -22,5 +22,5 @@ public partial class Result<T> : Result
         TValue = value;
     }
     public T? TValue { get; }
-    
+    public static Result<T> ValidationFailure(Error error) => error.Type == ErrorType.Validation ? new(default, false, error) : throw new InvalidOperationException("ValidationFaiilure factory must be used only with validation errors"); 
 }
