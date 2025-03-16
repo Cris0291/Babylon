@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Babylon.Common.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2abf2b5d7e1c6e8a17cf9b48c74ffa24d3bdf9f4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4a3a8b27df73f62a55042ea7256021c499eca318")]
 [assembly: System.Reflection.AssemblyProductAttribute("Babylon.Common.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Babylon.Common.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
