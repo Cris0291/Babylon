@@ -15,9 +15,5 @@
 	  <ProjectReference Include="..\..\..\Common\Babylon.Common.Application\Babylon.Common.Application.csproj" />
 	  <ProjectReference Include="..\Babylon.Modules.Channels.Domain\Babylon.Modules.Channels.Domain.csproj" />
 	</ItemGroup>
-	
-	<ItemGroup>
-	  <Folder Include="Channels\" />
-	</ItemGroup>
 
 </Project>
