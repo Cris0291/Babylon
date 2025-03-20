@@ -2,10 +2,10 @@
 using Babylon.Modules.Channels.Infrastructure.Database;
 
 namespace Babylon.Modules.Channels.Infrastructure.Channels;
-internal sealed class ChannelRepository(ChannelsDbContext channelsDbContext) : IChannelRepository
+internal sealed class ChannelRepository(ChannelsDbContext dbContext) : IChannelRepository
 {
-    public Task Insert(Channel channel)
+    public async Task Insert(Channel channel)
     {
-        throw new NotImplementedException();
+        await dbContext.AddAsync(channel);
     }
 }
