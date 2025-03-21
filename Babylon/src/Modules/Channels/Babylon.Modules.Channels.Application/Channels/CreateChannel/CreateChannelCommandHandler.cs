@@ -4,8 +4,8 @@ using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Domain.Channels;
 using Babylon.Modules.Channels.Domain.Members;
 
-namespace Babylon.Modules.Channels.Application.Channels;
-internal sealed class CreateChannelCommandHandler(IChannelRepository channelRepository,IMemberRepository memberRepository, IUnitOfWork unitOfWork) : ICommandHandler<CreateChannelCommand, Guid>
+namespace Babylon.Modules.Channels.Application.Channels.CreateChannel;
+internal sealed class CreateChannelCommandHandler(IChannelRepository channelRepository, IMemberRepository memberRepository, IUnitOfWork unitOfWork) : ICommandHandler<CreateChannelCommand, Guid>
 {
     public async Task<Result<Guid>> Handle(CreateChannelCommand request, CancellationToken cancellationToken)
     {
