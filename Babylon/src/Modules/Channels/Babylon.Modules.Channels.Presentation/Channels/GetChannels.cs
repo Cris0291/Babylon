@@ -10,10 +10,13 @@ internal class GetChannels : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapGet(ApiEndpoints.Channels.GetChannels, async (ISender sender) =>
+        app.MapGet(ApiEndpoints.Channels.GetChannels, async (ISender sender,Request request) =>
         {
-            await sender.Send(new GetChannelsQuery());
+            await sender.Send(new GetChannelsQuery(request.Name, request.Type));
         }).WithTags(Tags.Channels);
             
     }
+    internal sealed record Request(string Name, string Type);
 }
+
+

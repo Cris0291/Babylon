@@ -16,7 +16,8 @@ internal class CreateChannel : IEndpoint
             await sender.Send(new CreateChannelCommand(request.ChannelName, request.IsPublicChannel, request.MemberId));
         }).WithTags(Tags.Channels);
     }
+    internal sealed record Request(string ChannelName, bool IsPublicChannel, Guid MemberId);
 }
     
 
-internal sealed record Request(string ChannelName, bool IsPublicChannel, Guid MemberId);
+
