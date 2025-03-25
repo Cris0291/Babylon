@@ -2,4 +2,5 @@
 public interface IChannelRepository
 {
     Task Insert(Channel channel);
+    Task<bool> Exist(Guid channelId);
 }
