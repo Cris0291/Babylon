@@ -25,12 +25,15 @@ public static class ChannelsModule
     {
         string databaseConnectionString = configuration.GetConnectionString("Database");
 
-        services.AddDbContext<ChannelsDbContext>(options => options.UseSqlServer(databaseConnectionString, 
-            options => options.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Channels)));
+        services.AddDbContext<ChannelsDbContext>(options => options.UseSqlServer(databaseConnectionString,
+            options => options.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Channels))
+        .UseSnakeCaseNamingConvention());
+            
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ChannelsDbContext>());
         services.AddScoped<IChannelRepository, ChannelRepository>();
         services.AddScoped<IMemberRepository, MemberRepository>();
+        services.AddScoped<IChannelMemberRepository, ChannelMemberRepository>();
 
         return services;
     }

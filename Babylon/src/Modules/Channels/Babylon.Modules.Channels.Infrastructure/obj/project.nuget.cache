@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "SeeMEFf8ZgiKxUEd/Kg6EOVguNwELbv47RCBMFMeVDxnXw7vEXV0FGySEO055YoLgzWleF0qeJWhuBhI5Pbayg==",
+  "dgSpecHash": "vYUzKeXRT76FVBkpFbYTCtvnLd+5Da/V2oszLls0oBX0zZcGWTJZ53Kyk9nzyGfJgm8GP/AimWQ6bo0DiWIQ/w==",
   "success": true,
   "projectFilePath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Channels\\Babylon.Modules.Channels.Infrastructure\\Babylon.Modules.Channels.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cris0\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
+    "C:\\Users\\cris0\\.nuget\\packages\\efcore.namingconventions\\9.0.0\\efcore.namingconventions.9.0.0.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
