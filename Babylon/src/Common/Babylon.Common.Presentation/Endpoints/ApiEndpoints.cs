@@ -9,5 +9,7 @@ public static class ApiEndpoints
 
         public const string CreateChannel = ChannelBase;
         public const string GetChannels = ChannelBase;
+        public const string AddMembersToChannel = $"{ChannelBase}/{{id:guid}}/members";
+        public const string DeleteMemberFromChannel = $"{ChannelBase}/{{channelId:guid}}/members/{{memberId:guid}}";
     }
 }
