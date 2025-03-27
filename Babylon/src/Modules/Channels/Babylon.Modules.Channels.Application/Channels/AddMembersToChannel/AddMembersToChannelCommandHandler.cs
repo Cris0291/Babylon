@@ -2,9 +2,10 @@
 using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Domain.Channels;
+using Babylon.Modules.Channels.Domain.Members;
 
 namespace Babylon.Modules.Channels.Application.Channels.AddMembersToChannel;
-public class AddMembersToChannelCommandHandler(IChannelRepository channelRepository, IChannelMemberRepository channelMemberRepository ,IUnitOfWork unitOfWork) : ICommandHandler<AddMembersToChannelCommand>
+internal sealed class AddMembersToChannelCommandHandler(IChannelRepository channelRepository, IChannelMemberRepository channelMemberRepository, IMemberRepository memberRepository, IUnitOfWork unitOfWork) : ICommandHandler<AddMembersToChannelCommand>
 {
     public async Task<Result> Handle(AddMembersToChannelCommand request, CancellationToken cancellationToken)
     {
@@ -17,8 +18,16 @@ public class AddMembersToChannelCommandHandler(IChannelRepository channelReposit
 
         foreach (Guid member in request.MembersIds)
         {
-            var memberChannel = ChannelMember.Create(request.ChannelId, member);
-            membersList.Add(memberChannel);
+            bool existMember = await memberRepository.Exist(member);
+            if (existMember)
+            {
+                var memberChannel = ChannelMember.Create(request.ChannelId, member);
+                membersList.Add(memberChannel);
+            }
+            else
+            {
+                throw new InvalidOperationException("Member was not found");
+            }
         }
 
         await channelMemberRepository.AddChannelMembers(membersList);

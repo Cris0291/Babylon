@@ -4,7 +4,7 @@ using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Domain.Channels;
 
 namespace Babylon.Modules.Channels.Application.Channels.DeleteMemberFormChannel;
-internal class DeleteMemberFormChannelCommandHandler(IChannelMemberRepository channelMemberRepository, IUnitOfWork unitOfWork) : ICommandHandler<DeleteMemberFormChannelCommand>
+internal sealed class DeleteMemberFormChannelCommandHandler(IChannelMemberRepository channelMemberRepository, IUnitOfWork unitOfWork) : ICommandHandler<DeleteMemberFormChannelCommand>
 {
     public async Task<Result> Handle(DeleteMemberFormChannelCommand request, CancellationToken cancellationToken)
     {
