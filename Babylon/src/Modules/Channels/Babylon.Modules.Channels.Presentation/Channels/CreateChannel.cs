@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Babylon.Modules.Channels.Presentation.Channels;
 
-internal class CreateChannel : IEndpoint
+internal sealed class CreateChannel : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {

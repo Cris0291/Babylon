@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 
 namespace Babylon.Modules.Channels.Presentation.Channels;
-internal class GetChannels : IEndpoint
+internal sealed class GetChannels : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
