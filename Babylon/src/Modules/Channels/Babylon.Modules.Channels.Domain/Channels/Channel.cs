@@ -1,4 +1,6 @@
-﻿using Babylon.Modules.Channels.Domain.Members;
+﻿using System.Threading.Channels;
+using Babylon.Common.Domain;
+using Babylon.Modules.Channels.Domain.Members;
 using Babylon.Modules.Channels.Domain.ThreadChannels;
 
 namespace Babylon.Modules.Channels.Domain.Channels;
@@ -16,6 +18,16 @@ public sealed class Channel
     public static Channel CreateChannel(string channelName, bool publicChannel, Guid creator)
     {
         return new Channel { Name = channelName, Type = publicChannel ? ChannelType.Public : ChannelType.Private, Creator = creator ,CreatedAt = DateTime.Now};
+    }
+    public Result ChangeType(string type)
+    {
+        if (!Enum.TryParse(type, true, out ChannelType result))
+        {
+            return Result.Failure(Error.Validation(description: "A validation error has occurred. Given channel type does not exist"));
+        }
+        Type = result;
+
+        return Result.Success();
     }
 }
 
