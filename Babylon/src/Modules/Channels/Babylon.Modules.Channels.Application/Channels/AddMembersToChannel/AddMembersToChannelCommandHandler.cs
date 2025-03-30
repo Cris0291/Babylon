@@ -10,8 +10,8 @@ internal sealed class AddMembersToChannelCommandHandler(IChannelRepository chann
     public async Task<Result> Handle(AddMembersToChannelCommand request, CancellationToken cancellationToken)
     {
         var membersList = new List<ChannelMember>();
-        bool existChannel = await channelRepository.Exist(request.ChannelId);
-        if (!existChannel)
+        Channel? channel = await channelRepository.GetChannel(request.ChannelId);
+        if (channel is null)
         {
             throw new InvalidOperationException("Channel was not found");
         }
@@ -23,6 +23,7 @@ internal sealed class AddMembersToChannelCommandHandler(IChannelRepository chann
             {
                 var memberChannel = ChannelMember.Create(request.ChannelId, member);
                 membersList.Add(memberChannel);
+                channel.AddMember(member);
             }
             else
             {

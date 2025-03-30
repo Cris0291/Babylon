@@ -1,0 +1,6 @@
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Application\obj\Debug\net8.0\Babylon.Modules.Channels.Application.csproj.AssemblyReference.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Application\obj\Debug\net8.0\Babylon.Modules.Channels.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Application\obj\Debug\net8.0\Babylon.Modules.Channels.Application.AssemblyInfoInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Application\obj\Debug\net8.0\Babylon.Modules.Channels.Application.AssemblyInfo.cs
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Application\obj\Debug\net8.0\Babylon.Modules.Channels.Application.csproj.CoreCompileInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Application\obj\Debug\net8.0\Babylon.Modules.Channels.Application.sourcelink.json

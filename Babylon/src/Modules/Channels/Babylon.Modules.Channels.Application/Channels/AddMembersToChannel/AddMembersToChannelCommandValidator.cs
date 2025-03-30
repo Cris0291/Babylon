@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 
 namespace Babylon.Modules.Channels.Application.Channels.AddMembersToChannel;
-internal class AddMembersToChannelCommandValidator : AbstractValidator<AddMembersToChannelCommand>
+internal sealed class AddMembersToChannelCommandValidator : AbstractValidator<AddMembersToChannelCommand>
 {
     public AddMembersToChannelCommandValidator()
     {

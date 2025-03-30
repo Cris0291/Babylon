@@ -2,7 +2,7 @@
 using FluentValidation;
 
 namespace Babylon.Modules.Channels.Application.Channels.GetChannels;
-internal class GetChannelsQueryValidator : AbstractValidator<GetChannelsQuery>
+internal sealed class GetChannelsQueryValidator : AbstractValidator<GetChannelsQuery>
 {
     public GetChannelsQueryValidator()
     {

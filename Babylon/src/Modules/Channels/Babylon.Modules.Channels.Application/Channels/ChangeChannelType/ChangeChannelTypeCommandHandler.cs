@@ -19,9 +19,9 @@ internal sealed class ChangeChannelTypeCommandHandler(IChannelRepository channel
             throw new InvalidOperationException("Only channel creator can modify channel type");
         }
 
-        if(!Enum.TryParse(typeof(ChannelType), request.ChannelType, out object? result))
-        {
-            throw new InvalidOperationException("Given channel type was not found");
-        }
+        Result result = channel.ChangeType(request.ChannelType);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return result;
     }
 }
