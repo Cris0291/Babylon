@@ -13,8 +13,7 @@ public sealed class Channel
     public ChannelType Type { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public Guid Creator { get; private set; } 
-    public List<Member> Participants { get; private set; }
-    public List<ThreadChannel> Threads { get; private set; }
+    public List<Guid> Members { get; private set; }
     public static Channel CreateChannel(string channelName, bool publicChannel, Guid creator)
     {
         return new Channel { Name = channelName, Type = publicChannel ? ChannelType.Public : ChannelType.Private, Creator = creator ,CreatedAt = DateTime.Now};
@@ -28,6 +27,10 @@ public sealed class Channel
         Type = result;
 
         return Result.Success();
+    }
+    public void AddMember(Guid memberId)
+    {
+        Members.Add(memberId);
     }
 }
 
