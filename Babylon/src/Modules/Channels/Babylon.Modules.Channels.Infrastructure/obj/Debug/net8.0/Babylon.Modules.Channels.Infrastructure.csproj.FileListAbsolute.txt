@@ -1,0 +1,6 @@
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Infrastructure\obj\Debug\net8.0\Babylon.Modules.Channels.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Infrastructure\obj\Debug\net8.0\Babylon.Modules.Channels.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Infrastructure\obj\Debug\net8.0\Babylon.Modules.Channels.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Infrastructure\obj\Debug\net8.0\Babylon.Modules.Channels.Infrastructure.AssemblyInfo.cs
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Infrastructure\obj\Debug\net8.0\Babylon.Modules.Channels.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\cris0\OneDrive\Escritorio\Babylon\Babylon\src\Modules\Channels\Babylon.Modules.Channels.Infrastructure\obj\Debug\net8.0\Babylon.Modules.Channels.Infrastructure.sourcelink.json

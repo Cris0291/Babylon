@@ -15,4 +15,8 @@ internal sealed class ChannelRepository(ChannelsDbContext dbContext) : IChannelR
     {
         await dbContext.AddAsync(channel);
     }
+    public async Task<Channel?> GetChannel(Guid channelId)
+    {
+        return await dbContext.Channels.SingleOrDefaultAsync(c => c.ChannelId == channelId);
+    }
 }
