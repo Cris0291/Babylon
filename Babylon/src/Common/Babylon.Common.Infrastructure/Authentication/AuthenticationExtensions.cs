@@ -10,6 +10,8 @@ public static class AuthenticationExtensions
 
         services.AddHttpContextAccessor();
 
+        services.ConfigureOptions<JwtBearerConfigureOptions>();
+
         return services;
     }
 }
