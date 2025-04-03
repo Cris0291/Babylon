@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+   <PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AnalysisLevel>latest</AnalysisLevel>
+		<AnalysisMode>all</AnalysisMode>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Babylon.Common.Presentation\Babylon.Common.Presentation.csproj" />
+    <ProjectReference Include="..\Babylon.Modules.Users.Application\Babylon.Modules.Users.Application.csproj" />
+  </ItemGroup>
+
+</Project>

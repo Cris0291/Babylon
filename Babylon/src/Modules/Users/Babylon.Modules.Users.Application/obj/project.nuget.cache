@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "F4hsR4hDb/ZkBFTTvq4bC202eS8/wlx3IuGZLZ7egmmWLXqRFuhCMNUY6TVlVwwv0CtLzaHi3k1CXdz+2cgM3Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Users\\Babylon.Modules.Users.Application\\Babylon.Modules.Users.Application.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\cris0\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
+    "C:\\Users\\cris0\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
+    "C:\\Users\\cris0\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
+    "C:\\Users\\cris0\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
+    "C:\\Users\\cris0\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
+    "C:\\Users\\cris0\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
