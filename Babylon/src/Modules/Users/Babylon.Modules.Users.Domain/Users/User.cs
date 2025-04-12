@@ -3,7 +3,7 @@
 public sealed class User
 {
     private User() { }
-    public Guid UserId { get; private set; }
+    public Guid Id { get; private set; }
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public string Email { get; private set; }
