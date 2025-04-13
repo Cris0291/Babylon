@@ -1,6 +1,7 @@
 ﻿using System.Data.Common;
 using Babylon.Common.Application.Data;
 using Babylon.Common.Infrastructure.Authentication;
+using Babylon.Common.Infrastructure.Authorization;
 using Babylon.Common.Infrastructure.Data;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +18,8 @@ public static class InfrastructureConfiguration
         services.TryAddSingleton(sqlDbSource);
 
         services.AddAuthenticationInternals();
+
+        services.AddAuthorizationInternals();
 
         services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
         return services;
