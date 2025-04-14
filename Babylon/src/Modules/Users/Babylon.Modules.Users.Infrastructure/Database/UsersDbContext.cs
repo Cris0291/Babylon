@@ -1,5 +1,7 @@
-﻿using Babylon.Modules.Users.Application.Abstractions.Data;
+﻿using Babylon.Common.Infrastructure.Outbox;
+using Babylon.Modules.Users.Application.Abstractions.Data;
 using Babylon.Modules.Users.Domain.Users;
+using Babylon.Modules.Users.Infrastructure.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Babylon.Modules.Users.Infrastructure.Database;
@@ -8,6 +10,11 @@ public sealed class UsersDbContext(DbContextOptions<UsersDbContext> options) : D
     internal DbSet<User> Users { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(modelBuilder);
+        modelBuilder.HasDefaultSchema(Schemas.Users);
+
+        modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new RoleConfiguration());
+        modelBuilder.ApplyConfiguration(new PermissionConfiguration());
+        modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
     }
 }
