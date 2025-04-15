@@ -227,6 +227,14 @@
               "target": "Package",
               "version": "[3.14.0, )"
             },
+            "Quartz.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[3.14.0, )"
+            },
+            "Scrutor": {
+              "target": "Package",
+              "version": "[6.0.1, )"
+            },
             "SonarAnalyzer.CSharp": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
