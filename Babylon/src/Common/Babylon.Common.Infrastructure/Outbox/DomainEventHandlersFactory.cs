@@ -10,7 +10,7 @@ public static class DomainEventHandlersFactory
     public static IEnumerable<IDomainEventHandler> GetHandlers(Type type, IServiceProvider serviceProvider, Assembly assembly)
     {
         Type[] domainHandlerTypes = _handlersDictionary.GetOrAdd(
-            $"{assembly.GetName().Name}{type.Name}",
+            $"{assembly.GetName().Name}-{type.Name}",
             _ =>
             {
                 Type[] domainHandlerTypes = assembly.GetTypes()

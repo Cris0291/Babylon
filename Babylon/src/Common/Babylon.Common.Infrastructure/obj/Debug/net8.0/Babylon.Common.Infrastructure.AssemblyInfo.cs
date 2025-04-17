@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Babylon.Common.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c1c50f75253c6e4e6e37af83121c4038779f5ae")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36d29ec87865f0c20d8a1245fc5eb941eeb32e10")]
 [assembly: System.Reflection.AssemblyProductAttribute("Babylon.Common.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Babylon.Common.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
