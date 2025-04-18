@@ -11,14 +11,7 @@
 		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="SonarAnalyzer.CSharp" Version="10.7.0.110445">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
-
-
+	
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Common\Babylon.Common.Infrastructure\Babylon.Common.Infrastructure.csproj" />
 	  <ProjectReference Include="..\Babylon.Modules.Channels.Application\Babylon.Modules.Channels.Application.csproj" />
