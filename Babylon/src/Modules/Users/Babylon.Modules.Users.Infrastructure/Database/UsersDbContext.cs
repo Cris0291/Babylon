@@ -1,4 +1,5 @@
-﻿using Babylon.Common.Infrastructure.Outbox;
+﻿using Babylon.Common.Infrastructure.Inbox;
+using Babylon.Common.Infrastructure.Outbox;
 using Babylon.Modules.Users.Application.Abstractions.Data;
 using Babylon.Modules.Users.Domain.Users;
 using Babylon.Modules.Users.Infrastructure.Users;
@@ -16,5 +17,8 @@ public sealed class UsersDbContext(DbContextOptions<UsersDbContext> options) : D
         modelBuilder.ApplyConfiguration(new RoleConfiguration());
         modelBuilder.ApplyConfiguration(new PermissionConfiguration());
         modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
+        modelBuilder.ApplyConfiguration(new OutboxMessageConsumerConfiguration());
+        modelBuilder.ApplyConfiguration(new InboxMessageConfiguration());
+        modelBuilder.ApplyConfiguration(new InboxMessageConsumerConfiguration());
     }
 }

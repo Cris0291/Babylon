@@ -41,7 +41,7 @@ internal sealed class IdempotentDomainEventHandler<TDomainEvent>(IDomainEventHan
     {
         const string sql =
             """
-            INSERT INTO outbox_message_consumers(outbox_message_id, name)
+            INSERT INTO users.outbox_message_consumers(outbox_message_id, name)
             VALUE (@OutboxMessageId, @Name)
             """;
 
