@@ -10,7 +10,7 @@ internal sealed class GetChannelsQueryHandler(IDbConnectionFactory dbConnectionF
 {
     public async Task<Result<IEnumerable<ChannelsResponse>>> Handle(GetChannelsQuery request, CancellationToken cancellationToken)
     {
-        DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
+        await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
         var parameters = new GetChannelsParameters(request.Name, request.Type);
 
