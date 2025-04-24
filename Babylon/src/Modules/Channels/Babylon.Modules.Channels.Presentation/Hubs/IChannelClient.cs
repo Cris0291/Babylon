@@ -2,4 +2,5 @@
 internal interface IChannelClient
 {
     Task ReceiveMessage(string message);
+    Task<>
 }

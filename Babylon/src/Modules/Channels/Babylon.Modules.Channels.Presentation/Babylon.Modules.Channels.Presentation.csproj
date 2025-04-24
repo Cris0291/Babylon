@@ -14,6 +14,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Common\Babylon.Common.Presentation\Babylon.Common.Presentation.csproj" />
 	  <ProjectReference Include="..\Babylon.Modules.Channels.Application\Babylon.Modules.Channels.Application.csproj" />
+	  <ProjectReference Include="..\Babylon.Modules.Channels.IntegrationEvents\Babylon.Modules.Channels.IntegrationEvents.csproj" />
 	</ItemGroup>
 
 </Project>

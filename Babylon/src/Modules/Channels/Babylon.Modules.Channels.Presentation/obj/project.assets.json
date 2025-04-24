@@ -173,6 +173,19 @@
         "runtime": {
           "bin/placeholder/Babylon.Modules.Channels.Domain.dll": {}
         }
+      },
+      "Babylon.Modules.Channels.IntegrationEvents/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Babylon.Common.Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Babylon.Modules.Channels.IntegrationEvents.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Babylon.Modules.Channels.IntegrationEvents.dll": {}
+        }
       }
     }
   },
@@ -346,12 +359,18 @@
       "type": "project",
       "path": "../Babylon.Modules.Channels.Domain/Babylon.Modules.Channels.Domain.csproj",
       "msbuildProject": "../Babylon.Modules.Channels.Domain/Babylon.Modules.Channels.Domain.csproj"
+    },
+    "Babylon.Modules.Channels.IntegrationEvents/1.0.0": {
+      "type": "project",
+      "path": "../Babylon.Modules.Channels.IntegrationEvents/Babylon.Modules.Channels.IntegrationEvents.csproj",
+      "msbuildProject": "../Babylon.Modules.Channels.IntegrationEvents/Babylon.Modules.Channels.IntegrationEvents.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "Babylon.Common.Presentation >= 1.0.0",
-      "Babylon.Modules.Channels.Application >= 1.0.0"
+      "Babylon.Modules.Channels.Application >= 1.0.0",
+      "Babylon.Modules.Channels.IntegrationEvents >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -386,6 +405,9 @@
             },
             "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Channels\\Babylon.Modules.Channels.Application\\Babylon.Modules.Channels.Application.csproj": {
               "projectPath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Channels\\Babylon.Modules.Channels.Application\\Babylon.Modules.Channels.Application.csproj"
+            },
+            "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Channels\\Babylon.Modules.Channels.IntegrationEvents\\Babylon.Modules.Channels.IntegrationEvents.csproj": {
+              "projectPath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Channels\\Babylon.Modules.Channels.IntegrationEvents\\Babylon.Modules.Channels.IntegrationEvents.csproj"
             }
           }
         }
