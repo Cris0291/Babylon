@@ -24,7 +24,7 @@ public class Error
         ) =>  new (code, description, ErrorType.Failure, metadata);
     public static Error Validation(
         string code = "General.Validation",
-        string description = " A validation error has occurred",
+        string description = "A validation error has occurred",
         Dictionary<string, object>? metadata = null
         ) => new(code, description, ErrorType.Validation, metadata);
     public static Error Unexpected(
