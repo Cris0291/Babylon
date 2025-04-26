@@ -5,7 +5,7 @@ using Babylon.Common.Domain;
 using Dapper;
 
 namespace Babylon.Modules.Channels.Application.Channels.GetChannelMessages;
-internal sealed partial class GetChannelMessagesQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetChannelMessagesQuery, IEnumerable<MessageResponse>>
+internal sealed class GetChannelMessagesQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetChannelMessagesQuery, IEnumerable<MessageResponse>>
 {
     public async Task<Result<IEnumerable<MessageResponse>>> Handle(GetChannelMessagesQuery request, CancellationToken cancellationToken)
     {
