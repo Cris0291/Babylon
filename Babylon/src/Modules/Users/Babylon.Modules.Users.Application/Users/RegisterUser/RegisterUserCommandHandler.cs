@@ -21,6 +21,6 @@ internal sealed class RegisterUserCommandHandler(IUserRepository userRepository,
           
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.UserId;
+        return user.Id;
     }
 }
