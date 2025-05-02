@@ -1,6 +1,8 @@
-﻿namespace Babylon.Modules.Users.Domain.Users;
+﻿using Babylon.Common.Domain;
 
-public sealed class User
+namespace Babylon.Modules.Users.Domain.Users;
+
+public sealed class User : Entity
 {
     private User() { }
     public Guid Id { get; private set; }
@@ -10,13 +12,18 @@ public sealed class User
     public string IdentityId { get; private set; }
     public static User Create(string firstName, string lastName, string email, string identityId)
     {
-        return new User
+        var user =  new User
         {
+            Id = Guid.NewGuid(),
             FirstName = firstName,
             LastName = lastName,
             Email = email,
             IdentityId = identityId
         };
+
+        user.RaiseEvent(new UserRegisterDomainEvent { UserId = user.Id});
+
+        return user;
     }
 }
    
