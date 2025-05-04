@@ -129,6 +129,19 @@
         "runtime": {
           "bin/placeholder/Babylon.Modules.Users.Domain.dll": {}
         }
+      },
+      "Babylon.Modules.Users.IntegrationEvents/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Babylon.Common.Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Babylon.Modules.Users.IntegrationEvents.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Babylon.Modules.Users.IntegrationEvents.dll": {}
+        }
       }
     }
   },
@@ -271,12 +284,18 @@
       "type": "project",
       "path": "../Babylon.Modules.Users.Domain/Babylon.Modules.Users.Domain.csproj",
       "msbuildProject": "../Babylon.Modules.Users.Domain/Babylon.Modules.Users.Domain.csproj"
+    },
+    "Babylon.Modules.Users.IntegrationEvents/1.0.0": {
+      "type": "project",
+      "path": "../Babylon.Modules.Users.IntegrationEvents/Babylon.Modules.Users.IntegrationEvents.csproj",
+      "msbuildProject": "../Babylon.Modules.Users.IntegrationEvents/Babylon.Modules.Users.IntegrationEvents.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "Babylon.Common.Application >= 1.0.0",
-      "Babylon.Modules.Users.Domain >= 1.0.0"
+      "Babylon.Modules.Users.Domain >= 1.0.0",
+      "Babylon.Modules.Users.IntegrationEvents >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -311,6 +330,9 @@
             },
             "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Users\\Babylon.Modules.Users.Domain\\Babylon.Modules.Users.Domain.csproj": {
               "projectPath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Users\\Babylon.Modules.Users.Domain\\Babylon.Modules.Users.Domain.csproj"
+            },
+            "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Users\\Babylon.Modules.Users.IntegrationEvents\\Babylon.Modules.Users.IntegrationEvents.csproj": {
+              "projectPath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Modules\\Users\\Babylon.Modules.Users.IntegrationEvents\\Babylon.Modules.Users.IntegrationEvents.csproj"
             }
           }
         }
