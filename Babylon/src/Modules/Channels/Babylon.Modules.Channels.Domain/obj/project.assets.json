@@ -2,9 +2,6 @@
   "version": 3,
   "targets": {
     "net8.0": {
-      "SonarAnalyzer.CSharp/10.7.0.110445": {
-        "type": "package"
-      },
       "Babylon.Common.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
@@ -18,24 +15,6 @@
     }
   },
   "libraries": {
-    "SonarAnalyzer.CSharp/10.7.0.110445": {
-      "sha512": "U4v2LWopxADYkUv7Z5CX7ifKMdDVqHb7a1bzppIQnQi4WQR6z1Zi5rDkCHlVYGEd1U/WMz1IJCU8OmFZLJpVig==",
-      "type": "package",
-      "path": "sonaranalyzer.csharp/10.7.0.110445",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "LICENSE.txt",
-        "analyzers/SonarAnalyzer.CSharp.dll",
-        "images/sonarsource_64.png",
-        "license/THIRD-PARTY-NOTICES.txt",
-        "sonaranalyzer.csharp.10.7.0.110445.nupkg.sha512",
-        "sonaranalyzer.csharp.nuspec",
-        "tools/install.ps1",
-        "tools/uninstall.ps1"
-      ]
-    },
     "Babylon.Common.Domain/1.0.0": {
       "type": "project",
       "path": "../../../Common/Babylon.Common.Domain/Babylon.Common.Domain.csproj",
@@ -44,8 +23,7 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "Babylon.Common.Domain >= 1.0.0",
-      "SonarAnalyzer.CSharp >= 10.7.0.110445"
+      "Babylon.Common.Domain >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -96,14 +74,6 @@
     "frameworks": {
       "net8.0": {
         "targetAlias": "net8.0",
-        "dependencies": {
-          "SonarAnalyzer.CSharp": {
-            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-            "suppressParent": "All",
-            "target": "Package",
-            "version": "[10.7.0.110445, )"
-          }
-        },
         "imports": [
           "net461",
           "net462",

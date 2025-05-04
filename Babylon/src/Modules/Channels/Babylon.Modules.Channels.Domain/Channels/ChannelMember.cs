@@ -3,13 +3,13 @@ public sealed class ChannelMember
 {
     private ChannelMember() { }
     public Guid ChannelId { get; private set; }
-    public Guid MemberId { get; private set; }
-    public static ChannelMember Create(Guid channelId, Guid memberId)
+    public Guid Id { get; private set; }
+    public static ChannelMember Create(Guid channelId, Guid id)
     {
         return new ChannelMember
         {
             ChannelId = channelId,
-            MemberId = memberId,
+            Id = id,
         };
     }
 }
