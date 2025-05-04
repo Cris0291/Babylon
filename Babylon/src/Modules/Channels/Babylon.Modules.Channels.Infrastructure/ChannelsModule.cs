@@ -5,11 +5,16 @@ using Babylon.Common.Presentation.Endpoints;
 using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Domain.Channels;
 using Babylon.Modules.Channels.Domain.Members;
+using Babylon.Modules.Channels.Domain.MessageChannels;
 using Babylon.Modules.Channels.Infrastructure.Channels;
 using Babylon.Modules.Channels.Infrastructure.Database;
 using Babylon.Modules.Channels.Infrastructure.Inbox;
 using Babylon.Modules.Channels.Infrastructure.Members;
+using Babylon.Modules.Channels.Infrastructure.MessageChannels;
 using Babylon.Modules.Channels.Infrastructure.Outbox;
+using Babylon.Modules.Channels.IntegrationEvents;
+using Babylon.Modules.Users.IntegrationEvents;
+using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
@@ -28,6 +33,11 @@ public static class ChannelsModule
 
         return services;
     }
+    public static void ConfigureConsumers(IRegistrationConfigurator registrationConfigurator)
+    {
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<ChannelPublishMessageIntegrationEvent>>();
+        registrationConfigurator.AddConsumer<IntegrationEventConsumer<UserRegisteredIntegrationEvent>>();
+    }
     private static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         string databaseConnectionString = configuration.GetConnectionString("Database");
@@ -42,6 +52,7 @@ public static class ChannelsModule
         services.AddScoped<IChannelRepository, ChannelRepository>();
         services.AddScoped<IMemberRepository, MemberRepository>();
         services.AddScoped<IChannelMemberRepository, ChannelMemberRepository>();
+        services.AddScoped<IMessageChannelRepository, MessageChannelRepository>();
 
         services.Configure<OutboxOptions>(configuration.GetSection("Channels:Outbox"));
 

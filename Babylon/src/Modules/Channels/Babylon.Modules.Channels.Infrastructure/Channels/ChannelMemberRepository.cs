@@ -16,7 +16,7 @@ internal class ChannelMemberRepository(ChannelsDbContext dbContext) : IChannelMe
     }
     public async Task<ChannelMember> GetChannelMember(Guid channelId, Guid memberId)
     {
-        ChannelMember? channelMember = await dbContext.ChannelMembers.SingleOrDefaultAsync(c => c.ChannelId == channelId && c.MemberId == memberId);
+        ChannelMember? channelMember = await dbContext.ChannelMembers.SingleOrDefaultAsync(c => c.ChannelId == channelId && c.Id == memberId);
 
         if (channelMember is null)
         {

@@ -831,6 +831,23 @@
           }
         }
       },
+      "Quartz.Extensions.Hosting/3.14.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Quartz.Extensions.DependencyInjection": "3.14.0"
+        },
+        "compile": {
+          "lib/net8.0/Quartz.Extensions.Hosting.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Quartz.Extensions.Hosting.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Scrutor/6.0.1": {
         "type": "package",
         "dependencies": {
@@ -1306,8 +1323,7 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.14",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.2",
           "Newtonsoft.Json": "13.0.3",
-          "Quartz": "3.14.0",
-          "Quartz.Extensions.DependencyInjection": "3.14.0",
+          "Quartz.Extensions.Hosting": "3.14.0",
           "Scrutor": "6.0.1"
         },
         "compile": {
@@ -1361,18 +1377,46 @@
           "bin/placeholder/Babylon.Modules.Channels.Domain.dll": {}
         }
       },
+      "Babylon.Modules.Channels.IntegrationEvents/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Babylon.Common.Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Babylon.Modules.Channels.IntegrationEvents.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Babylon.Modules.Channels.IntegrationEvents.dll": {}
+        }
+      },
       "Babylon.Modules.Channels.Presentation/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "Babylon.Common.Presentation": "1.0.0",
-          "Babylon.Modules.Channels.Application": "1.0.0"
+          "Babylon.Modules.Channels.Application": "1.0.0",
+          "Babylon.Modules.Channels.IntegrationEvents": "1.0.0",
+          "Babylon.Modules.Users.IntegrationEvents": "1.0.0"
         },
         "compile": {
           "bin/placeholder/Babylon.Modules.Channels.Presentation.dll": {}
         },
         "runtime": {
           "bin/placeholder/Babylon.Modules.Channels.Presentation.dll": {}
+        }
+      },
+      "Babylon.Modules.Users.IntegrationEvents/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Babylon.Common.Application": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Babylon.Modules.Users.IntegrationEvents.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Babylon.Modules.Users.IntegrationEvents.dll": {}
         }
       }
     }
@@ -2523,6 +2567,25 @@
         "quartz.extensions.dependencyinjection.nuspec"
       ]
     },
+    "Quartz.Extensions.Hosting/3.14.0": {
+      "sha512": "kbxBND5Nift+qwOud8cjywoLvjcQX+aLt6R7qQcQVg8w84NUNjTsjzZ5zIod9vz7ricSvIaQXGVbhpm7X6yVQA==",
+      "type": "package",
+      "path": "quartz.extensions.hosting/3.14.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hosted-services-integration.md",
+        "lib/net8.0/Quartz.Extensions.Hosting.dll",
+        "lib/net8.0/Quartz.Extensions.Hosting.xml",
+        "lib/net9.0/Quartz.Extensions.Hosting.dll",
+        "lib/net9.0/Quartz.Extensions.Hosting.xml",
+        "lib/netstandard2.0/Quartz.Extensions.Hosting.dll",
+        "lib/netstandard2.0/Quartz.Extensions.Hosting.xml",
+        "quartz-logo-small.png",
+        "quartz.extensions.hosting.3.14.0.nupkg.sha512",
+        "quartz.extensions.hosting.nuspec"
+      ]
+    },
     "Scrutor/6.0.1": {
       "sha512": "5xKT6ND5GqnFzwSaYozHCJe75GFL8sPy4yw/iRFqeBFGlmqPNFpOg1T9Q0Gl2h76Cklt0ZTg6Ypkri5iUBKXsA==",
       "type": "package",
@@ -3348,10 +3411,20 @@
       "path": "../Babylon.Modules.Channels.Domain/Babylon.Modules.Channels.Domain.csproj",
       "msbuildProject": "../Babylon.Modules.Channels.Domain/Babylon.Modules.Channels.Domain.csproj"
     },
+    "Babylon.Modules.Channels.IntegrationEvents/1.0.0": {
+      "type": "project",
+      "path": "../Babylon.Modules.Channels.IntegrationEvents/Babylon.Modules.Channels.IntegrationEvents.csproj",
+      "msbuildProject": "../Babylon.Modules.Channels.IntegrationEvents/Babylon.Modules.Channels.IntegrationEvents.csproj"
+    },
     "Babylon.Modules.Channels.Presentation/1.0.0": {
       "type": "project",
       "path": "../Babylon.Modules.Channels.Presentation/Babylon.Modules.Channels.Presentation.csproj",
       "msbuildProject": "../Babylon.Modules.Channels.Presentation/Babylon.Modules.Channels.Presentation.csproj"
+    },
+    "Babylon.Modules.Users.IntegrationEvents/1.0.0": {
+      "type": "project",
+      "path": "../../Users/Babylon.Modules.Users.IntegrationEvents/Babylon.Modules.Users.IntegrationEvents.csproj",
+      "msbuildProject": "../../Users/Babylon.Modules.Users.IntegrationEvents/Babylon.Modules.Users.IntegrationEvents.csproj"
     }
   },
   "projectFileDependencyGroups": {

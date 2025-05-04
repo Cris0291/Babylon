@@ -8,7 +8,7 @@ internal sealed class ChannelMemberConfiguration : IEntityTypeConfiguration<Chan
 {
     public void Configure(EntityTypeBuilder<ChannelMember> builder)
     {
-        builder.HasKey(x => new {x.MemberId, x.ChannelId});
+        builder.HasKey(x => new {x.Id, x.ChannelId});
 
         builder.HasOne<Channel>()
             .WithMany()
@@ -16,6 +16,6 @@ internal sealed class ChannelMemberConfiguration : IEntityTypeConfiguration<Chan
 
         builder.HasOne<Member>()
             .WithMany()
-            .HasForeignKey(x => x.MemberId);
+            .HasForeignKey(x => x.Id);
     }
 }

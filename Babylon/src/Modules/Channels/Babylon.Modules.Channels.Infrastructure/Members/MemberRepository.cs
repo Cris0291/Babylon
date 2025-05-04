@@ -10,4 +10,9 @@ internal sealed class MemberRepository(ChannelsDbContext dbContext) : IMemberRep
         Member? member = await dbContext.Members.SingleOrDefaultAsync(m => m.MemberId == MemberId);
         return member is not null;
     }
+
+    public async Task Insert(Member member)
+    {
+        await dbContext.AddAsync(member);
+    }
 }

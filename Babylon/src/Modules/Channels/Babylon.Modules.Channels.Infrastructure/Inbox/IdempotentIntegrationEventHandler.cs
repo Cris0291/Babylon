@@ -33,8 +33,8 @@ internal sealed class IdempotentIntegrationEventHandler<TIntegrationEvent>(
             SELECT EXIST(
                SELECT 1
                FROM channels.inbox_message_consumers
-               WHERE inbox_message_id = @ID AND
-                     name = @NAME
+               WHERE inbox_message_id = @Id AND
+                     name = @Name
             )
             """;
 
