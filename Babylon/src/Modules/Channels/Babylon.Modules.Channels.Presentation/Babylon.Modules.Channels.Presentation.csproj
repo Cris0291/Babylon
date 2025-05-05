@@ -13,6 +13,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\..\..\Common\Babylon.Common.Presentation\Babylon.Common.Presentation.csproj" />
+	  <ProjectReference Include="..\..\Users\Babylon.Modules.Users.IntegrationEvents\Babylon.Modules.Users.IntegrationEvents.csproj" />
 	  <ProjectReference Include="..\Babylon.Modules.Channels.Application\Babylon.Modules.Channels.Application.csproj" />
 	  <ProjectReference Include="..\Babylon.Modules.Channels.IntegrationEvents\Babylon.Modules.Channels.IntegrationEvents.csproj" />
 	</ItemGroup>
