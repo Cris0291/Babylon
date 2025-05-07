@@ -6,6 +6,7 @@ public static class AuthenticationExtensions
     public static IServiceCollection AddAuthenticationInternals(this IServiceCollection services)
     {
         services.AddAuthentication().AddJwtBearer();
+
         services.AddAuthorization();
 
         services.AddHttpContextAccessor();

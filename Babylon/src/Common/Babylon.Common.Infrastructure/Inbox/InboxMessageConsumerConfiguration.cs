@@ -6,7 +6,7 @@ public sealed class InboxMessageConsumerConfiguration : IEntityTypeConfiguration
 {
     public void Configure(EntityTypeBuilder<InboxMessageConsumer> builder)
     {
-        builder.ToTable("inbox_message_consumer");
+        builder.ToTable("inbox_message_consumers");
 
         builder.HasKey(i => new {i.InboxMessageId, i.Name});
 

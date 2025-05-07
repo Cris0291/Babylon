@@ -227,11 +227,7 @@
               "target": "Package",
               "version": "[13.0.3, )"
             },
-            "Quartz": {
-              "target": "Package",
-              "version": "[3.14.0, )"
-            },
-            "Quartz.Extensions.DependencyInjection": {
+            "Quartz.Extensions.Hosting": {
               "target": "Package",
               "version": "[3.14.0, )"
             },

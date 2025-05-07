@@ -204,6 +204,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "MassTransit.Abstractions": {
+              "target": "Package",
+              "version": "[8.4.0, )"
+            },
             "SonarAnalyzer.CSharp": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",

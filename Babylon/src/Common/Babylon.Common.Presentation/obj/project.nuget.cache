@@ -1,12 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "EgPTUkBKAlPLBpR8q6hY0zK+lszHACXNM7DP/U/QWxDd2y4ZgPbIvav9ZPxIzLlJAPlfenBu1l5CJPt/V0/lAQ==",
+  "dgSpecHash": "cd/hu2Tqcu5YzjBQz3nINWPEay4QyCkb7uItUuf1JV1Be/iynmiCjCc1OIy+NPoIS/R+WvVRMWyTaUkSDhvQXw==",
   "success": true,
   "projectFilePath": "C:\\Users\\cris0\\OneDrive\\Escritorio\\Babylon\\Babylon\\src\\Common\\Babylon.Common.Presentation\\Babylon.Common.Presentation.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\cris0\\.nuget\\packages\\dapper\\2.1.66\\dapper.2.1.66.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\fluentvalidation\\11.11.0\\fluentvalidation.11.11.0.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.11.0\\fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512",
+    "C:\\Users\\cris0\\.nuget\\packages\\masstransit.abstractions\\8.4.0\\masstransit.abstractions.8.4.0.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\mediatr\\12.4.1\\mediatr.12.4.1.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\cris0\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",

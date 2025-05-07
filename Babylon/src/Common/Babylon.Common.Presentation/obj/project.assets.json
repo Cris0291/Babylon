@@ -45,6 +45,19 @@
           }
         }
       },
+      "MassTransit.Abstractions/8.4.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/MassTransit.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/MassTransit.Abstractions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "MediatR/12.4.1": {
         "type": "package",
         "dependencies": {
@@ -184,6 +197,27 @@
         "lib/netstandard2.1/FluentValidation.DependencyInjectionExtensions.xml"
       ]
     },
+    "MassTransit.Abstractions/8.4.0": {
+      "sha512": "wGiNlHZOwAY1CRxxLfrr+hbP3Ooj9RK3JJZtGHlEmbDTLuSQu67skC2QdTVRCe2WmH/23XUwOzhNNYsFHdstQg==",
+      "type": "package",
+      "path": "masstransit.abstractions/8.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "NuGet.README.md",
+        "lib/net472/MassTransit.Abstractions.dll",
+        "lib/net472/MassTransit.Abstractions.xml",
+        "lib/net8.0/MassTransit.Abstractions.dll",
+        "lib/net8.0/MassTransit.Abstractions.xml",
+        "lib/net9.0/MassTransit.Abstractions.dll",
+        "lib/net9.0/MassTransit.Abstractions.xml",
+        "lib/netstandard2.0/MassTransit.Abstractions.dll",
+        "lib/netstandard2.0/MassTransit.Abstractions.xml",
+        "masstransit.abstractions.8.4.0.nupkg.sha512",
+        "masstransit.abstractions.nuspec",
+        "mt-logo-small.png"
+      ]
+    },
     "MediatR/12.4.1": {
       "sha512": "0tLxCgEC5+r1OCuumR3sWyiVa+BMv3AgiU4+pz8xqTc+2q1WbUEXFOr7Orm96oZ9r9FsldgUtWvB2o7b9jDOaw==",
       "type": "package",
@@ -279,6 +313,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "Babylon.Common.Application >= 1.0.0",
+      "MassTransit.Abstractions >= 8.4.0",
       "SonarAnalyzer.CSharp >= 10.7.0.110445"
     ]
   },
@@ -331,6 +366,10 @@
       "net8.0": {
         "targetAlias": "net8.0",
         "dependencies": {
+          "MassTransit.Abstractions": {
+            "target": "Package",
+            "version": "[8.4.0, )"
+          },
           "SonarAnalyzer.CSharp": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",

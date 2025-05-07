@@ -831,6 +831,23 @@
           }
         }
       },
+      "Quartz.Extensions.Hosting/3.14.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Hosting.Abstractions": "8.0.0",
+          "Quartz.Extensions.DependencyInjection": "3.14.0"
+        },
+        "compile": {
+          "lib/net8.0/Quartz.Extensions.Hosting.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Quartz.Extensions.Hosting.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Scrutor/6.0.1": {
         "type": "package",
         "dependencies": {
@@ -2463,6 +2480,25 @@
         "quartz.extensions.dependencyinjection.nuspec"
       ]
     },
+    "Quartz.Extensions.Hosting/3.14.0": {
+      "sha512": "kbxBND5Nift+qwOud8cjywoLvjcQX+aLt6R7qQcQVg8w84NUNjTsjzZ5zIod9vz7ricSvIaQXGVbhpm7X6yVQA==",
+      "type": "package",
+      "path": "quartz.extensions.hosting/3.14.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "hosted-services-integration.md",
+        "lib/net8.0/Quartz.Extensions.Hosting.dll",
+        "lib/net8.0/Quartz.Extensions.Hosting.xml",
+        "lib/net9.0/Quartz.Extensions.Hosting.dll",
+        "lib/net9.0/Quartz.Extensions.Hosting.xml",
+        "lib/netstandard2.0/Quartz.Extensions.Hosting.dll",
+        "lib/netstandard2.0/Quartz.Extensions.Hosting.xml",
+        "quartz-logo-small.png",
+        "quartz.extensions.hosting.3.14.0.nupkg.sha512",
+        "quartz.extensions.hosting.nuspec"
+      ]
+    },
     "Scrutor/6.0.1": {
       "sha512": "5xKT6ND5GqnFzwSaYozHCJe75GFL8sPy4yw/iRFqeBFGlmqPNFpOg1T9Q0Gl2h76Cklt0ZTg6Ypkri5iUBKXsA==",
       "type": "package",
@@ -3301,8 +3337,7 @@
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 8.0.14",
       "Microsoft.EntityFrameworkCore.SqlServer >= 9.0.2",
       "Newtonsoft.Json >= 13.0.3",
-      "Quartz >= 3.14.0",
-      "Quartz.Extensions.DependencyInjection >= 3.14.0",
+      "Quartz.Extensions.Hosting >= 3.14.0",
       "Scrutor >= 6.0.1",
       "SonarAnalyzer.CSharp >= 10.7.0.110445"
     ]
@@ -3379,11 +3414,7 @@
             "target": "Package",
             "version": "[13.0.3, )"
           },
-          "Quartz": {
-            "target": "Package",
-            "version": "[3.14.0, )"
-          },
-          "Quartz.Extensions.DependencyInjection": {
+          "Quartz.Extensions.Hosting": {
             "target": "Package",
             "version": "[3.14.0, )"
           },
