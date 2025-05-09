@@ -48,9 +48,14 @@ public sealed class ChannelHub(ISender sender, IEventBus bus) : Hub
     {
         string groupName = $"{req.ChannelName}-{req.ChannelId}";
 
-        await bus.PublishAsync(new ChannelPublishMessageIntegrationEvent(req.ChannelId, req.MemberId, req.Message, req.PublicationDate, req.UserName, req.AvatarUrl));
+        await bus.PublishAsync(new ChannelPublishMessageIntegrationEvent(req.ChannelId, req.MemberId, req.Message, req.PublicationDate, req.UserName, req.Avatar));
 
         await Clients.Group(groupName).SendAsync("ReceiveMessage", req);
+    }
+
+    public async Task RemoveUserFromGroup(RemoveUserRequest request)
+    {
+
     }
 
     public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid MemberId, string UserName, string Message, DateTime PublicationDate, string Avatar);

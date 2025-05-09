@@ -1,13 +1,15 @@
-﻿using Babylon.Common.Domain;
+﻿using Babylon.Common.Application.EventBus;
+using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Channels.GetChannelMessages;
 using Babylon.Modules.Channels.Application.Members.GetValidThreadChannel;
 using Babylon.Modules.Channels.Application.Threads.GetThreadChannelMessages;
+using Babylon.Modules.Channels.IntegrationEvents;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Babylon.Modules.Channels.Presentation.Hubs;
-public sealed class ThreadHub(ISender sender) : Hub
+public sealed class ThreadHub(ISender sender, IEventBus bus) : Hub
 {
     public override async Task OnConnectedAsync()
     {
@@ -48,7 +50,11 @@ public sealed class ThreadHub(ISender sender) : Hub
     }
     public async Task SendMessage(MessageThreadRequest req)
     {
+        string groupName = $"{req.ThreadName}-{req.ThreadId}";
 
+        await bus.PublishAsync(new ThreadPublishMessageIntegrationEvent(req.ThreadId, req.MemberId, req.Message, req.PublicationDate, req.UserName, req.Avatar));
+
+        await Clients.Group(groupName).SendAsync("ReceiveThreadMessage", req);
     }
     public sealed record MessageThreadRequest(Guid ThreadId, string ThreadName, Guid MemberId, string UserName, string Message, DateTime PublicationDate, string Avatar);
 }
