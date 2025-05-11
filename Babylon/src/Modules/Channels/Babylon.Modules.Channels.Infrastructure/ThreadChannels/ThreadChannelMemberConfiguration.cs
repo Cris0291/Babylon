@@ -8,7 +8,7 @@ internal sealed class ThreadChannelMemberConfiguration : IEntityTypeConfiguratio
 {
     public void Configure(EntityTypeBuilder<ThreadChannelMember> builder)
     {
-        builder.HasKey(x => new {x.ThreadChannelId, x.MemberId});
+        builder.HasKey(x => new {x.ThreadChannelId, x.Id});
 
         builder.HasOne<ThreadChannel>()
             .WithMany()
@@ -16,6 +16,6 @@ internal sealed class ThreadChannelMemberConfiguration : IEntityTypeConfiguratio
 
         builder.HasOne<Member>()
             .WithMany()
-            .HasForeignKey(x => x.MemberId);
+            .HasForeignKey(x => x.Id);
     }
 }

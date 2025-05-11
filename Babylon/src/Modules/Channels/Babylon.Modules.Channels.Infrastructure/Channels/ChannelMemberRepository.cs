@@ -5,24 +5,17 @@ using Microsoft.EntityFrameworkCore;
 namespace Babylon.Modules.Channels.Infrastructure.Channels;
 internal class ChannelMemberRepository(ChannelsDbContext dbContext) : IChannelMemberRepository
 {
-    public async Task AddChannelMembers(IEnumerable<ChannelMember> members)
+    public async Task AddChannelMembers(ChannelMember member)
     {
-        await dbContext.ChannelMembers.AddRangeAsync(members);
+        await dbContext.ChannelMembers.AddAsync(member);
     }
     public async Task DeleteChannelMember(ChannelMember channelMember)
     {
         dbContext.Remove(channelMember);
         await Task.CompletedTask;
     }
-    public async Task<ChannelMember> GetChannelMember(Guid channelId, Guid memberId)
+    public async Task<ChannelMember?> GetChannelMember(Guid channelId, Guid id)
     {
-        ChannelMember? channelMember = await dbContext.ChannelMembers.SingleOrDefaultAsync(c => c.ChannelId == channelId && c.Id == memberId);
-
-        if (channelMember is null)
-        {
-            throw new InvalidOperationException("Requested channel memeber was not found");
-        }
-
-        return channelMember;
+        return await dbContext.ChannelMembers.SingleOrDefaultAsync(c => c.ChannelId == channelId && c.Id == id);
     }
 }
