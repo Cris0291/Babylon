@@ -3,18 +3,31 @@
 
 namespace Babylon.Modules.Channels.Domain.Channels;
 
-public sealed class Channel
+public sealed class Channel : Entity
 {
     private Channel() { }
     public Guid ChannelId { get; private set; }
     public string Name { get; private set; }
     public ChannelType Type { get; private set; }
     public DateTime CreatedAt { get; private set; }
+    //Creator id should be user id
     public Guid Creator { get; private set; } 
+    public List<Guid> BlockedMembers { get; private set; }
     public List<Guid> Members { get; private set; }
     public static Channel CreateChannel(string channelName, bool publicChannel, Guid creator)
     {
-        return new Channel { Name = channelName, Type = publicChannel ? ChannelType.Public : ChannelType.Private, Creator = creator ,CreatedAt = DateTime.Now};
+        var channel = new Channel {
+            ChannelId = Guid.NewGuid(),
+            Name = channelName,
+            Type = publicChannel ? ChannelType.Public : ChannelType.Private,
+            Creator = creator,
+            CreatedAt = DateTime.Now,
+            BlockedMembers = []
+            };
+
+        channel.RaiseEvent(new AddMemberToChannelDomainEvent(channel.Creator, channel.ChannelId));
+
+        return channel;
     }
     public Result ChangeType(string type)
     {
@@ -26,9 +39,9 @@ public sealed class Channel
 
         return Result.Success();
     }
-    public void AddMember(Guid memberId)
+    public void BlockMember(Guid id)
     {
-        Members.Add(memberId);
+        BlockedMembers.Add(id);
     }
 }
 
