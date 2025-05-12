@@ -14,14 +14,19 @@ internal sealed class BlockMemberFromChannelCommandHandler(
         Channel? channel = await channelRepository.GetChannel(request.ChannelId);
         if (channel is null)
         {
-            throw new InvalidOperationException("Channel was not found");
+            return Result.Failure(Error.Failure(description: "Channel was not found"));
         }
 
-        ChannelMember channelMemeber = await channelMemberRepository.GetChannelMember(request.ChannelId, request.Id);
+        ChannelMember? channelMember = await channelMemberRepository.GetChannelMember(request.ChannelId, request.Id);
+
+        if (channelMember == null)
+        {
+            return Result.Failure(Error.Failure(description: "Member was not part of the channel"));
+        }
 
         channel.BlockMember(request.Id);
 
-        await channelMemberRepository.DeleteChannelMember(channelMemeber);
+        await channelMemberRepository.DeleteChannelMember(channelMember);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

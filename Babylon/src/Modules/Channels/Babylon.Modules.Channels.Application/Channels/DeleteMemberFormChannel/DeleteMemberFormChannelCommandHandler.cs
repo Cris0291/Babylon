@@ -2,7 +2,6 @@
 using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Domain.Channels;
-using Babylon.Modules.Channels.Domain.Members;
 
 namespace Babylon.Modules.Channels.Application.Channels.DeleteMemberFormChannel;
 internal sealed class DeleteMemberFormChannelCommandHandler(
@@ -15,14 +14,14 @@ internal sealed class DeleteMemberFormChannelCommandHandler(
         Channel? channel = await channelRepository.GetChannel(request.ChannelId);
         if (channel is null)
         {
-            throw new InvalidOperationException("Channel was not found");
+            return Result.Failure(Error.Failure(description: "Channel was not found"));
         }
 
         ChannelMember? channelMember = await channelMemberRepository.GetChannelMember(request.ChannelId, request.Id);
 
         if(channelMember == null)
         {
-            throw new InvalidOperationException("Member was not part of the channel");
+            return Result.Failure(Error.Failure(description: "Member was not part of the channel"));
         }
 
         await channelMemberRepository.DeleteChannelMember(channelMember);
