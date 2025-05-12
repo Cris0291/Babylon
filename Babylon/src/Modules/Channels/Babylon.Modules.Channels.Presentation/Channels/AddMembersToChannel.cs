@@ -12,8 +12,8 @@ internal sealed class AddMembersToChannel : IEndpoint
     {
         app.MapPost(ApiEndpoints.Channels.AddMembersToChannel, async (ISender sender, Guid id, Request request) =>
         {
-            await sender.Send(new AddMembersToChannelCommand(id, request.Members));
+            await sender.Send(new AddMembersToChannelCommand(id, request.Member));
         }).WithTags(Tags.Channels);
     }
-    internal sealed record Request(IEnumerable<Guid> Members);
+    internal sealed record Request(Guid Member);
 }

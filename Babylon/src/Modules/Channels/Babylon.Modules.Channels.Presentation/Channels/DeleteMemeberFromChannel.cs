@@ -10,9 +10,9 @@ internal sealed class DeleteMemeberFromChannel : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
-        app.MapDelete(ApiEndpoints.Channels.DeleteMemberFromChannel, async (ISender sender, Guid channelId, Guid memberId) =>
+        app.MapDelete(ApiEndpoints.Channels.DeleteMemberFromChannel, async (ISender sender, Guid channelId, Guid id) =>
         {
-            await sender.Send(new DeleteMemberFormChannelCommand(channelId, memberId));
+            await sender.Send(new DeleteMemberFormChannelCommand(channelId, id));
         }).WithTags(Tags.Channels);
     }
 }
