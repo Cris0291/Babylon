@@ -1,4 +1,6 @@
-﻿using Babylon.Common.Application.Messaging;
+﻿using System.Data.Common;
+using Babylon.Common.Application.Data;
+using Babylon.Common.Application.Messaging;
 using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Domain.Channels;
@@ -6,7 +8,12 @@ using Babylon.Modules.Channels.Domain.MessageThreadChannels;
 using Babylon.Modules.Channels.Domain.ThreadChannels;
 
 namespace Babylon.Modules.Channels.Application.Channels.CreateThread;
-internal sealed class CreateThreadCommandHandler(IUnitOfWork unitOfWork, IChannelRepository channelRepository, IThreadChannelRepository threadChannelRepository, IMessageThreadChannelRepository messageRepository) : ICommandHandler<CreateThreadCommand>
+internal sealed class CreateThreadCommandHandler(
+    IUnitOfWork unitOfWork, 
+    IChannelRepository channelRepository, 
+    IThreadChannelRepository threadChannelRepository, 
+    IMessageThreadChannelRepository messageRepository,
+    IDbConnectionFactory dbConnectionFactory) : ICommandHandler<CreateThreadCommand>
 {
     public async Task<Result> Handle(CreateThreadCommand request, CancellationToken cancellationToken)
     {
@@ -15,6 +22,16 @@ internal sealed class CreateThreadCommandHandler(IUnitOfWork unitOfWork, IChanne
         {
             throw new InvalidOperationException("Channel was not found");
         }
+
+        await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
+
+        const string sql =
+            $"""
+            SELECT
+               cm.id AS {}
+            FROM channels.channel_members cm
+            WHERE cm.channel_id = @ChannelId
+            """;
 
         var threadChannel = ThreadChannel.Create(request.ChannelName, request.ChannelId);
         await threadChannelRepository.Insert(threadChannel);
