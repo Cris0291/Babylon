@@ -6,6 +6,7 @@ using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Domain.Channels;
 using Babylon.Modules.Channels.Domain.MessageThreadChannels;
 using Babylon.Modules.Channels.Domain.ThreadChannels;
+using Dapper;
 
 namespace Babylon.Modules.Channels.Application.Channels.CreateThread;
 internal sealed class CreateThreadCommandHandler(
@@ -28,10 +29,12 @@ internal sealed class CreateThreadCommandHandler(
         const string sql =
             $"""
             SELECT
-               cm.id AS {}
+               cm.id AS {nameof(MemberDto.Id)}
             FROM channels.channel_members cm
             WHERE cm.channel_id = @ChannelId
             """;
+
+        IEnumerable<MemberDto> members = await connection.QueryAsync<MemberDto>(sql, new { request.ChannelId});
 
         var threadChannel = ThreadChannel.Create(request.ChannelName, request.ChannelId);
         await threadChannelRepository.Insert(threadChannel);
