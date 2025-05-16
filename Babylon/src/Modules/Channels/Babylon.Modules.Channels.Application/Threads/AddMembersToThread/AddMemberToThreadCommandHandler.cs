@@ -17,5 +17,7 @@ internal sealed class AddMemberToThreadCommandHandler(IThreadChannelMemberReposi
         }
 
         await threadChannelMemberRepository.Insert(threadMembers);
+
+        return Result.Success();
     }
 }

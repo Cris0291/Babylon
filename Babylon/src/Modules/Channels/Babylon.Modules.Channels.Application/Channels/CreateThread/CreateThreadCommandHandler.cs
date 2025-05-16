@@ -3,10 +3,12 @@ using Babylon.Common.Application.Data;
 using Babylon.Common.Application.Messaging;
 using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Abstractions.Data;
+using Babylon.Modules.Channels.Application.Threads.AddMembersToThread;
 using Babylon.Modules.Channels.Domain.Channels;
 using Babylon.Modules.Channels.Domain.MessageThreadChannels;
 using Babylon.Modules.Channels.Domain.ThreadChannels;
 using Dapper;
+using MediatR;
 
 namespace Babylon.Modules.Channels.Application.Channels.CreateThread;
 internal sealed class CreateThreadCommandHandler(
@@ -14,7 +16,8 @@ internal sealed class CreateThreadCommandHandler(
     IChannelRepository channelRepository, 
     IThreadChannelRepository threadChannelRepository, 
     IMessageThreadChannelRepository messageRepository,
-    IDbConnectionFactory dbConnectionFactory) : ICommandHandler<CreateThreadCommand>
+    IDbConnectionFactory dbConnectionFactory,
+    ISender sender) : ICommandHandler<CreateThreadCommand>
 {
     public async Task<Result> Handle(CreateThreadCommand request, CancellationToken cancellationToken)
     {
@@ -41,6 +44,8 @@ internal sealed class CreateThreadCommandHandler(
 
         var message = MessageThreadChannel.Create(request.UserName, request.MessageText, threadChannel.ThreadChannelId, request.MemberId, request.CreationDate);
         await messageRepository.Insert(message);
+
+        await sender.Send(new AddMemberToThreadCommand(members, threadChannel.ThreadChannelId), cancellationToken);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return Result.Success();
