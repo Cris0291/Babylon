@@ -13,7 +13,8 @@ public sealed class ThreadChannel
         return new ThreadChannel
         {
             ChannelName = channelName,
-            ChannelId = channelId
+            ChannelId = channelId,
+            ThreadChannelId = Guid.NewGuid()
         };
     }
 }
