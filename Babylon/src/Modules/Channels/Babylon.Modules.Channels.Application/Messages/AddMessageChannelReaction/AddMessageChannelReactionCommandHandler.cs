@@ -4,7 +4,10 @@ using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Domain.MessageChannels;
 
 namespace Babylon.Modules.Channels.Application.Messages.AddMessageChannelReaction;
-internal sealed class AddMessageChannelReactionCommandHandler(IMessageChannelRepository repository, IUnitOfWork unitOfWork) : ICommandHandler<AddMessageChannelReactionCommand>
+internal sealed class AddMessageChannelReactionCommandHandler(
+    IMessageChannelRepository repository, 
+    IMessageChannelReactionRepository messageChannelReactionRepository ,
+    IUnitOfWork unitOfWork) : ICommandHandler<AddMessageChannelReactionCommand>
 {
     public async Task<Result> Handle(AddMessageChannelReactionCommand request, CancellationToken cancellationToken)
     {
@@ -15,6 +18,20 @@ internal sealed class AddMessageChannelReactionCommandHandler(IMessageChannelRep
             throw new InvalidOperationException("Message was not found");
         }
 
+        MessageChannelReaction? reaction = await messageChannelReactionRepository.Get(request.Id, request.MessageId);
 
+        if (reaction is null)
+        {
+            var messageReaction = MessageChannelReaction.Create(request.Id, request.MessageId, request.Emoji);
+            await messageChannelReactionRepository.Insert(messageReaction);
+        }
+        else
+        {
+            reaction.AddOrToggleEmoji(reaction.Emoji);
+        }
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        return Result.Success();
     }
 }
