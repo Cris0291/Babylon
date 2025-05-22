@@ -24,20 +24,17 @@ public sealed class ThreadHub(ISender sender, IEventBus bus) : Hub
             ? tid 
             : throw new InvalidOperationException("Given thread id was not correct");
 
-
-        string threadName = httpContext.Request.Query["ThreadName"].Single();
-
         string uId = Context.User?.FindFirst("sub")?.Value;
 
         Guid userId = Guid.TryParse(uId, out Guid usId) ? usId : throw new InvalidOperationException("User id could not be found");
 
-        string groupName = $"{threadName}-{threadId}";
+        string groupName = $"{threadId}";
 
         Result<bool> result = await sender.Send(new GetValidThreadChannelQuery(userId, threadId));
 
         if (!result.TValue)
         {
-            throw new InvalidOperationException($"User does not have acces to channel: {threadName}");
+            throw new InvalidOperationException($"User does not have acces to channel");
         }
 
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
@@ -50,7 +47,7 @@ public sealed class ThreadHub(ISender sender, IEventBus bus) : Hub
     }
     public async Task SendMessage(MessageThreadRequest req)
     {
-        string groupName = $"{req.ThreadName}-{req.ThreadId}";
+        string groupName = $"{req.ThreadId}";
 
         await bus.PublishAsync(new ThreadPublishMessageIntegrationEvent(req.ThreadId, req.MemberId, req.Message, req.PublicationDate, req.UserName, req.Avatar));
 

@@ -2,10 +2,12 @@
 using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Abstractions.Services;
 using Babylon.Modules.Channels.Application.Channels.BlockMemberFromChannel;
+using Babylon.Modules.Channels.Application.Channels.ChannelArchiveValidation;
 using Babylon.Modules.Channels.Application.Channels.DeleteMemberFormChannel;
 using Babylon.Modules.Channels.Application.Channels.GetChannelMessages;
 using Babylon.Modules.Channels.Application.Members.GetMemberAdmin;
 using Babylon.Modules.Channels.Application.Members.GetValidChannel;
+using Babylon.Modules.Channels.Application.Messages.AddMessageChannelReaction;
 using Babylon.Modules.Channels.IntegrationEvents;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -25,9 +27,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
         Guid channelId = Guid.TryParse((string)httpContext.Request.RouteValues["id"], out Guid id) ? id : throw new InvalidCastException("Given channel id was not correct");
 
-        string channelName = httpContext.Request.Query["name"].Single();
-
-        string groupName = $"{channelName}-{channelId}";
+        string groupName = $"{channelId}";
 
         string userId = Context.User?.FindFirst("sub")?.Value;
 
@@ -37,7 +37,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
         if (!isUserRegisteredInChannel.TValue)
         {
-            throw new InvalidOperationException($"User does not have acces to channel: {channelName}");
+            throw new InvalidOperationException($"User does not have acces to channel");
         }
 
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
@@ -50,7 +50,13 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     }
     public async Task SendMessage(MessageRequest req)
     {
-        string groupName = $"{req.ChannelName}-{req.ChannelId}";
+        string groupName = $"{req.ChannelId}";
+
+        Result<bool> isArchiveResult = await sender.Send(new ChannelArchiveValidationQuery(req.ChannelId));
+        if (isArchiveResult.TValue)
+        {
+            throw new HubException("Channel is archive new messages cannot be added");
+        }
 
         await bus.PublishAsync(new ChannelPublishMessageIntegrationEvent(req.ChannelId, req.MemberId, req.Message, req.PublicationDate, req.UserName, req.Avatar));
 
@@ -59,7 +65,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
     public async Task RemoveUserFromGroup(RemoveUserRequest request)
     {
-        string groupName = $"{request.ChannelName}-{request.ChannelId}";
+        string groupName = $"{request.ChannelId}";
 
         await ValidateAdmin(request.ChannelId, request.AdminId);
 
@@ -76,6 +82,10 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
         }
 
         await Clients.Group(groupName).SendAsync("UserRemoved", request.TargetId);
+    }
+    public async Task ReactToMessage(MessageReactionRequest reaction)
+    {
+        Result result = await sender.Send(new AddMessageChannelReactionCommand(reaction.MemberId, reaction.MessageChannelId, reaction.Emoji));
     }
 
     private async Task ValidateAdmin(Guid channelId, Guid adminId)
@@ -119,4 +129,5 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     }
 
     public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid MemberId, string UserName, string Message, DateTime PublicationDate, string Avatar);
+    public sealed record MessageReactionRequest(Guid MessageChannelId, Guid MemberId, string Emoji);
 }
