@@ -10,7 +10,7 @@ internal sealed class CreateMessageCommandHandler(IMessageChannelRepository mess
     {
         var message = MessageChannel.Create(
             request.ChannelId, 
-            request.MemberId, 
+            request.Id, 
             request.Message, 
             request.PublicationDate,
             request.UserName, 
