@@ -1,11 +1,14 @@
-﻿using Babylon.Common.Application.EventBus;
+﻿using Babylon.Common.Application.Caching;
+using Babylon.Common.Application.EventBus;
 using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Abstractions.Services;
 using Babylon.Modules.Channels.Application.Channels.BlockMemberFromChannel;
 using Babylon.Modules.Channels.Application.Channels.ChannelArchiveValidation;
 using Babylon.Modules.Channels.Application.Channels.DeleteMemberFormChannel;
 using Babylon.Modules.Channels.Application.Channels.GetChannelMessages;
+using Babylon.Modules.Channels.Application.Channels.GetChannelStateAccess;
 using Babylon.Modules.Channels.Application.Members.GetMemberAdmin;
+using Babylon.Modules.Channels.Application.Members.GetMemberMute;
 using Babylon.Modules.Channels.Application.Members.GetValidChannel;
 using Babylon.Modules.Channels.Application.Messages.AddMessageChannelReaction;
 using Babylon.Modules.Channels.IntegrationEvents;
@@ -14,7 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Babylon.Modules.Channels.Presentation.Hubs;
-public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionService connectionService) : Hub
+public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionService connectionService, ICacheService cacheService) : Hub
 {
     public override async Task OnConnectedAsync()
     {
@@ -37,7 +40,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
         if (!isUserRegisteredInChannel.TValue)
         {
-            throw new InvalidOperationException($"User does not have acces to channel");
+            throw new HubException($"User does not have acces to channel");
         }
 
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
@@ -52,15 +55,25 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     {
         string groupName = $"{req.ChannelId}";
 
-        Result<bool> isArchiveResult = await sender.Send(new ChannelArchiveValidationQuery(req.ChannelId));
-        if (isArchiveResult.TValue)
+        ChannelAccessStateDto channelState;
+
+        ChannelAccessStateDto? cacheResult = await cacheService.GetAsync<ChannelAccessStateDto>($"channelState-{req.ChannelId}-{req.Id}");
+
+        channelState = cacheResult != null ? cacheResult : (await sender.Send(new GetChannelStateAccessQuery(req.ChannelId, req.Id))).TValue;
+
+        if (channelState!.Type == Domain.Channels.ChannelType.Archived)
         {
             throw new HubException("Channel is archive new messages cannot be added");
         }
 
-        await bus.PublishAsync(new ChannelPublishMessageIntegrationEvent(req.ChannelId, req.MemberId, req.Message, req.PublicationDate, req.UserName, req.Avatar));
+        if (channelState.IsMute)
+        {
+            throw new HubException("You are currently mute on this channel");
+        }
 
         await Clients.Group(groupName).SendAsync("ReceiveMessage", req);
+
+        await bus.PublishAsync(new ChannelPublishMessageIntegrationEvent(req.ChannelId, req.Id, req.Message, req.PublicationDate, req.UserName, req.Avatar));
     }
 
     public async Task RemoveUserFromGroup(RemoveUserRequest request)
@@ -85,7 +98,16 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     }
     public async Task ReactToMessage(MessageReactionRequest reaction)
     {
+        string groupName = $"{reaction.ChannelId}";
+
         Result result = await sender.Send(new AddMessageChannelReactionCommand(reaction.MemberId, reaction.MessageChannelId, reaction.Emoji));
+
+        if (!result.IsSuccess)
+        {
+            throw new HubException(result.Error?.Description) ;
+        }
+
+        await Clients.Group(groupName).SendAsync("AddReaction", new { reaction.Emoji, reaction.MessageChannelId, reaction.MemberId });
     }
 
     private async Task ValidateAdmin(Guid channelId, Guid adminId)
@@ -128,6 +150,6 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
         }
     }
 
-    public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid MemberId, string UserName, string Message, DateTime PublicationDate, string Avatar);
-    public sealed record MessageReactionRequest(Guid MessageChannelId, Guid MemberId, string Emoji);
+    public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid Id, string UserName, string Message, DateTime PublicationDate, string Avatar);
+    public sealed record MessageReactionRequest(Guid MessageChannelId, Guid MemberId, string Emoji, Guid ChannelId);
 }

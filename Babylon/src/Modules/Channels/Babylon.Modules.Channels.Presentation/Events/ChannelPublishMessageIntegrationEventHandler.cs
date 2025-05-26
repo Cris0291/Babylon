@@ -10,7 +10,7 @@ internal class ChannelPublishMessageIntegrationEventHandler(ISender sender) : In
     {
         await sender.Send(new CreateMessageCommand(
             integrationEvent.ChannelId, 
-            integrationEvent.MemberId, 
+            integrationEvent.Id, 
             integrationEvent.Message, 
             integrationEvent.PublicationDate, 
             integrationEvent.UserName, 
