@@ -43,5 +43,19 @@ public sealed class Channel : Entity
     {
         BlockedMembers.Add(id);
     }
+    public void ArchiveChannel()
+    {
+        Type = ChannelType.Archived;
+    }
+
+    public bool IsArchive()
+    {
+        return Type == ChannelType.Archived;
+    }
+
+    public void Rename(string newName)
+    {
+        Name = newName;
+    }
 }
 

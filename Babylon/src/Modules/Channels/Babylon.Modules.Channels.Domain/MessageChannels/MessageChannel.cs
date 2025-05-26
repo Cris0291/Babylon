@@ -1,6 +1,8 @@
-﻿namespace Babylon.Modules.Channels.Domain.MessageChannels;
+﻿using Babylon.Common.Domain;
 
-public sealed class MessageChannel
+namespace Babylon.Modules.Channels.Domain.MessageChannels;
+
+public sealed class MessageChannel : Entity
 {
     private MessageChannel() { }
     public Guid MessageChannelId { get; private set; }
@@ -9,13 +11,12 @@ public sealed class MessageChannel
     public string AvatarUrl { get; private set; }
     public int Like { get; private set; }
     public int Dislike { get; private set; }
-    public string[] EmojiReactions { get; private set; }
     public DateTime PublicationDate { get; private set; }
     public Guid ChannelId { get; private set; }
-    public Guid MemberId { get; private set; }
+    public Guid Id { get; private set; }
     public static MessageChannel Create(
         Guid channelId, 
-        Guid memberId, 
+        Guid id, 
         string message, 
         DateTime publicationDate, 
         string userName, 
@@ -24,14 +25,13 @@ public sealed class MessageChannel
         return new MessageChannel
         {
             ChannelId = channelId,
-            MemberId = memberId,
+            Id = id,
             Message = message,
             PublicationDate = publicationDate,
             UserName = userName,
             AvatarUrl = avatar,
             Like = 0,
             Dislike = 0,
-            EmojiReactions = []
         };
     }
 }

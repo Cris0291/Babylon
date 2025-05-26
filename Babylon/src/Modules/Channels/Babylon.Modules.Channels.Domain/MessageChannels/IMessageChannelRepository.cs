@@ -2,4 +2,5 @@
 public interface IMessageChannelRepository
 {
     Task Insert(MessageChannel messageChannel);
+    Task<MessageChannel?> Get(Guid messageChannelId);
 }

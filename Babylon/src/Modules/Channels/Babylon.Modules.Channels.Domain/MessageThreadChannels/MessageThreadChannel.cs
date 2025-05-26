@@ -8,8 +8,8 @@ public sealed class MessageThreadChannel
     public string Message { get; private set; }
     public DateTime PublicationDate { get; private set; }
     public Guid ThreadChannelId { get; private set; }
-    public Guid MemberId { get; private set; }
-    public static MessageThreadChannel Create(string userName, string message, Guid threadId, Guid memberId, DateTime creationDate = default)
+    public Guid Id { get; private set; }
+    public static MessageThreadChannel Create(string userName, string message, Guid threadId, Guid id, DateTime creationDate = default)
     {
         return new MessageThreadChannel
         {
@@ -17,7 +17,7 @@ public sealed class MessageThreadChannel
             Message = message,
             PublicationDate = creationDate != default ? creationDate : DateTime.Now,
             ThreadChannelId = threadId,
-            MemberId = memberId
+            Id = id
         };
     }
 }
