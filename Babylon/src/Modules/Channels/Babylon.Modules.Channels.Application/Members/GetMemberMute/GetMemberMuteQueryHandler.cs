@@ -16,10 +16,17 @@ internal sealed class GetMemberMuteQueryHandler(IDbConnectionFactory dbConnectio
             SELECT
                cm.is_mute AS {nameof(ChannelMemberDto.IsMute)}
             FROM channels.channel_members cm
-            WHERE cm.id = @Id AND m.channel_id
+            WHERE cm.id = @Id AND cm.channel_id = @ChannelId
             """;
 
-        connection.QueryAsync
+        ChannelMemberDto? member = await connection.QuerySingleOrDefaultAsync<ChannelMemberDto>(sql, new {request.ChannelId, request.Id});
+
+        if (member == null)
+        {
+            return Result.Failure<bool>(Error.Failure(description: "Target user was not found for given channel"));
+        }
+
+        return Result.Success<bool>(member.IsMute);
     }
     internal record ChannelMemberDto(bool IsMute);
 }
