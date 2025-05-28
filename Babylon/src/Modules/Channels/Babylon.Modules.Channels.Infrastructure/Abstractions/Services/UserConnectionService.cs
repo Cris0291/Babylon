@@ -4,8 +4,8 @@ using Babylon.Modules.Channels.Application.Abstractions.Services;
 namespace Babylon.Modules.Channels.Infrastructure.Abstractions.Services;
 internal class UserConnectionService : IUserConnectionService
 {
-    private readonly ConcurrentDictionary<string, List<string>> _connections = new();
-    public void AddConnection(string userId, string connectionId)
+    private readonly ConcurrentDictionary<Guid, List<string>> _connections = new();
+    public void AddConnection(Guid userId, string connectionId)
     {
         _connections.AddOrUpdate(userId, new List<string> { connectionId},  (_, list) =>
         {
@@ -17,14 +17,14 @@ internal class UserConnectionService : IUserConnectionService
         });
     }
 
-    public List<string> GetConnections(string userId)
+    public List<string> GetConnections(Guid userId)
     {
         return _connections.TryGetValue(userId, out List<string> list) ? list : new List<string>();
     }
 
     public void RemoveConnection(string connectionId)
     {
-        foreach (KeyValuePair<string, List<string>> entry in _connections)
+        foreach (KeyValuePair<Guid, List<string>> entry in _connections)
         {
             lock (entry.Value)
             {

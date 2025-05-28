@@ -19,4 +19,10 @@ internal sealed class ChannelRepository(ChannelsDbContext dbContext) : IChannelR
     {
         return await dbContext.Channels.SingleOrDefaultAsync(c => c.ChannelId == channelId);
     }
+
+    public async Task Delete(Channel channel)
+    {
+        dbContext.Remove(channel);
+        await Task.CompletedTask;
+    }
 }

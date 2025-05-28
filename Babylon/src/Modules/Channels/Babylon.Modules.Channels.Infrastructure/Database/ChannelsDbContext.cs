@@ -16,6 +16,7 @@ public sealed class ChannelsDbContext(DbContextOptions<ChannelsDbContext> option
     internal DbSet<Member> Members { get; set; }
     internal DbSet<ChannelMember> ChannelMembers { get; set; }
     internal DbSet<MessageChannel> MesssageChannels { get; set; }
+    internal DbSet<MessageChannelReaction> MessageChannelReactions { get; set; }
     internal DbSet<MessageThreadChannel> MessageThreadChannels { get; set; }
     internal DbSet<ThreadChannel> ThreadChannels { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)

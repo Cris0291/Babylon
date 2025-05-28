@@ -9,7 +9,7 @@ internal sealed class MemberConfiguration : IEntityTypeConfiguration<Member>
 {
     public void Configure(EntityTypeBuilder<Member> builder)
     {
-        builder.HasMany<MessageChannel>().WithOne().HasForeignKey(x => x.MemberId);
-        builder.HasMany<MessageThreadChannel>().WithOne().HasForeignKey(x => x.MemberId);
+        builder.HasMany<MessageChannel>().WithOne().HasForeignKey(x => x.Id);
+        builder.HasMany<MessageThreadChannel>().WithOne().HasForeignKey(x => x.Id);
     }
 }
