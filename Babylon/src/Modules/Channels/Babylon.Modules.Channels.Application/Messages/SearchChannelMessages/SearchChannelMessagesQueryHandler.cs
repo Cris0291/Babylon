@@ -45,5 +45,7 @@ internal sealed class SearchChannelMessagesQueryHandler(IDbConnectionFactory dbC
             """;
 
         IEnumerable<SearchedChannelMessageDto> messages = await connection.QueryAsync<SearchedChannelMessageDto>(sql, new { request.ChannelId, request.Id, request.Search});
+
+        return Result.Success(messages);
     }
 }
