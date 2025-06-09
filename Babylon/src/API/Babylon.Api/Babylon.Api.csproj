@@ -7,6 +7,7 @@
     <UserSecretsId>3cf18d57-e161-42d0-b61d-c0721b315d02</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
+    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\Channels\Babylon.Modules.Channels.Infrastructure\Babylon.Modules.Channels.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Users\Babylon.Modules.Users.Infrastructure\Babylon.Modules.Users.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

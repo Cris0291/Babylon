@@ -9,8 +9,8 @@ public sealed class MessageChannel : Entity
     public string UserName { get; private set; }
     public string Message { get; private set; }
     public string AvatarUrl { get; private set; }
-    public int Like { get; private set; }
-    public int Dislike { get; private set; }
+    public int NumberOfLikes { get; private set; }
+    public int NumberOfDislikes { get; private set; }
     public DateTime PublicationDate { get; private set; }
     public Guid ChannelId { get; private set; }
     public Guid Id { get; private set; }
@@ -30,9 +30,20 @@ public sealed class MessageChannel : Entity
             PublicationDate = publicationDate,
             UserName = userName,
             AvatarUrl = avatar,
-            Like = 0,
-            Dislike = 0,
+            NumberOfLikes = 0,
+            NumberOfDislikes = 0,
         };
+    }
+    public void Edit(string message)
+    {
+        Message = message;
+    }
+
+    public int AddOrRemoveLike(bool like)
+    {
+        NumberOfLikes = like ? ++NumberOfLikes : --NumberOfLikes;
+
+        return NumberOfLikes;
     }
 }
     

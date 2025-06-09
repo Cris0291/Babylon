@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Babylon.Modules.Channels.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7f8c4f47dad876a4b7df23a902b5e04d2a8ebf20")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75e40a201b0494c7475ab3caaf7b4e24acb25074")]
 [assembly: System.Reflection.AssemblyProductAttribute("Babylon.Modules.Channels.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Babylon.Modules.Channels.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

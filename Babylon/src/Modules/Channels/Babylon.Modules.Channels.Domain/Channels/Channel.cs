@@ -57,5 +57,9 @@ public sealed class Channel : Entity
     {
         Name = newName;
     }
+    public bool IsAdmin(Guid adminId)
+    {
+        return adminId == Creator;
+    }
 }
 

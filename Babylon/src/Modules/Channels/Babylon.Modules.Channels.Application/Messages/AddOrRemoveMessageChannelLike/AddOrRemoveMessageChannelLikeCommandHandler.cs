@@ -1,4 +1,4 @@
-﻿using System.Data.Common;
+using System.Data.Common;
 using Babylon.Common.Application.Data;
 using Babylon.Common.Application.Messaging;
 using Babylon.Common.Domain;
@@ -6,14 +6,15 @@ using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Domain.MessageChannels;
 using Dapper;
 
-namespace Babylon.Modules.Channels.Application.Messages.AddMessageChannelReaction;
-internal sealed class AddMessageChannelReactionCommandHandler(
+namespace Babylon.Modules.Channels.Application.Messages.AddOrRemoveMessageChannelLike;
+
+internal sealed class AddOrRemoveMessageChannelLikeCommandHandler(
     IMessageChannelRepository repository, 
-    IMessageChannelReactionRepository messageChannelReactionRepository ,
+    IMessageChannelReactionRepository messageChannelReactionRepository,
     IDbConnectionFactory dbConnectionFactory,
-    IUnitOfWork unitOfWork) : ICommandHandler<AddMessageChannelReactionCommand>
+    IUnitOfWork unitOfWork) : ICommandHandler<AddOrRemoveMessageChannelLikeCommand, int>
 {
-    public async Task<Result> Handle(AddMessageChannelReactionCommand request, CancellationToken cancellationToken)
+    public async Task<Result<int>> Handle(AddOrRemoveMessageChannelLikeCommand request, CancellationToken cancellationToken)
     {
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
         
@@ -21,7 +22,7 @@ internal sealed class AddMessageChannelReactionCommandHandler(
 
         if (message is null)
         {
-            return Result.Failure(Error.Failure(description: "Message was not found"));
+            return Result.Failure<int>(Error.Failure(description: "Message was not found"));
         }
 
         const string sql =
@@ -56,21 +57,27 @@ internal sealed class AddMessageChannelReactionCommandHandler(
         {
             return Result.Failure<int>(Error.Failure(description: "User is not authorized to access this channel"));
         }
-
+        
         MessageChannelReaction? reaction = await messageChannelReactionRepository.Get(request.Id, request.MessageId);
 
         if (reaction is null)
         {
-            var messageReaction = MessageChannelReaction.Create(request.Id, request.MessageId, request.Emoji);
+            var messageReaction = MessageChannelReaction.Create(request.Id, request.MessageId, like: request.Like);
             await messageChannelReactionRepository.Insert(messageReaction);
         }
         else
         {
-            reaction.AddOrToggleEmoji(request.Emoji);
+            Result<int> result = reaction.AddOrRemoveLike(request.Like);
+            if (!result.IsSuccess)
+            {
+                return result;
+            }
         }
 
+        int numberOfLikes = message.AddOrRemoveLike(request.Like);
+        
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return Result.Success();
+        return Result.Success(numberOfLikes);
     }
 }

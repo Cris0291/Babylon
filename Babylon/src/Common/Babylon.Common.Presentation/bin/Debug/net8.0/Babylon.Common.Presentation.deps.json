@@ -9,6 +9,7 @@
       "Babylon.Common.Presentation/1.0.0": {
         "dependencies": {
           "Babylon.Common.Application": "1.0.0",
+          "MassTransit.Abstractions": "8.4.0",
           "SonarAnalyzer.CSharp": "10.7.0.110445"
         },
         "runtime": {
@@ -40,6 +41,14 @@
           "lib/netstandard2.1/FluentValidation.DependencyInjectionExtensions.dll": {
             "assemblyVersion": "11.0.0.0",
             "fileVersion": "11.11.0.0"
+          }
+        }
+      },
+      "MassTransit.Abstractions/8.4.0": {
+        "runtime": {
+          "lib/net8.0/MassTransit.Abstractions.dll": {
+            "assemblyVersion": "8.4.0.0",
+            "fileVersion": "8.4.0.0"
           }
         }
       },
@@ -109,6 +118,13 @@
       "sha512": "sha512-viTKWaMbL3yJYgGI0DiCeavNbE9UPMWFVK2XS9nYXGbm3NDMd0/L5ER4wBzmTtW3BYh3SrlSXm9RACiKZ6stlA==",
       "path": "fluentvalidation.dependencyinjectionextensions/11.11.0",
       "hashPath": "fluentvalidation.dependencyinjectionextensions.11.11.0.nupkg.sha512"
+    },
+    "MassTransit.Abstractions/8.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-wGiNlHZOwAY1CRxxLfrr+hbP3Ooj9RK3JJZtGHlEmbDTLuSQu67skC2QdTVRCe2WmH/23XUwOzhNNYsFHdstQg==",
+      "path": "masstransit.abstractions/8.4.0",
+      "hashPath": "masstransit.abstractions.8.4.0.nupkg.sha512"
     },
     "MediatR/12.4.1": {
       "type": "package",

@@ -11,6 +11,8 @@ using Babylon.Modules.Channels.Application.Members.GetMemberAdmin;
 using Babylon.Modules.Channels.Application.Members.GetMemberMute;
 using Babylon.Modules.Channels.Application.Members.GetValidChannel;
 using Babylon.Modules.Channels.Application.Messages.AddMessageChannelReaction;
+using Babylon.Modules.Channels.Application.Messages.AddOrRemoveMessageChannelLike;
+using Babylon.Modules.Channels.Application.Messages.EditMessageChannel;
 using Babylon.Modules.Channels.IntegrationEvents;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -100,7 +102,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     {
         string groupName = $"{reaction.ChannelId}";
 
-        Result result = await sender.Send(new AddMessageChannelReactionCommand(reaction.MemberId, reaction.MessageChannelId, reaction.Emoji));
+        Result result = await sender.Send(new AddMessageChannelReactionCommand(reaction.MemberId, reaction.MessageChannelId, reaction.ChannelId, reaction.Emoji));
 
         if (!result.IsSuccess)
         {
@@ -108,6 +110,33 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
         }
 
         await Clients.Group(groupName).SendAsync("AddReaction", new { reaction.Emoji, reaction.MessageChannelId, reaction.MemberId });
+    }
+    public async Task AddOrRemoveLike(MessageLikeRequest reaction)
+        {
+            string groupName = $"{reaction.ChannelId}";
+    
+            Result<int> result = await sender.Send(new AddOrRemoveMessageChannelLikeCommand(reaction.Id, reaction.MessageId, reaction.ChannelId, reaction.like));
+    
+            if (!result.IsSuccess)
+            {
+                throw new HubException(result.Error?.Description) ;
+            }
+    
+            await Clients.Group(groupName).SendAsync("AddOrRemoveLike", new { reaction.like, reaction.MessageId, result.TValue });
+        }
+    public async Task EditMessage(EditMessageRequest request)
+    {
+        string groupName = $"{request.ChannelId}";
+
+        Result result = await sender.Send(new EditMessageChannelCommand(request.MessageChannelId, request.ChannelId, request.Id, request.Message));
+
+        if (!result.IsSuccess)
+        {
+            await Clients.Caller.SendAsync("EditMessage", new { request.Message, request.MessageChannelId, request.ChannelId, Error = "Message could not be edited" });
+            return;
+        }
+
+        await Clients.Group(groupName).SendAsync("EditMessage", new { request.Message, request.MessageChannelId, request.ChannelId });
     }
 
     private async Task ValidateAdmin(Guid channelId, Guid adminId)
@@ -152,4 +181,5 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
     public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid Id, string UserName, string Message, DateTime PublicationDate, string Avatar);
     public sealed record MessageReactionRequest(Guid MessageChannelId, Guid MemberId, string Emoji, Guid ChannelId);
+    public sealed record MessageLikeRequest(Guid Id, Guid MessageId, bool like, Guid ChannelId);
 }

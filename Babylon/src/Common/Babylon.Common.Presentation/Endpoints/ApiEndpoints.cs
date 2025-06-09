@@ -10,9 +10,15 @@ public static class ApiEndpoints
         public const string CreateChannel = ChannelBase;
         public const string GetChannels = ChannelBase;
         public const string AddMembersToChannel = $"{ChannelBase}/{{id:guid}}/members";
-        public const string DeleteMemberFromChannel = $"{ChannelBase}/{{channelId:guid}}/members/{{memberId:guid}}";
+        public const string DeleteMemberFromChannel = $"{ChannelBase}/{{channelId:guid}}/members/{{id:guid}}";
         public const string ChangeChannelType = $"{ChannelBase}/{{id:guid}}/type";
         public const string CreateThread = $"{ChannelBase}/{{id:guid}}/threads";
+        public const string ArchiveChannel = $"{ChannelBase}/{{id:guid}}/type-archive";
+        public const string RenameChannel = $"{ChannelBase}/{{id:guid}}/name";
+        public const string DeleteChannel = $"{ChannelBase}/{{id:guid}}";
+        public const string MuteMember = $"{ChannelBase}/{{channelId:guid}}/members/{{id:guid}}";
+        public const string ListBlockedMembers = $"{ChannelBase}/{{channelId:guid}}/members/{{id:guid}}";
+        public const string SearchChannelMessages = $"{ChannelBase}/{{channelId:guid}}/messages";
     }
     public static class Users
     {

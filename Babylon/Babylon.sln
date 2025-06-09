@@ -34,7 +34,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Babylon.Modules.Channels.Presentation", "src\Modules\Channels\Babylon.Modules.Channels.Presentation\Babylon.Modules.Channels.Presentation.csproj", "{4626DEB9-461B-4131-BDD7-00E4770621C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.Modules.Channels.Presentation", "src\Modules\Channels\Babylon.Modules.Channels.Presentation\Babylon.Modules.Channels.Presentation.csproj", "{4626DEB9-461B-4131-BDD7-00E4770621C2}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{8E8327CE-207C-456B-A31C-AD78DECDDD50}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{26C0A961-AF7C-4FFD-B41E-71790A6BD9C1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.Modules.Users.Presentation", "src\Modules\Users\Babylon.Modules.Users.Presentation\Babylon.Modules.Users.Presentation.csproj", "{E4927BC6-B242-47C2-8D61-98C3D747CD5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.Modules.Users.Application", "src\Modules\Users\Babylon.Modules.Users.Application\Babylon.Modules.Users.Application.csproj", "{5D9DA45D-9B5F-486D-9D39-4A438B68BF0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.Modules.Users.Domain", "src\Modules\Users\Babylon.Modules.Users.Domain\Babylon.Modules.Users.Domain.csproj", "{57E6C4AD-BFE1-42DF-A286-5CCA548495DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.Modules.Users.Infrastructure", "src\Modules\Users\Babylon.Modules.Users.Infrastructure\Babylon.Modules.Users.Infrastructure.csproj", "{4C537F8F-195C-4928-9D00-F503D3937515}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Babylon.Modules.Channels.IntegrationEvents", "src\Modules\Channels\Babylon.Modules.Channels.IntegrationEvents\Babylon.Modules.Channels.IntegrationEvents.csproj", "{E69EC092-53F0-46AA-873C-57FE0F96B56A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Babylon.Modules.Users.IntegrationEvents", "src\Modules\Users\Babylon.Modules.Users.IntegrationEvents\Babylon.Modules.Users.IntegrationEvents.csproj", "{76EF65F4-9AFF-40C8-969B-E203C4EAD260}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +94,34 @@ Global
 		{4626DEB9-461B-4131-BDD7-00E4770621C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4626DEB9-461B-4131-BDD7-00E4770621C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4626DEB9-461B-4131-BDD7-00E4770621C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E8327CE-207C-456B-A31C-AD78DECDDD50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E8327CE-207C-456B-A31C-AD78DECDDD50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E8327CE-207C-456B-A31C-AD78DECDDD50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E8327CE-207C-456B-A31C-AD78DECDDD50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4927BC6-B242-47C2-8D61-98C3D747CD5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4927BC6-B242-47C2-8D61-98C3D747CD5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4927BC6-B242-47C2-8D61-98C3D747CD5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4927BC6-B242-47C2-8D61-98C3D747CD5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D9DA45D-9B5F-486D-9D39-4A438B68BF0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D9DA45D-9B5F-486D-9D39-4A438B68BF0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D9DA45D-9B5F-486D-9D39-4A438B68BF0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D9DA45D-9B5F-486D-9D39-4A438B68BF0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E6C4AD-BFE1-42DF-A286-5CCA548495DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E6C4AD-BFE1-42DF-A286-5CCA548495DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E6C4AD-BFE1-42DF-A286-5CCA548495DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E6C4AD-BFE1-42DF-A286-5CCA548495DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C537F8F-195C-4928-9D00-F503D3937515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C537F8F-195C-4928-9D00-F503D3937515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C537F8F-195C-4928-9D00-F503D3937515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C537F8F-195C-4928-9D00-F503D3937515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E69EC092-53F0-46AA-873C-57FE0F96B56A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E69EC092-53F0-46AA-873C-57FE0F96B56A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E69EC092-53F0-46AA-873C-57FE0F96B56A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E69EC092-53F0-46AA-873C-57FE0F96B56A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76EF65F4-9AFF-40C8-969B-E203C4EAD260}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76EF65F4-9AFF-40C8-969B-E203C4EAD260}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76EF65F4-9AFF-40C8-969B-E203C4EAD260}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76EF65F4-9AFF-40C8-969B-E203C4EAD260}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -96,6 +140,13 @@ Global
 		{CFEFDCAD-8056-493B-A2FF-83A52A7A60F5} = {E1DE4C8C-786C-46BB-A315-42282E9EEF9C}
 		{AD49C70A-33C8-4DF2-8AD1-461C6938142E} = {E1DE4C8C-786C-46BB-A315-42282E9EEF9C}
 		{4626DEB9-461B-4131-BDD7-00E4770621C2} = {E1DE4C8C-786C-46BB-A315-42282E9EEF9C}
+		{26C0A961-AF7C-4FFD-B41E-71790A6BD9C1} = {B380C834-78F5-4508-AF50-D3C999C8D19E}
+		{E4927BC6-B242-47C2-8D61-98C3D747CD5E} = {26C0A961-AF7C-4FFD-B41E-71790A6BD9C1}
+		{5D9DA45D-9B5F-486D-9D39-4A438B68BF0A} = {26C0A961-AF7C-4FFD-B41E-71790A6BD9C1}
+		{57E6C4AD-BFE1-42DF-A286-5CCA548495DD} = {26C0A961-AF7C-4FFD-B41E-71790A6BD9C1}
+		{4C537F8F-195C-4928-9D00-F503D3937515} = {26C0A961-AF7C-4FFD-B41E-71790A6BD9C1}
+		{E69EC092-53F0-46AA-873C-57FE0F96B56A} = {E1DE4C8C-786C-46BB-A315-42282E9EEF9C}
+		{76EF65F4-9AFF-40C8-969B-E203C4EAD260} = {26C0A961-AF7C-4FFD-B41E-71790A6BD9C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {98B8221A-ED74-4382-893B-F564F72BB32D}
