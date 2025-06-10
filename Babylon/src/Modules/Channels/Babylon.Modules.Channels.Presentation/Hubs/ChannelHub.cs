@@ -138,6 +138,12 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
         await Clients.Group(groupName).SendAsync("EditMessage", new { request.Message, request.MessageChannelId, request.ChannelId });
     }
+    public async Task NotifyTyping(TypingNotification request)
+    {
+        string groupName = $"{request.ChannelId}";
+
+        await Clients.Group(groupName).SendAsync("NotifyUserMessage", new {Notification = $"{request.UserName} is typing"});
+    }
 
     private async Task ValidateAdmin(Guid channelId, Guid adminId)
     {
@@ -182,4 +188,5 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid Id, string UserName, string Message, DateTime PublicationDate, string Avatar);
     public sealed record MessageReactionRequest(Guid MessageChannelId, Guid MemberId, string Emoji, Guid ChannelId);
     public sealed record MessageLikeRequest(Guid Id, Guid MessageId, bool like, Guid ChannelId);
+    public sealed record TypingNotification(Guid ChannelId, string UserName);
 }
