@@ -9,7 +9,8 @@ public sealed class MessageChannelReaction : Entity
     public string? Emoji { get; private set; }
     public bool? Like { get; private set; }
     public bool? Dislike { get; private set; }
-    public static MessageChannelReaction Create(Guid id, Guid messageId, string? emoji = null, bool? like = null, bool? dislike = null)
+    public bool Pin { get; private set; }
+    public static MessageChannelReaction Create(Guid id, Guid messageId, string? emoji = null, bool? like = null, bool? dislike = null, bool pin = false)
     {
         return new MessageChannelReaction
         {
@@ -18,6 +19,7 @@ public sealed class MessageChannelReaction : Entity
             Emoji = emoji,
             Like = like,
             Dislike = dislike,
+            Pin = pin
         };
     }
     public void AddOrToggleEmoji(string emoji)
@@ -35,5 +37,17 @@ public sealed class MessageChannelReaction : Entity
         Like = like;
 
         return Result.Success<int>(0);
+    }
+
+    public Result AddOrRemovePin(bool pin)
+    {
+        if (Pin == pin)
+        {
+            return Result.Failure(Error.Failure(description: "Something unexpected happened. Pin was added or remove twice"));
+        }
+
+        Pin = pin;
+        
+        return Result.Success();
     }
 }
