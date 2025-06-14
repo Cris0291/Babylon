@@ -15,9 +15,15 @@ internal sealed class GetThreadChannelMessagesQueryHandler(IDbConnectionFactory 
         const string sql =
             $"""
             SELECT
-               mt.message AS {nameof(MessageResponse.Message)}
-               mt.publication_date {nameof(MessageResponse.PublicationDate)}
+               mt.message AS {nameof(MessageThreadChannelResponse.Message)}
+               mt.publication_date AS {nameof(MessageThreadChannelResponse.PublicationDate)}
+               mt.user_name AS {nameof(MessageThreadChannelResponse.UserName)}
+               mt.avatar_url AS {nameof(MessageThreadChannelResponse.Avatar)}
+               mt.number_of_likes AS {nameof(MessageThreadChannelResponse.NumberOfLikes)}
+               mt.number_of_dislikes AS {nameof(MessageThreadChannelResponse.NumberOfDislikes)}
             FROM channels.message_thread_channels mt
+            JOIN channels.message_thread_channel_reactions mtr ON mtr.message_thread_channel_id = mt.message_thread_channel_id
+            JOIN channels.message_thread_channel_reactions mu ON mu.message_thread_channel_id = mt.message_thread_channel_id AND mu.id = mt.id
             WHERE mt.message_thread_channel_id = @ThreadId
             ORDER BY mt.publication_date
             """;

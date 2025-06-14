@@ -6,18 +6,30 @@ public sealed class MessageThreadChannel
     public Guid MessageThreadChannelId { get; private set; }
     public string UserName { get; private set; }
     public string Message { get; private set; }
+    public string AvatarUrl { get; private set; }
+    public int NumberOfLikes { get; private set; }
+    public int NumberOfDislikes { get; private set; }
     public DateTime PublicationDate { get; private set; }
     public Guid ThreadChannelId { get; private set; }
     public Guid Id { get; private set; }
-    public static MessageThreadChannel Create(string userName, string message, Guid threadId, Guid id, DateTime creationDate = default)
+    public static MessageThreadChannel Create(
+        Guid threadId, 
+        Guid id, 
+        string message, 
+        string userName, 
+        string avatar,
+        DateTime publicationDate = default)
     {
         return new MessageThreadChannel
         {
-            UserName = userName,
-            Message = message,
-            PublicationDate = creationDate != default ? creationDate : DateTime.Now,
             ThreadChannelId = threadId,
-            Id = id
+            Id = id,
+            Message = message,
+            PublicationDate = publicationDate,
+            UserName = userName,
+            AvatarUrl = avatar,
+            NumberOfLikes = 0,
+            NumberOfDislikes = 0,
         };
     }
 }

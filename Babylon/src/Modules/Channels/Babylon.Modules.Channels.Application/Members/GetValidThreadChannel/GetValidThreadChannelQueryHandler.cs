@@ -13,13 +13,17 @@ internal sealed class GetValidThreadChannelQueryHandler(IDbConnectionFactory dbC
 
         const string sql =
             """
-            SELECT EXIST(
+            CASE
+             WHEN EXIST(
                SELECT 1
                FROM channels.thread_channel_member tm
                WHERE tm.id = @Id AND tm.thread_channel_id = @ThreadId
             )
+             THEN 1
+             ELSE 0
+            END AS ExistFlag
             """;
 
-        return await connection.ExecuteScalarAsync<bool>(sql, request);
+        return await connection.QuerySingleAsync<int>(sql, request) == 1 ? true : false;
     }
 }
