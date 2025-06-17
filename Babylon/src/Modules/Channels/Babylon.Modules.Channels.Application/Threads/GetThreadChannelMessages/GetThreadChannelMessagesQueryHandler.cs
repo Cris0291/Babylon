@@ -21,9 +21,13 @@ internal sealed class GetThreadChannelMessagesQueryHandler(IDbConnectionFactory 
                mt.avatar_url AS {nameof(MessageThreadChannelResponse.Avatar)}
                mt.number_of_likes AS {nameof(MessageThreadChannelResponse.NumberOfLikes)}
                mt.number_of_dislikes AS {nameof(MessageThreadChannelResponse.NumberOfDislikes)}
+               mu.like AS {nameof(MessageThreadChannelResponse.UserLike)}
+               mu.dislike AS {nameof(MessageThreadChannelResponse.UserDislike)}
+               mu.pin AS {nameof(MessageThreadChannelResponse.UserPin)}
+               STRING_AGG(mtr.emoji) AS {nameof(MessageThreadChannelResponse.Emojis)}
             FROM channels.message_thread_channels mt
             JOIN channels.message_thread_channel_reactions mtr ON mtr.message_thread_channel_id = mt.message_thread_channel_id
-            JOIN channels.message_thread_channel_reactions mu ON mu.message_thread_channel_id = mt.message_thread_channel_id AND mu.id = mt.id
+            JOIN channels.message_thread_channel_reactions mu ON mu.message_thread_channel_id = mt.message_thread_channel_id AND mu.id = mt.id 
             WHERE mt.message_thread_channel_id = @ThreadId
             ORDER BY mt.publication_date
             """;
