@@ -26,9 +26,19 @@ internal sealed class GetThreadChannelMessagesQueryHandler(IDbConnectionFactory 
                mu.pin AS {nameof(MessageThreadChannelResponse.UserPin)}
                STRING_AGG(mtr.emoji) AS {nameof(MessageThreadChannelResponse.Emojis)}
             FROM channels.message_thread_channels mt
-            JOIN channels.message_thread_channel_reactions mtr ON mtr.message_thread_channel_id = mt.message_thread_channel_id
-            JOIN channels.message_thread_channel_reactions mu ON mu.message_thread_channel_id = mt.message_thread_channel_id AND mu.id = mt.id 
+            LEFT JOIN channels.message_thread_channel_reactions mtr ON mtr.message_thread_channel_id = mt.message_thread_channel_id
+            LEFT JOIN channels.message_thread_channel_reactions mu ON mu.message_thread_channel_id = mt.message_thread_channel_id AND mu.id = @Id 
             WHERE mt.message_thread_channel_id = @ThreadId
+            GROUP BY
+                mt.message,
+                mt.publication_date,
+                mt.user_name,
+                mt.avatar_url,
+                mt.number_of_likes,
+                mt.number_of_dislikes,
+                mu.like,
+                mu.dislike,
+                mu.pin
             ORDER BY mt.publication_date
             """;
 
