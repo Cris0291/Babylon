@@ -42,7 +42,7 @@ internal sealed class CreateThreadCommandHandler(
         var threadChannel = ThreadChannel.Create(request.ChannelName, request.ChannelId);
         await threadChannelRepository.Insert(threadChannel);
 
-        var message = MessageThreadChannel.Create(request.UserName, request.MessageText, threadChannel.ThreadChannelId, request.MemberId, request.CreationDate);
+        var message = MessageThreadChannel.Create(threadChannel.ThreadChannelId, request.MemberId, request.MessageText, request.UserName, request.Avatar, request.CreationDate);
         await messageRepository.Insert(message);
 
         await sender.Send(new AddMemberToThreadCommand(members, threadChannel.ThreadChannelId), cancellationToken);

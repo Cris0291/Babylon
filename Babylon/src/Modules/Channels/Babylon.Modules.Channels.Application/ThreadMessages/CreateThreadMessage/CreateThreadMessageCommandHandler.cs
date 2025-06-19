@@ -9,10 +9,11 @@ internal sealed class CreateThreadMessageCommandHandler(IMessageThreadChannelRep
     public async Task<Result> Handle(CreateThreadMessageCommand request, CancellationToken cancellationToken)
     {
         var message = MessageThreadChannel.Create(
-            request.UserName,
-            request.Message,
-            request.ThreadId,
+            request.ThreadId, 
             request.MemberId,
+            request.Message,
+            request.UserName,
+            request.Avatar,
             request.PublicationDate
             );
 

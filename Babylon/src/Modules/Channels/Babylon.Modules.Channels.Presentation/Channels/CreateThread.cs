@@ -12,9 +12,9 @@ internal sealed class CreateThread : IEndpoint
     {
         app.MapPost(ApiEndpoints.Channels.CreateThread, async (ISender sender, Request request) =>
         {
-            await sender.Send(new CreateThreadCommand(request.ChannelName, request.ChannelId, request.Message.UserName, request.Message.MessageText, request.Message.CreationDate, request.Message.MemberId));
+            await sender.Send(new CreateThreadCommand(request.ChannelName, request.ChannelId, request.Message.UserName, request.Message.MessageText, request.Message.CreationDate, request.Message.MemberId, request.Message.Avatar));
         }).WithTags(Tags.Channels);
     }
     public sealed record Request(string ChannelName, Guid ChannelId, MessageThreadRequest Message);
-    public sealed record MessageThreadRequest(string UserName, string MessageText, DateTime CreationDate, Guid MemberId);
+    public sealed record MessageThreadRequest(string UserName, string MessageText, DateTime CreationDate, Guid MemberId, string Avatar);
 }
