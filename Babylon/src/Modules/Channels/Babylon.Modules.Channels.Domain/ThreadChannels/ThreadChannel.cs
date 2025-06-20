@@ -17,6 +17,10 @@ public sealed class ThreadChannel
             ThreadChannelId = Guid.NewGuid()
         };
     }
+    public void Rename(string threadChannelName)
+    {
+        ChannelName = threadChannelName;
+    }
 }
     
 
