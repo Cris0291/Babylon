@@ -7,6 +7,7 @@ using Babylon.Modules.Channels.Application.Channels.ChannelArchiveValidation;
 using Babylon.Modules.Channels.Application.Channels.DeleteMemberFormChannel;
 using Babylon.Modules.Channels.Application.Channels.GetChannelMessages;
 using Babylon.Modules.Channels.Application.Channels.GetChannelStateAccess;
+using Babylon.Modules.Channels.Application.Channels.RenameChannel;
 using Babylon.Modules.Channels.Application.Members.GetMemberAdmin;
 using Babylon.Modules.Channels.Application.Members.GetMemberMute;
 using Babylon.Modules.Channels.Application.Members.GetValidChannel;
@@ -144,6 +145,14 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
         await Clients.Group(groupName).SendAsync("NotifyUserMessage", new {Notification = $"{request.UserName} is typing"});
     }
+    public async Task RenameChannel(RenameChannelRequest request)
+    {
+        string groupName = $"{request.ChannelId}";
+        
+        await sender.Send(new RenameChannelCommand(request.ChannelId, request.Name, request.Id));
+        
+        await Clients.Group(groupName).SendAsync("RenameChannelClient", new {request.ChannelId, request.Name});
+    }
 
     private async Task ValidateAdmin(Guid channelId, Guid adminId)
     {
@@ -189,4 +198,5 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public sealed record MessageReactionRequest(Guid MessageChannelId, Guid MemberId, string Emoji, Guid ChannelId);
     public sealed record MessageLikeRequest(Guid Id, Guid MessageId, bool like, Guid ChannelId);
     public sealed record TypingNotification(Guid ChannelId, string UserName);
+    public sealed record RenameChannelRequest(Guid ChannelId, string Name, Guid Id);
 }

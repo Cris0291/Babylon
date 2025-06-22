@@ -12,8 +12,8 @@ internal sealed class RenameChannel : IEndpoint
     {
         app.MapPost(ApiEndpoints.Channels.RenameChannel, async (ISender sender, Guid id, Request request) =>
         {
-            await sender.Send(new RenameChannelCommand(id, request.Name));
+            await sender.Send(new RenameChannelCommand(id, request.Name , request.UserId));
         }).WithTags(Tags.Channels);
     }
-    internal sealed record Request(string Name);
+    internal sealed record Request(string Name, Guid UserId);
 }

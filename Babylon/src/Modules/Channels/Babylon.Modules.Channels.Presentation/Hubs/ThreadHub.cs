@@ -3,6 +3,7 @@ using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Channels.GetChannelMessages;
 using Babylon.Modules.Channels.Application.Members.GetValidThreadChannel;
 using Babylon.Modules.Channels.Application.Threads.GetThreadChannelMessages;
+using Babylon.Modules.Channels.Application.Threads.RenameThread;
 using Babylon.Modules.Channels.IntegrationEvents;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -53,5 +54,15 @@ public sealed class ThreadHub(ISender sender, IEventBus bus) : Hub
 
         await Clients.Group(groupName).SendAsync("ReceiveThreadMessage", req);
     }
+
+    public async Task RenameThread(RenameThreadRequest req)
+    {
+        string groupName = $"{req.ThreadChannelId}";
+
+        await sender.Send(new RenameThreadChannelCommand(req.ThreadChannelId, req.ThreadChannelName, req.Id));
+        
+        await Clients.Group(groupName).SendAsync("RenameThreadClient", new {req.ThreadChannelId, req.ThreadChannelName});
+    }
     public sealed record MessageThreadRequest(Guid ThreadId, string ThreadName, Guid MemberId, string UserName, string Message, DateTime PublicationDate, string Avatar);
+    public sealed record RenameThreadRequest(Guid ThreadChannelId, string ThreadChannelName, Guid Id);
 }

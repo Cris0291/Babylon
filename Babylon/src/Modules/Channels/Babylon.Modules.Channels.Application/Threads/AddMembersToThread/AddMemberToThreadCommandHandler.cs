@@ -1,10 +1,11 @@
 ﻿using Babylon.Common.Application.Messaging;
 using Babylon.Common.Domain;
+using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Application.Channels.CreateThread;
 using Babylon.Modules.Channels.Domain.ThreadChannels;
 
 namespace Babylon.Modules.Channels.Application.Threads.AddMembersToThread;
-internal sealed class AddMemberToThreadCommandHandler(IThreadChannelMemberRepository threadChannelMemberRepository) : ICommandHandler<AddMemberToThreadCommand>
+internal sealed class AddMemberToThreadCommandHandler(IThreadChannelMemberRepository threadChannelMemberRepository, IUnitOfWork unitOfWork) : ICommandHandler<AddMemberToThreadCommand>
 {
     public async Task<Result> Handle(AddMemberToThreadCommand request, CancellationToken cancellationToken)
     {
@@ -17,6 +18,8 @@ internal sealed class AddMemberToThreadCommandHandler(IThreadChannelMemberReposi
         }
 
         await threadChannelMemberRepository.Insert(threadMembers);
+
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }
