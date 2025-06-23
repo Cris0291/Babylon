@@ -43,9 +43,14 @@ public sealed class Channel : Entity
     {
         BlockedMembers.Add(id);
     }
-    public void ArchiveChannel()
+    public Result ArchiveChannel()
     {
+        if(Type == ChannelType.Archived)
+        {
+            return Result.Failure(Error.Failure(description: "Channel was already archived"));
+        }
         Type = ChannelType.Archived;
+        return Result.Success();
     }
 
     public bool IsArchive()

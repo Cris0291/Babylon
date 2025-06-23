@@ -39,33 +39,14 @@ internal sealed class ArchiveThreadChannelCommandHandler(IDbConnectionFactory db
                   END AS IsAdmin
                 FROM SelectedChannel sc
             ),
-            SelectedThread AS (
-                SELECT
-                  ad.channel_id,
-                  ad.type,
-                  ad.creator,
-                  ad.ExistChannel,
-                  ad.IsAdmin,
-                  CASE
-                    WHEN EXISTS (
-                      SELECT 1
-                      FROM channels.thread_channels tc
-                      WHERE tc.channel_id        = ad.channel_id
-                        AND tc.thread_channel_id = @ThreadChannelId
-                    ) THEN 1
-                    ELSE 0
-                  END AS ExistThread
-                FROM AdminChannel ad
-            )
             SELECT 
               ExistChannel, 
               IsAdmin, 
-              ExistThread
-            FROM SelectedThread;
+            FROM AdminChannel;
             """;
 
-        (int existChannel, int isAdmin, int existThread) = await connection.QuerySingleAsync<(int existChannel, int isAdmin, int existThread)>(sql,
-            new { request.ThreadChannelId, request.AdminId, request.ChannelId });
+        (int existChannel, int isAdmin) = await connection.QuerySingleAsync<(int existChannel, int isAdmin)>(sql,
+            new { request.AdminId, request.ChannelId });
 
         if (existChannel == 0)
         {
@@ -77,11 +58,21 @@ internal sealed class ArchiveThreadChannelCommandHandler(IDbConnectionFactory db
             return Result.Failure(Error.Failure(description: "Only the channel creator can perform this action"));
         }
 
-        if (existThread == 0)
+        ThreadChannel? threadChannel = await threadChannelRepository.Get(request.ThreadChannelId);
+
+        if (threadChannel == null)
         {
             return Result.Failure(Error.Failure(description: "Thread not found in this channel"));
         }
+        
+        Result result = threadChannel.Archive();
+        if (!result.IsSuccess)
+        {
+            return result;
+        }
+        
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        ThreadChannel? threadChannel = await threadChannelRepository.Get(request.ThreadChannelId);
+        return Result.Success();
     }
 }

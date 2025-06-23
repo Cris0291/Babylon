@@ -45,12 +45,12 @@ internal sealed class RenameThreadChannelCommandHandler(IThreadChannelRepository
 
         if (existsFlag == 0)
         {
-            throw new InvalidOperationException("Requested thread was not found");
+            return Result.Failure(Error.Failure(description: "Requested thread was not found"));
         }
 
         if (isAuthorized == 0)
         {
-            throw new InvalidOperationException("Not authorized");
+            return Result.Failure(Error.Failure(description: "Not authorized"));
         }
         
         ThreadChannel threadChannel = await threadChannelRepository.Get(request.ThreadChannelId);

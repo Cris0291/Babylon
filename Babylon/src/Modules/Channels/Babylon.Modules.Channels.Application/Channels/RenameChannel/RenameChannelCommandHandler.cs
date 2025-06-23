@@ -43,12 +43,12 @@ internal sealed class RenameChannelCommandHandler(IChannelRepository channelRepo
         
         if (existsFlag == 0)
         {
-            throw new InvalidOperationException("Requested channel was not found");
+            return Result.Failure(Error.Failure(description: "Requested channel was not found"));
         }
 
         if (isAuthorized == 0)
         {
-            throw new InvalidOperationException("Not authorized");
+            return Result.Failure(Error.Failure(description: "Not authorized"));
         }
         
         Channel? channel = await channelRepository.GetChannel(request.ChannelId);

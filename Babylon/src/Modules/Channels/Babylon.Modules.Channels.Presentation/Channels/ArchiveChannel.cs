@@ -12,7 +12,7 @@ internal sealed class ArchiveChannel : IEndpoint
     {
         app.MapPatch(ApiEndpoints.Channels.ArchiveChannel, async (ISender sender, Guid id) =>
         {
-            await sender.Send(new ArchiveChannelCommand(id));
+            await sender.Send(new ArchiveChannelCommand(id, Guid.NewGuid()));
         }).WithTags(Tags.Channels);
     }
 }

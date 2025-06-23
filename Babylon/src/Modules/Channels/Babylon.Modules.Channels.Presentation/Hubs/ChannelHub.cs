@@ -2,6 +2,7 @@
 using Babylon.Common.Application.EventBus;
 using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Abstractions.Services;
+using Babylon.Modules.Channels.Application.Channels.ArchiveChannel;
 using Babylon.Modules.Channels.Application.Channels.BlockMemberFromChannel;
 using Babylon.Modules.Channels.Application.Channels.ChannelArchiveValidation;
 using Babylon.Modules.Channels.Application.Channels.DeleteMemberFormChannel;
@@ -149,9 +150,25 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     {
         string groupName = $"{request.ChannelId}";
         
-        await sender.Send(new RenameChannelCommand(request.ChannelId, request.Name, request.Id));
+        Result result = await sender.Send(new RenameChannelCommand(request.ChannelId, request.Name, request.Id));
+        if(!result.IsSuccess)
+        {
+            throw new HubException(result.Error?.Description);
+        }
         
         await Clients.Group(groupName).SendAsync("RenameChannelClient", new {request.ChannelId, request.Name});
+    }
+
+    public async Task ArchiveChannel(ArchiveChannelRequest request)
+    {
+        string groupName = $"{request.ChannelId}";
+
+        Result result = await sender.Send(new ArchiveChannelCommand(request.ChannelId, request.AdminId));
+        if(!result.IsSuccess)
+        {
+            throw new HubException(result.Error?.Description);
+        }
+        await Clients.Group(groupName).SendAsync("ArchiveChannelClient", new {request.ChannelId});
     }
 
     private async Task ValidateAdmin(Guid channelId, Guid adminId)
@@ -199,4 +216,5 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public sealed record MessageLikeRequest(Guid Id, Guid MessageId, bool like, Guid ChannelId);
     public sealed record TypingNotification(Guid ChannelId, string UserName);
     public sealed record RenameChannelRequest(Guid ChannelId, string Name, Guid Id);
+    public sealed record ArchiveChannelRequest(Guid ChannelId, Guid AdminId);
 }

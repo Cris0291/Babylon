@@ -12,10 +12,22 @@ internal sealed class ArchiveChannelCommandHandler(IUnitOfWork unitOfWork, IChan
 
         if (channel is null)
         {
-            throw new InvalidOperationException("Channel was not found");
+            return Result.Failure(Error.Failure(description: "Channel was not found"));
         }
 
-        channel.ArchiveChannel();
+        bool isAdmin = channel.IsAdmin(request.AdminId);
+
+        if (!isAdmin)
+        {
+            return Result.Failure(Error.Failure(description: "Only the channel creator can perform this action"));
+        }
+        
+        Result result = channel.ArchiveChannel();
+        
+        if (!result.IsSuccess)
+        {
+            return result;
+        }
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
