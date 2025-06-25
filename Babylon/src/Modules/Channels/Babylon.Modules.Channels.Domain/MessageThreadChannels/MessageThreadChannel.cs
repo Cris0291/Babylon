@@ -32,5 +32,11 @@ public sealed class MessageThreadChannel
             NumberOfDislikes = 0,
         };
     }
+    public int AddOrRemoveLike(bool like)
+    {
+        NumberOfLikes = like ? ++NumberOfLikes : --NumberOfLikes;
+
+        return NumberOfLikes;
+    }
 }
     
