@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Babylon.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b8814da2673ac7fcee5f5ccb1d4558b9ca20d6d0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7545c916f381cd7d108ecb48c279a97a6c9bc326")]
 [assembly: System.Reflection.AssemblyProductAttribute("Babylon.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Babylon.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

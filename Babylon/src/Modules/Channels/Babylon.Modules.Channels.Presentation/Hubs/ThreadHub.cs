@@ -3,6 +3,7 @@ using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Channels.GetChannelMessages;
 using Babylon.Modules.Channels.Application.Members.GetValidThreadChannel;
 using Babylon.Modules.Channels.Application.ThreadMessages.AddMessageThreadChannelReaction;
+using Babylon.Modules.Channels.Application.ThreadMessages.AddOrRemoveMessageThreadChannelLike;
 using Babylon.Modules.Channels.Application.Threads.ArchiveThread;
 using Babylon.Modules.Channels.Application.Threads.GetThreadChannelMessages;
 using Babylon.Modules.Channels.Application.Threads.RenameThread;
@@ -93,8 +94,30 @@ public sealed class ThreadHub(ISender sender, IEventBus bus) : Hub
 
         await Clients.Group(groupName).SendAsync("AddThreadReaction", new { reaction.Emoji, reaction.MessageThreadChannelId, reaction.MemberId });
     }
+
+    public async Task AddOrRemoveThreadMessageLike(MessageThreadLikeRequest request)
+    {
+        string groupName = $"{request.ThreadChannelId}";
+    
+        Result<int> result = await sender.Send(new AddOrRemoveMessageThreadChannelLikeCommand(request.Id, request.ThreadMessageId, request.ThreadChannelId, request.Like));
+    
+        if (!result.IsSuccess)
+        {
+            throw new HubException(result.Error?.Description) ;
+        }
+    
+        await Clients.Group(groupName).SendAsync("AddOrRemoveThreadMessageLikeClient", new { request.Like, request.ThreadMessageId, result.TValue });
+    }
+    public async Task NotifyTyping(TypingNotification request)
+    {
+        string groupName = $"{request.ThreadChannelId}";
+
+        await Clients.Group(groupName).SendAsync("NotifyUserThreadMessage", new {Notification = $"{request.UserName} is typing"});
+    }
     public sealed record MessageThreadRequest(Guid ThreadId, string ThreadName, Guid MemberId, string UserName, string Message, DateTime PublicationDate, string Avatar);
     public sealed record RenameThreadRequest(Guid ThreadChannelId, string ThreadChannelName, Guid Id);
     public sealed record ArchiveRecordRequest(Guid ThreadChannelId, Guid ChannelId, Guid AdminId);
     public sealed record MessageThreadReactionRequest(Guid MessageThreadChannelId, Guid MemberId, string Emoji, Guid ThreadChannelId);
+    public sealed record MessageThreadLikeRequest(Guid Id, Guid ThreadMessageId, bool Like, Guid ThreadChannelId);
+    public sealed record TypingNotification(Guid ThreadChannelId, string UserName);
 }
