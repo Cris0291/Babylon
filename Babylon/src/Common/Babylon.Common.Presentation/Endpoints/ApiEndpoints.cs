@@ -19,6 +19,8 @@ public static class ApiEndpoints
         public const string MuteMember = $"{ChannelBase}/{{channelId:guid}}/members/{{id:guid}}";
         public const string ListBlockedMembers = $"{ChannelBase}/{{channelId:guid}}/members/{{id:guid}}";
         public const string SearchChannelMessages = $"{ChannelBase}/{{channelId:guid}}/messages";
+        public const string PinChannelMessage = $"{ChannelBase}/{{channelId:guid}}/messages/{{messageChannelId:guid}}";
+        public const string PinThreadChannelMessage = $"{ChannelBase}/{{channelId:guid}}/threads/{{threadChannelId:guid}}/messages/{{messageThreadChannelId:guid}}";
     }
     public static class Users
     {
