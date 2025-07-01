@@ -13,13 +13,35 @@ internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnect
 
         const string sql =
             """
-            SELECT EXIST(
-               SELECT 1
-               FROM channels.channel_members cm
-               WHERE cm.id = @MemberId AND cm.channel_id = @ChannelId
+            WITH SelectedChannel AS (
+                SELECT
+                    c.channel_id,
+                    c.type,
+                    c.blocked_members
+                FROM channels.channels c
+                where c.channel_id = @ChannelId
+            ),
+            MemberInfo AS (
+                 SELECT
+                     cm.id,
+                     cm.is_mute
+                 FROM channels.channel_members cm
+                 WHERE cm.channel_id = @ChannelId AND cm.id = @Id
             )
+            SELECT
+                sc.channel_id,
+                sc.type,
+                CASE WHEN sc.channel_id IS NOT NULL THEN 1 ELSE 0 END AS ExistChannel,
+                CASE WHEN mi.id IS NOT NULL THEN 1 ELSE 0 END AS IsAuthorized,
+                CASE WHEN mi.is_mute = 1 THEN 1 ELSE 0 END AS IsMute,
+            FROM SelectedChannel sc
             """;
 
-        return await connection.ExecuteScalarAsync<bool>(sql, request);
+        bool isAuthorized = await connection.ExecuteScalarAsync<int>(sql, new { request.Id, request.ChannelId }) == 1;
+
+        if (!isAuthorized)
+        {
+            return Result.Failure<bool>(Error.Failure(description: "User is not authorized to access this channel"));
+        }
     }
 }
