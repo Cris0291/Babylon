@@ -42,10 +42,12 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
         Result<bool> isUserRegisteredInChannel = await sender.Send(new GetValidChannelQuery(uId, channelId));
 
-        if (!isUserRegisteredInChannel.TValue)
+        if (!isUserRegisteredInChannel.IsSuccess)
         {
-            throw new HubException($"User does not have acces to channel");
+            throw new HubException(isUserRegisteredInChannel.Error?.Description);
         }
+        
+        connectionService.AddConnection(uId, Context.ConnectionId);
 
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 

@@ -25,8 +25,11 @@ internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnect
                 sc.channel_id,
                 sc.type,
                 CASE WHEN sc.channel_id IS NOT NULL THEN 1 ELSE 0 END AS ExistChannel,
-                CASE WHEN cm.id IS NOT NULL THEN 1 ELSE 0 END AS IsAuthorized,
-                CASE WHEN cm.is_mute = 1 THEN 1 ELSE 0 END AS IsMute,
+                CASE
+              WHEN c.type = 'Public'       THEN 1
+              WHEN cm.id   IS NOT NULL     THEN 1
+              ELSE 0
+            END AS IsAuthorized,
                 CASE 
                   WHEN EXISTS (
                      SELECT 1
@@ -41,23 +44,21 @@ internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnect
                 ON cm.channel_id = @ChannelId AND cm.id = @Id
             """;
 
-        (bool isMute, bool isAuthorized, bool existChannel, bool isBlocked) = await connection.QuerySingleAsync<(bool IsMute, bool IsAuthorized, bool ExistChannel, bool IsBlocked)>(sql, new { request.ChannelId, request.Id });
-        if (!isMute)
+        (bool isAuthorized, bool existChannel, bool isBlocked) = await connection.QuerySingleAsync<(bool IsAuthorized, bool ExistChannel, bool IsBlocked)>(sql, new { request.ChannelId, request.Id });
+        
+        if (!existChannel)
         {
-            return Result.Failure(Error.Failure(description: "User must be a member of the thread"));
+            return Result.Failure<bool>(Error.Failure(description: "Requested thread message was not found"));
         }
-
         if (!isAuthorized)
         {
-            return Result.Failure(Error.Failure(description: "Requested thread message was not found"));
+            return Result.Failure<bool>(Error.Failure(description: "User is not authorized to acces this channel"));
         }
         if (!isBlocked)
         {
-            return Result.Failure(Error.Failure(description: "Requested thread message was not found"));
+            return Result.Failure<bool>(Error.Failure(description: "User is blocked from this channel"));
         }
-        if (!isAuthorized)
-        {
-            return Result.Failure(Error.Failure(description: "Requested thread message was not found"));
-        }
+
+        return Result.Success(true);
     }
 }
