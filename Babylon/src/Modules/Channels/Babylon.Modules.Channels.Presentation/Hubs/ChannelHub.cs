@@ -51,7 +51,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
-        Result<IEnumerable<MessageResponse>> messages = await sender.Send(new GetChannelMessagesQuery(channelId));
+        Result<IEnumerable<MessageResponse>> messages = await sender.Send(new GetChannelMessagesQuery(uId, channelId));
 
         await Clients.Caller.SendAsync("LoadMessages", messages.TValue);
 
