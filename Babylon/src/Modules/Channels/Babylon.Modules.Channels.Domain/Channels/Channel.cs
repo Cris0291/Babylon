@@ -9,6 +9,7 @@ public sealed class Channel : Entity
     public Guid ChannelId { get; private set; }
     public string Name { get; private set; }
     public ChannelType Type { get; private set; }
+    public ArchiveType AType { get; private set; }
     public DateTime CreatedAt { get; private set; }
     //Creator id should be user id
     public Guid Creator { get; private set; } 
@@ -49,6 +50,9 @@ public sealed class Channel : Entity
         {
             return Result.Failure(Error.Failure(description: "Channel was already archived"));
         }
+
+        ArchiveType archiveType = Type == ChannelType.Public ? ArchiveType.ArchivePublic : ArchiveType.ArchivePrivate;
+        AType = archiveType;
         Type = ChannelType.Archived;
         return Result.Success();
     }

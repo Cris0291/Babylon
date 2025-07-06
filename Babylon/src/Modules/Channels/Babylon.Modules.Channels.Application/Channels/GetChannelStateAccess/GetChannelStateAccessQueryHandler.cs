@@ -12,13 +12,30 @@ internal sealed class GetChannelStateAccessQueryHandler(IDbConnectionFactory dbC
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
         const string sql =
-            $"""
+            """
+            WITH SelectedChannel AS (
+                SELECT
+                    c.channel_id,
+                    c.type,
+                    c.blocked_members
+                FROM channels.channels c
+                where c.channel_id = @ChannelId
+            ),
             SELECT
-              cm.is_mute AS {nameof(ChannelAccessStateDto.IsMute)}
-              c.type AS {nameof(ChannelAccessStateDto.Type)}
-            FROM channels.channel_members cm
-            JOIN channels.channels c ON c.channel_id = cm.channel_id
-            WHERE cm.id = @Id AND cm.channel_id = @ChannelId
+                cm.is_mute AS IsMute,
+                sc.type AS Type
+                CASE 
+                  WHEN EXISTS (
+                     SELECT 1
+                     FROM STRING_SPLIT(sc.blocked_members, ',') split
+                     WHERE SPLIT.VALUE = @Id
+                  ) 
+                  THEN 1
+                  ELSE 0
+                END AS IsBlocked
+            FROM SelectedChannel sc
+            LEFT JOIN channels.channel_members cm
+                ON cm.channel_id = @ChannelId AND cm.id = @Id
             """;
 
         ChannelAccessStateDto channelState = await connection.QuerySingleAsync<ChannelAccessStateDto>(sql, request);

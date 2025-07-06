@@ -5,9 +5,9 @@ using Babylon.Common.Domain;
 using Dapper;
 
 namespace Babylon.Modules.Channels.Application.Members.GetValidChannel;
-internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetValidChannelQuery, bool>
+internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetValidChannelQuery, (bool, bool)>
 {
-    public async Task<Result<bool>> Handle(GetValidChannelQuery request, CancellationToken cancellationToken)
+    public async Task<Result<(bool, bool)>> Handle(GetValidChannelQuery request, CancellationToken cancellationToken)
     {
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
@@ -24,9 +24,12 @@ internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnect
             SELECT
                 sc.channel_id,
                 sc.type,
+                cm.is_mute AS IsMute,
                 CASE WHEN sc.channel_id IS NOT NULL THEN 1 ELSE 0 END AS ExistChannel,
+                CASE WHEN sc.type = 'Archive' THEN 1 ELSE 0 AS IsArchived
                 CASE
               WHEN c.type = 'Public'       THEN 1
+              WHEN c.a_type = 'ArchivePublic' THEN 1
               WHEN cm.id   IS NOT NULL     THEN 1
               ELSE 0
             END AS IsAuthorized,
@@ -35,7 +38,7 @@ internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnect
                      SELECT 1
                      FROM STRING_SPLIT(sc.blocked_members, ',') split
                      WHERE SPLIT.VALUE = @Id
-                  )
+                  ) 
                   THEN 1
                   ELSE 0
                 END AS IsBlocked
@@ -44,21 +47,21 @@ internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnect
                 ON cm.channel_id = @ChannelId AND cm.id = @Id
             """;
 
-        (bool isAuthorized, bool existChannel, bool isBlocked) = await connection.QuerySingleAsync<(bool IsAuthorized, bool ExistChannel, bool IsBlocked)>(sql, new { request.ChannelId, request.Id });
+        (bool isAuthorized, bool existChannel, bool isBlocked, bool isMute, bool isArchived) = await connection.QuerySingleAsync<(bool IsAuthorized, bool ExistChannel, bool IsBlocked, bool IsMute, bool IsArchived)>(sql, new { request.ChannelId, request.Id });
         
         if (!existChannel)
         {
-            return Result.Failure<bool>(Error.Failure(description: "Requested thread message was not found"));
+            return Result.Failure<(bool, bool)>(Error.Failure(description: "Requested channel message was not found"));
         }
         if (!isAuthorized)
         {
-            return Result.Failure<bool>(Error.Failure(description: "User is not authorized to acces this channel"));
+            return Result.Failure<(bool, bool)>(Error.Failure(description: "User is not authorized to acces this channel"));
         }
         if (!isBlocked)
         {
-            return Result.Failure<bool>(Error.Failure(description: "User is blocked from this channel"));
+            return Result.Failure<(bool, bool)>(Error.Failure(description: "User is blocked from this channel"));
         }
 
-        return Result.Success(true);
+        return Result.Success((isMute, isArchived));
     }
 }

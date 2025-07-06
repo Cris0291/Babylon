@@ -40,7 +40,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
         Guid uId =  Guid.TryParse(userId, out Guid usId) ? usId : throw new InvalidOperationException("User id could not be found");
 
-        Result<bool> isUserRegisteredInChannel = await sender.Send(new GetValidChannelQuery(uId, channelId));
+        Result<(bool, bool)> isUserRegisteredInChannel = await sender.Send(new GetValidChannelQuery(uId, channelId));
 
         if (!isUserRegisteredInChannel.IsSuccess)
         {
@@ -53,7 +53,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
 
         Result<IEnumerable<MessageResponse>> messages = await sender.Send(new GetChannelMessagesQuery(uId, channelId));
 
-        await Clients.Caller.SendAsync("LoadMessages", messages.TValue);
+        await Clients.Caller.SendAsync("LoadMessages", new {Messages = messages.TValue, IsMute = isUserRegisteredInChannel.TValue.Item1, IsArchiived = isUserRegisteredInChannel.TValue.Item2});
 
         await base.OnConnectedAsync();
     }
@@ -75,6 +75,11 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
         if (channelState.IsMute)
         {
             throw new HubException("You are currently mute on this channel");
+        }
+        
+        if (channelState.IsBlocked)
+        {
+            throw new HubException("You are currently blocked on this channel");
         }
 
         await Clients.Group(groupName).SendAsync("ReceiveMessage", req);
