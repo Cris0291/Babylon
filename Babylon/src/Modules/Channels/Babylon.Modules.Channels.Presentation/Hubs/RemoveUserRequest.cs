@@ -1,2 +1,2 @@
 ﻿namespace Babylon.Modules.Channels.Presentation.Hubs;
-public sealed record RemoveUserRequest(Guid ChannelId, Guid AdminId, Guid TargetId, string ChannelName, bool IsBlocked);
+public sealed record RemoveUserRequest(Guid ChannelId, Guid AdminId, Guid TargetId);

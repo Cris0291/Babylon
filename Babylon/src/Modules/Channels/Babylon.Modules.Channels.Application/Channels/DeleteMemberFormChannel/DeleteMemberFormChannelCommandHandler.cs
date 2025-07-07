@@ -16,6 +16,11 @@ internal sealed class DeleteMemberFormChannelCommandHandler(
         {
             return Result.Failure(Error.Failure(description: "Channel was not found"));
         }
+        
+        if(channel.Creator != request.AdminId)
+        {
+            return Result.Failure(Error.Failure(description: "Only channel admin is authorized to remove users from this group."));
+        }
 
         ChannelMember? channelMember = await channelMemberRepository.GetChannelMember(request.ChannelId, request.Id);
 

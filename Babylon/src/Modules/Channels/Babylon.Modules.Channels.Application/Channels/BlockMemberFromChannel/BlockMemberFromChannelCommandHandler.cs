@@ -16,6 +16,11 @@ internal sealed class BlockMemberFromChannelCommandHandler(
         {
             return Result.Failure(Error.Failure(description: "Channel was not found"));
         }
+        
+        if(channel.Creator != request.AdminId)
+        {
+            return Result.Failure(Error.Failure(description: "Only channel admin is authorized to block users from this group."));
+        }
 
         ChannelMember? channelMember = await channelMemberRepository.GetChannelMember(request.ChannelId, request.Id);
 
@@ -25,8 +30,6 @@ internal sealed class BlockMemberFromChannelCommandHandler(
         }
 
         channel.BlockMember(request.Id);
-
-        await channelMemberRepository.DeleteChannelMember(channelMember);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);
 

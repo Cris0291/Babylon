@@ -91,11 +91,12 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     {
         string groupName = $"{request.ChannelId}";
 
-        await ValidateAdmin(request.ChannelId, request.AdminId);
-
-        await ValidMemeberGroup(request.TargetId, request.ChannelId);
-
-        await RemoveOrBlockUser(request.IsBlocked, request.ChannelId, request.TargetId);
+        Result result = await sender.Send(new DeleteMemberFormChannelCommand(request.ChannelId, request.TargetId, request.AdminId));
+        
+        if(!result.IsSuccess)
+        {
+            throw new HubException(result.Error!.Description);
+        }
 
         List<string> userConnections = connectionService.GetConnections(request.TargetId);
 
@@ -106,6 +107,25 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
         }
 
         await Clients.Group(groupName).SendAsync("UserRemoved", request.TargetId);
+    }
+
+    public async Task BlockUserFromGroup(BlockChannelMemberRequest request)
+    {
+        string groupName = $"{request.ChannelId}";
+        
+        Result result = await sender.Send(new BlockMemberFromChannelCommand(request.ChannelId, request.TargetId, request.AdminId));
+        
+        if(!result.IsSuccess)
+        {
+            throw new HubException(result.Error!.Description);
+        }
+        
+        List<string> userConnections = connectionService.GetConnections(request.TargetId);
+
+        foreach (string connection in userConnections)
+        {
+            await Clients.Client(connection).SendAsync("BlockedMember", groupName);
+        }
     }
     public async Task ReactToMessage(MessageReactionRequest reaction)
     {
@@ -187,36 +207,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
             throw new HubException("You are not authorized to remove users from this group.");
         }
     }
-    private async Task ValidMemeberGroup(Guid targetId, Guid channelId)
-    {
-        Result<bool> isMemberOfChannel = await sender.Send(new GetValidChannelQuery(targetId, channelId));
-
-        if (!isMemberOfChannel.TValue)
-        {
-            throw new HubException("Target user is not in the group.");
-        }
-    }
-    private async Task RemoveOrBlockUser(bool isBlocked,Guid channelId, Guid targetId)
-    {
-        if (isBlocked)
-        {
-            Result blockedResult = await sender.Send(new BlockMemberFromChannelCommand(channelId, targetId));
-
-            if (!blockedResult.IsSuccess)
-            {
-                throw new HubException(blockedResult.Error!.Description);
-            }
-        }
-        else
-        {
-            Result deletedResult = await sender.Send(new DeleteMemberFormChannelCommand(channelId, targetId));
-
-            if (!deletedResult.IsSuccess)
-            {
-                throw new HubException(deletedResult.Error!.Description);
-            }
-        }
-    }
+    
 
     public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid Id, string UserName, string Message, DateTime PublicationDate, string Avatar);
     public sealed record MessageReactionRequest(Guid MessageChannelId, Guid MemberId, string Emoji, Guid ChannelId);
@@ -224,4 +215,5 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public sealed record TypingNotification(Guid ChannelId, string UserName);
     public sealed record RenameChannelRequest(Guid ChannelId, string Name, Guid Id);
     public sealed record ArchiveChannelRequest(Guid ChannelId, Guid AdminId);
+    public sealed record BlockChannelMemberRequest(Guid ChannelId, Guid AdminId, Guid TargetId);
 }
