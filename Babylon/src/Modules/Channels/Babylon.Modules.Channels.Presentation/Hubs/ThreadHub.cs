@@ -1,6 +1,9 @@
-﻿using Babylon.Common.Application.EventBus;
+﻿using Babylon.Common.Application.Caching;
+using Babylon.Common.Application.EventBus;
 using Babylon.Common.Domain;
+using Babylon.Modules.Channels.Application.Abstractions.Services;
 using Babylon.Modules.Channels.Application.Channels.GetChannelMessages;
+using Babylon.Modules.Channels.Application.Channels.GetChannelStateAccess;
 using Babylon.Modules.Channels.Application.Members.GetValidThreadChannel;
 using Babylon.Modules.Channels.Application.ThreadMessages.AddMessageThreadChannelReaction;
 using Babylon.Modules.Channels.Application.ThreadMessages.AddOrRemoveMessageThreadChannelLike;
@@ -13,7 +16,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Babylon.Modules.Channels.Presentation.Hubs;
-public sealed class ThreadHub(ISender sender, IEventBus bus) : Hub
+public sealed class ThreadHub(ISender sender, IEventBus bus, IUserConnectionService connectionService, ICacheService cacheService) : Hub
 {
     public override async Task OnConnectedAsync()
     {
@@ -23,6 +26,10 @@ public sealed class ThreadHub(ISender sender, IEventBus bus) : Hub
         {
             throw new HubException("Unable to connect to requested channel or thread");
         }
+        
+        Guid channelId = Guid.TryParse((string)httpContext.Request.RouteValues["channelId"], out Guid cid) 
+                    ? cid 
+                    : throw new InvalidOperationException("Given thread id was not correct");
 
         Guid threadId = Guid.TryParse((string)httpContext.Request.RouteValues["threadId"], out Guid tid) 
             ? tid 
@@ -34,28 +41,51 @@ public sealed class ThreadHub(ISender sender, IEventBus bus) : Hub
 
         string groupName = $"{threadId}";
 
-        Result<bool> result = await sender.Send(new GetValidThreadChannelQuery(userId, threadId));
+        Result<(bool, bool)> result = await sender.Send(new GetValidThreadChannelQuery(userId, threadId, channelId));
 
-        if (!result.TValue)
+        if (!result.IsSuccess)
         {
-            throw new InvalidOperationException($"User does not have acces to channel");
+            throw new HubException(result.Error?.Description);
         }
-
+        
+        connectionService.AddConnection(userId, Context.ConnectionId);
+        
         await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
 
         Result<IEnumerable<MessageResponse>> messages = await sender.Send(new GetThreadChannelMessagesQuery(threadId));
 
-        await Clients.Caller.SendAsync("LoadThreadMessages", messages.TValue);
+        await Clients.Caller.SendAsync("LoadThreadMessages", new {Messages = messages.TValue, IsMute = result.TValue.Item1, IsArchiived = result.TValue.Item2});
 
         await base.OnConnectedAsync();
     }
     public async Task SendMessage(MessageThreadRequest req)
     {
         string groupName = $"{req.ThreadId}";
+        
+        ChannelAccessStateDto channelState;
+
+        ChannelAccessStateDto? cacheResult = await cacheService.GetAsync<ChannelAccessStateDto>($"threadChannelState-{req.ThreadId}-{req.MemberId}");
+
+        channelState = cacheResult != null ? cacheResult : (await sender.Send(new GetChannelStateAccessQuery(req.ChannelId, req.MemberId))).TValue;
+
+        if (channelState!.Type == Domain.Channels.ChannelType.Archived)
+        {
+            throw new HubException("Channel is archive new messages cannot be added");
+        }
+
+        if (channelState.IsMute)
+        {
+            throw new HubException("You are currently mute on this channel");
+        }
+        
+        if (channelState.IsBlocked)
+        {
+            throw new HubException("You are currently blocked on this channel");
+        }
+        
+        await Clients.Group(groupName).SendAsync("ReceiveThreadMessage", req);
 
         await bus.PublishAsync(new ThreadPublishMessageIntegrationEvent(req.ThreadId, req.MemberId, req.Message, req.PublicationDate, req.UserName, req.Avatar));
-
-        await Clients.Group(groupName).SendAsync("ReceiveThreadMessage", req);
     }
 
     public async Task RenameThread(RenameThreadRequest req)
@@ -114,7 +144,7 @@ public sealed class ThreadHub(ISender sender, IEventBus bus) : Hub
 
         await Clients.Group(groupName).SendAsync("NotifyUserThreadMessage", new {Notification = $"{request.UserName} is typing"});
     }
-    public sealed record MessageThreadRequest(Guid ThreadId, string ThreadName, Guid MemberId, string UserName, string Message, DateTime PublicationDate, string Avatar);
+    public sealed record MessageThreadRequest(Guid ThreadId, string ThreadName, Guid MemberId, string UserName, string Message, DateTime PublicationDate, string Avatar, Guid ChannelId);
     public sealed record RenameThreadRequest(Guid ThreadChannelId, string ThreadChannelName, Guid Id);
     public sealed record ArchiveRecordRequest(Guid ThreadChannelId, Guid ChannelId, Guid AdminId);
     public sealed record MessageThreadReactionRequest(Guid MessageThreadChannelId, Guid MemberId, string Emoji, Guid ThreadChannelId);

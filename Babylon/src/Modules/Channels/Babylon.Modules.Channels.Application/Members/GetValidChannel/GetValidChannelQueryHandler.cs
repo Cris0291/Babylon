@@ -51,11 +51,11 @@ internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnect
         
         if (!existChannel)
         {
-            return Result.Failure<(bool, bool)>(Error.Failure(description: "Requested channel message was not found"));
+            return Result.Failure<(bool, bool)>(Error.Failure(description: "Requested channel was not found"));
         }
         if (!isAuthorized)
         {
-            return Result.Failure<(bool, bool)>(Error.Failure(description: "User is not authorized to acces this channel"));
+            return Result.Failure<(bool, bool)>(Error.Failure(description: "User is not authorized to access this channel"));
         }
         if (!isBlocked)
         {
