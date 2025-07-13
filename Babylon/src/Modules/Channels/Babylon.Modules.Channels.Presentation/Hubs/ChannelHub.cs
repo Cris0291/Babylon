@@ -15,6 +15,7 @@ using Babylon.Modules.Channels.Application.Members.GetValidChannel;
 using Babylon.Modules.Channels.Application.Messages.AddMessageChannelReaction;
 using Babylon.Modules.Channels.Application.Messages.AddOrRemoveMessageChannelLike;
 using Babylon.Modules.Channels.Application.Messages.EditMessageChannel;
+using Babylon.Modules.Channels.Application.Threads.GetThreadsList;
 using Babylon.Modules.Channels.IntegrationEvents;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -99,11 +100,22 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
         }
 
         List<string> userConnections = connectionService.GetConnections(request.TargetId);
+        Result<List<Guid>> threadIds = await sender.Send(new GetThreadsListQuery(request.ChannelId));
 
         foreach (string connection in userConnections)
         {
             await Groups.RemoveFromGroupAsync(connection, groupName);
             await Clients.Client(connection).SendAsync("DeletedMember", groupName);
+        }
+
+        foreach (Guid threadId in threadIds.TValue!)
+        {
+            string threadName = $"{threadId}";
+            foreach (string connection in userConnections)
+            {
+                await Groups.RemoveFromGroupAsync(connection, threadName);
+                await Clients.Client(connection).SendAsync("DeletedThreadMember",threadName);
+            }
         }
 
         await Clients.Group(groupName).SendAsync("UserRemoved", request.TargetId);

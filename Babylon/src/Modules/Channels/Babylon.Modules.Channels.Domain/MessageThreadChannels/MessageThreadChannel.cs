@@ -38,5 +38,9 @@ public sealed class MessageThreadChannel
 
         return NumberOfLikes;
     }
+    public void Edit(string message)
+    {
+        Message = message;
+    }
 }
     
