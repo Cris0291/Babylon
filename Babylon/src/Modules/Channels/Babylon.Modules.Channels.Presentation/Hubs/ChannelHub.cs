@@ -62,26 +62,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     {
         string groupName = $"{req.ChannelId}";
 
-        ChannelAccessStateDto channelState;
-
-        ChannelAccessStateDto? cacheResult = await cacheService.GetAsync<ChannelAccessStateDto>($"channelState-{req.ChannelId}-{req.Id}");
-
-        channelState = cacheResult != null ? cacheResult : (await sender.Send(new GetChannelStateAccessQuery(req.ChannelId, req.Id))).TValue;
-
-        if (channelState!.Type == Domain.Channels.ChannelType.Archived)
-        {
-            throw new HubException("Channel is archive new messages cannot be added");
-        }
-
-        if (channelState.IsMute)
-        {
-            throw new HubException("You are currently mute on this channel");
-        }
-        
-        if (channelState.IsBlocked)
-        {
-            throw new HubException("You are currently blocked on this channel");
-        }
+        await ValidateChannelAccess(req.ChannelId, req.Id);
 
         await Clients.Group(groupName).SendAsync("ReceiveMessage", req);
 
@@ -142,6 +123,8 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public async Task ReactToMessage(MessageReactionRequest reaction)
     {
         string groupName = $"{reaction.ChannelId}";
+        
+        await ValidateChannelAccess(reaction.ChannelId, reaction.Id);
 
         Result result = await sender.Send(new AddMessageChannelReactionCommand(reaction.MemberId, reaction.MessageChannelId, reaction.ChannelId, reaction.Emoji));
 
@@ -219,7 +202,31 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
             throw new HubException("You are not authorized to remove users from this group.");
         }
     }
-    
+    private async Task ValidateChannelAccess(Guid channelId, Guid id)
+    {
+        ChannelAccessStateDto? cacheResult = await cacheService.GetAsync<ChannelAccessStateDto>($"channelState-{channelId}-{id}");
+
+        if (cacheResult == null)
+        {
+            cacheResult = (await sender.Send(new GetChannelStateAccessQuery(channelId, id))).TValue;
+            await cacheService.SetAsync($"channelState-{channelId}-{id}", cacheResult);
+        }
+
+        if (cacheResult!.Type == Domain.Channels.ChannelType.Archived)
+        {
+            throw new HubException("Channel is archive new messages cannot be added");
+        }
+
+        if (cacheResult .IsMute)
+        {
+            throw new HubException("You are currently mute on this channel");
+        }
+        
+        if (cacheResult .IsBlocked)
+        {
+            throw new HubException("You are currently blocked on this channel");
+        }
+    }
 
     public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid Id, string UserName, string Message, DateTime PublicationDate, string Avatar);
     public sealed record MessageReactionRequest(Guid MessageChannelId, Guid MemberId, string Emoji, Guid ChannelId);
