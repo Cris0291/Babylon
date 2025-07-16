@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Babylon.Modules.Users.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+159374b007b093e5528ca99ed64dea1bae21f3c5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a472e27f64b1bff68ee1ef6aef0659cc393ba4e6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Babylon.Modules.Users.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Babylon.Modules.Users.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -124,7 +124,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     {
         string groupName = $"{reaction.ChannelId}";
         
-        await ValidateChannelAccess(reaction.ChannelId, reaction.Id);
+        await ValidateChannelAccess(reaction.ChannelId, reaction.MemberId);
 
         Result result = await sender.Send(new AddMessageChannelReactionCommand(reaction.MemberId, reaction.MessageChannelId, reaction.ChannelId, reaction.Emoji));
 
@@ -138,6 +138,8 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public async Task AddOrRemoveLike(MessageLikeRequest reaction)
         {
             string groupName = $"{reaction.ChannelId}";
+            
+            await ValidateChannelAccess(reaction.ChannelId, reaction.Id);
     
             Result<int> result = await sender.Send(new AddOrRemoveMessageChannelLikeCommand(reaction.Id, reaction.MessageId, reaction.ChannelId, reaction.like));
     
@@ -151,6 +153,8 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public async Task EditMessage(EditMessageRequest request)
     {
         string groupName = $"{request.ChannelId}";
+        
+        await ValidateChannelAccess(request.ChannelId, request.Id);
 
         Result result = await sender.Send(new EditMessageChannelCommand(request.MessageChannelId, request.ChannelId, request.Id, request.Message));
 
@@ -165,6 +169,8 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public async Task NotifyTyping(TypingNotification request)
     {
         string groupName = $"{request.ChannelId}";
+        
+        await ValidateChannelAccess(request.ChannelId, request.Id);
 
         await Clients.Group(groupName).SendAsync("NotifyUserMessage", new {Notification = $"{request.UserName} is typing"});
     }
@@ -231,7 +237,7 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid Id, string UserName, string Message, DateTime PublicationDate, string Avatar);
     public sealed record MessageReactionRequest(Guid MessageChannelId, Guid MemberId, string Emoji, Guid ChannelId);
     public sealed record MessageLikeRequest(Guid Id, Guid MessageId, bool like, Guid ChannelId);
-    public sealed record TypingNotification(Guid ChannelId, string UserName);
+    public sealed record TypingNotification(Guid ChannelId, string UserName, Guid Id);
     public sealed record RenameChannelRequest(Guid ChannelId, string Name, Guid Id);
     public sealed record ArchiveChannelRequest(Guid ChannelId, Guid AdminId);
     public sealed record BlockChannelMemberRequest(Guid ChannelId, Guid AdminId, Guid TargetId);
