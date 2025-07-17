@@ -29,6 +29,10 @@ internal sealed class BlockMemberFromChannelCommandHandler(
             return Result.Failure(Error.Failure(description: "Member was not part of the channel"));
         }
 
+        if (channel.IsBlocked(request.Id))
+        {
+            return Result.Failure(Error.Failure(description: "Member was already blocked from the channel"));
+        }
         channel.BlockMember(request.Id);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

@@ -56,12 +56,14 @@ public sealed class Channel : Entity
         Type = ChannelType.Archived;
         return Result.Success();
     }
-
     public bool IsArchive()
     {
         return Type == ChannelType.Archived;
     }
-
+    public bool IsBlocked(Guid blockedMember)
+    {
+        return BlockedMembers.Contains(blockedMember);
+    }
     public void Rename(string newName)
     {
         Name = newName;
