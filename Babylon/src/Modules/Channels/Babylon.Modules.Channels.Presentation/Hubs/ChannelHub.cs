@@ -136,20 +136,21 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
         await Clients.Group(groupName).SendAsync("AddReaction", new { reaction.Emoji, reaction.MessageChannelId, reaction.MemberId });
     }
     public async Task AddOrRemoveLike(MessageLikeRequest reaction)
-        {
-            string groupName = $"{reaction.ChannelId}";
+    {
+        string groupName = $"{reaction.ChannelId}";
             
-            await ValidateChannelAccess(reaction.ChannelId, reaction.Id);
+        await ValidateChannelAccess(reaction.ChannelId, reaction.Id);
     
-            Result<int> result = await sender.Send(new AddOrRemoveMessageChannelLikeCommand(reaction.Id, reaction.MessageId, reaction.ChannelId, reaction.like));
+        Result<int> result = await sender.Send(new AddOrRemoveMessageChannelLikeCommand(reaction.Id, reaction.MessageId, reaction.ChannelId, reaction.like));
     
-            if (!result.IsSuccess)
-            {
-                throw new HubException(result.Error?.Description) ;
-            }
-    
-            await Clients.Group(groupName).SendAsync("AddOrRemoveLike", new { reaction.like, reaction.MessageId, result.TValue });
+        if (!result.IsSuccess)
+        {
+            throw new HubException(result.Error?.Description) ;
         }
+    
+        await Clients.Group(groupName).SendAsync("AddOrRemoveLike", new { reaction.like, reaction.MessageId, result.TValue });
+    }
+        
     public async Task EditMessage(EditMessageRequest request)
     {
         string groupName = $"{request.ChannelId}";
