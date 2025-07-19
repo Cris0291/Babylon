@@ -45,6 +45,10 @@ public sealed class MessageChannel : Entity
 
         return NumberOfLikes;
     }
+    public bool IsMessageFromUser(Guid id)
+    {
+        return Id == id;
+    }
 }
     
 

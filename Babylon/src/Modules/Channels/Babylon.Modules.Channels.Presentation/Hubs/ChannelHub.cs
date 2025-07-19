@@ -123,8 +123,6 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public async Task ReactToMessage(MessageReactionRequest reaction)
     {
         string groupName = $"{reaction.ChannelId}";
-        
-        await ValidateChannelAccess(reaction.ChannelId, reaction.MemberId);
 
         Result result = await sender.Send(new AddMessageChannelReactionCommand(reaction.MemberId, reaction.MessageChannelId, reaction.ChannelId, reaction.Emoji));
 
@@ -138,8 +136,6 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
     public async Task AddOrRemoveLike(MessageLikeRequest reaction)
     {
         string groupName = $"{reaction.ChannelId}";
-            
-        await ValidateChannelAccess(reaction.ChannelId, reaction.Id);
     
         Result<int> result = await sender.Send(new AddOrRemoveMessageChannelLikeCommand(reaction.Id, reaction.MessageId, reaction.ChannelId, reaction.like));
     
@@ -187,7 +183,6 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
         
         await Clients.Group(groupName).SendAsync("RenameChannelClient", new {request.ChannelId, request.Name});
     }
-
     public async Task ArchiveChannel(ArchiveChannelRequest request)
     {
         string groupName = $"{request.ChannelId}";

@@ -63,26 +63,7 @@ public sealed class ThreadHub(ISender sender, IEventBus bus, IUserConnectionServ
     {
         string groupName = $"{req.ThreadId}";
         
-        ChannelAccessStateDto channelState;
-
-        ChannelAccessStateDto? cacheResult = await cacheService.GetAsync<ChannelAccessStateDto>($"threadChannelState-{req.ThreadId}-{req.MemberId}");
-
-        channelState = cacheResult != null ? cacheResult : (await sender.Send(new GetChannelStateAccessQuery(req.ChannelId, req.MemberId))).TValue;
-
-        if (channelState!.Type == Domain.Channels.ChannelType.Archived)
-        {
-            throw new HubException("Channel is archive new messages cannot be added");
-        }
-
-        if (channelState.IsMute)
-        {
-            throw new HubException("You are currently mute on this channel");
-        }
-        
-        if (channelState.IsBlocked)
-        {
-            throw new HubException("You are currently blocked on this channel");
-        }
+        await ValidateChannelAccess(req.ChannelId, req.MemberId);
         
         await Clients.Group(groupName).SendAsync("ReceiveThreadMessage", req);
 
@@ -92,6 +73,8 @@ public sealed class ThreadHub(ISender sender, IEventBus bus, IUserConnectionServ
     public async Task RenameThread(RenameThreadRequest req)
     {
         string groupName = $"{req.ThreadChannelId}";
+        
+        await ValidateChannelAccess(req.ChannelId, req.Id);
 
         Result result = await sender.Send(new RenameThreadChannelCommand(req.ThreadChannelId, req.ThreadChannelName, req.Id));
         if(!result.IsSuccess)
@@ -101,7 +84,7 @@ public sealed class ThreadHub(ISender sender, IEventBus bus, IUserConnectionServ
         
         await Clients.Group(groupName).SendAsync("RenameThreadClient", new {req.ThreadChannelId, req.ThreadChannelName});
     }
-    public async Task ArchiveThread(ArchiveRecordRequest req)
+    /*public async Task ArchiveThread(ArchiveRecordRequest req)
     {
         string groupName = $"{req.ThreadChannelId}";
 
@@ -111,10 +94,12 @@ public sealed class ThreadHub(ISender sender, IEventBus bus, IUserConnectionServ
             throw new HubException(result.Error?.Description);
         }
         await Clients.Group(groupName).SendAsync("ArchiveThreadClient", new {req.ThreadChannelId});
-    }
+    }*/
     public async Task ReactToThreadMessage(MessageThreadReactionRequest reaction)
     {
         string groupName = $"{reaction.ThreadChannelId}";
+        
+        await ValidateChannelAccess(reaction.ChannelId,reaction.MemberId);
 
         Result result = await sender.Send(new AddMessageThreadChannelReactionCommand(reaction.MemberId, reaction.MessageThreadChannelId, reaction.ThreadChannelId, reaction.Emoji));
 
@@ -129,6 +114,8 @@ public sealed class ThreadHub(ISender sender, IEventBus bus, IUserConnectionServ
     public async Task AddOrRemoveThreadMessageLike(MessageThreadLikeRequest request)
     {
         string groupName = $"{request.ThreadChannelId}";
+        
+        await ValidateChannelAccess(request.ChannelId, request.Id);
     
         Result<int> result = await sender.Send(new AddOrRemoveMessageThreadChannelLikeCommand(request.Id, request.ThreadMessageId, request.ThreadChannelId, request.Like));
     
@@ -142,6 +129,8 @@ public sealed class ThreadHub(ISender sender, IEventBus bus, IUserConnectionServ
     public async Task NotifyTyping(TypingNotification request)
     {
         string groupName = $"{request.ThreadChannelId}";
+        
+        await ValidateChannelAccess(request.ChannelId, request.Id);
 
         await Clients.Group(groupName).SendAsync("NotifyUserThreadMessage", new {Notification = $"{request.UserName} is typing"});
     }
@@ -159,11 +148,37 @@ public sealed class ThreadHub(ISender sender, IEventBus bus, IUserConnectionServ
         
         await Clients.Group(groupName).SendAsync("EditThreadMessage", new { request.Message, request.MessageThreadChannelId, request.ThreadChannelId });
     }
+    
+    private async Task ValidateChannelAccess(Guid channelId, Guid id)
+    {
+        ChannelAccessStateDto? cacheResult = await cacheService.GetAsync<ChannelAccessStateDto>($"channelState-{channelId}-{id}");
+
+        if (cacheResult == null)
+        {
+            cacheResult = (await sender.Send(new GetChannelStateAccessQuery(channelId, id))).TValue;
+            await cacheService.SetAsync($"channelState-{channelId}-{id}", cacheResult);
+        }
+
+        if (cacheResult!.Type == Domain.Channels.ChannelType.Archived)
+        {
+            throw new HubException("Channel is archive new messages cannot be added");
+        }
+
+        if (cacheResult .IsMute)
+        {
+            throw new HubException("You are currently mute on this channel");
+        }
+        
+        if (cacheResult .IsBlocked)
+        {
+            throw new HubException("You are currently blocked on this channel");
+        }
+    }
     public sealed record MessageThreadRequest(Guid ThreadId, string ThreadName, Guid MemberId, string UserName, string Message, DateTime PublicationDate, string Avatar, Guid ChannelId);
-    public sealed record RenameThreadRequest(Guid ThreadChannelId, string ThreadChannelName, Guid Id);
+    public sealed record RenameThreadRequest(Guid ThreadChannelId, string ThreadChannelName, Guid Id, Guid ChannelId);
     public sealed record ArchiveRecordRequest(Guid ThreadChannelId, Guid ChannelId, Guid AdminId);
-    public sealed record MessageThreadReactionRequest(Guid MessageThreadChannelId, Guid MemberId, string Emoji, Guid ThreadChannelId);
-    public sealed record MessageThreadLikeRequest(Guid Id, Guid ThreadMessageId, bool Like, Guid ThreadChannelId);
-    public sealed record TypingNotification(Guid ThreadChannelId, string UserName);
+    public sealed record MessageThreadReactionRequest(Guid MessageThreadChannelId, Guid MemberId, string Emoji, Guid ThreadChannelId, Guid ChannelId);
+    public sealed record MessageThreadLikeRequest(Guid Id, Guid ThreadMessageId, bool Like, Guid ThreadChannelId, Guid ChannelId);
+    public sealed record TypingNotification(Guid ThreadChannelId, string UserName, Guid ChannelId, Guid Id);
     public sealed record EditThreadMessageRequest(Guid MessageThreadChannelId, string Message, Guid ThreadChannelId);
 }

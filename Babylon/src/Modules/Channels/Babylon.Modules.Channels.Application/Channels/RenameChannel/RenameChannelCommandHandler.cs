@@ -7,51 +7,23 @@ using Babylon.Modules.Channels.Domain.Channels;
 using Dapper;
 
 namespace Babylon.Modules.Channels.Application.Channels.RenameChannel;
-internal sealed class RenameChannelCommandHandler(IChannelRepository channelRepository, IDbConnectionFactory dbConnectionFactory , IUnitOfWork unitOfWork) : ICommandHandler<RenameChannelCommand>
+internal sealed class RenameChannelCommandHandler(IChannelRepository channelRepository, IUnitOfWork unitOfWork) : ICommandHandler<RenameChannelCommand>
 {
     public async Task<Result> Handle(RenameChannelCommand request, CancellationToken cancellationToken)
     {
-        await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
+        Channel? channel = await channelRepository.GetChannel(request.ChannelId);
         
-        const string sql =
-            """
-            WITH SelectedChannel AS (
-                SELECT channel_id, type
-                FROM channels.channels
-                WHERE channel_id = @ChannelId
-            ),
-            Authorized AS (
-                SELECT
-                   sc.channel_id,
-                   sc.type,
-                   CASE WHEN EXISTS (SELECT 1 FROM SelectedChannel) THEN 1 ELSE 0 END AS ExistFLag,
-                   CASE
-                       WHEN EXISTS (
-                           SELECT 1
-                           FROM channels.channel_members cm
-                           WHERE cm.channel_id = @ChannelId AND cm.id = @Id
-                       ) THEN 1
-                       ELSE 0
-                   END AS IsAuthorized
-                FROM SelectedChannel sc
-            ),
-            SELECT IsAuthorized, ExistFLag
-            FROM Authorized
-            """;
-        
-        (int existsFlag, int isAuthorized) = await connection.QuerySingleAsync<(int ExistFlag, int IsAuthorized)>(sql, new { request.Id, request.ChannelId});
-        
-        if (existsFlag == 0)
+        if (channel is null)
         {
-            return Result.Failure(Error.Failure(description: "Requested channel was not found"));
+            return Result.Failure(Error.Failure(description: "Channel was not found"));
         }
 
-        if (isAuthorized == 0)
+        bool isAdmin = channel.IsAdmin(request.Id);
+
+        if (!isAdmin)
         {
-            return Result.Failure(Error.Failure(description: "Not authorized"));
+            return Result.Failure(Error.Failure(description: "Only the channel creator can perform this action"));
         }
-        
-        Channel? channel = await channelRepository.GetChannel(request.ChannelId);
 
         channel!.Rename(request.Name);
 
