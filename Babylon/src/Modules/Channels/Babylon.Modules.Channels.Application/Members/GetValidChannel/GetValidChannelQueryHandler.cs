@@ -2,12 +2,13 @@
 using Babylon.Common.Application.Data;
 using Babylon.Common.Application.Messaging;
 using Babylon.Common.Domain;
+using Babylon.Modules.Channels.Application.Channels.GetChannelStateAccess;
 using Dapper;
 
 namespace Babylon.Modules.Channels.Application.Members.GetValidChannel;
-internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetValidChannelQuery, (bool, bool)>
+internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetValidChannelQuery, ChannelAccessStateDto>
 {
-    public async Task<Result<(bool, bool)>> Handle(GetValidChannelQuery request, CancellationToken cancellationToken)
+    public async Task<Result<ChannelAccessStateDto>> Handle(GetValidChannelQuery request, CancellationToken cancellationToken)
     {
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
@@ -48,20 +49,7 @@ internal sealed class GetValidChannelQueryHandler(IDbConnectionFactory dbConnect
             """;
 
         (bool isAuthorized, bool existChannel, bool isBlocked, bool isMute, bool isArchived) = await connection.QuerySingleAsync<(bool IsAuthorized, bool ExistChannel, bool IsBlocked, bool IsMute, bool IsArchived)>(sql, new { request.ChannelId, request.Id });
-        
-        if (!existChannel)
-        {
-            return Result.Failure<(bool, bool)>(Error.Failure(description: "Requested channel was not found"));
-        }
-        if (!isAuthorized)
-        {
-            return Result.Failure<(bool, bool)>(Error.Failure(description: "User is not authorized to access this channel"));
-        }
-        if (!isBlocked)
-        {
-            return Result.Failure<(bool, bool)>(Error.Failure(description: "User is blocked from this channel"));
-        }
 
-        return Result.Success((isMute, isArchived));
+        return Result.Success(new ChannelAccessStateDto(isArchived, isBlocked, isMute, existChannel, isAuthorized, false));
     }
 }

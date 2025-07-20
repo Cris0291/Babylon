@@ -13,7 +13,6 @@ namespace Babylon.Modules.Channels.Application.Messages.AddOrRemoveMessageChanne
 internal sealed class AddOrRemoveMessageChannelLikeCommandHandler(
     IMessageChannelRepository repository, 
     IMessageChannelReactionRepository messageChannelReactionRepository,
-    ISender sender,
     IUnitOfWork unitOfWork) : ICommandHandler<AddOrRemoveMessageChannelLikeCommand, int>
 {
     public async Task<Result<int>> Handle(AddOrRemoveMessageChannelLikeCommand request, CancellationToken cancellationToken)
@@ -23,18 +22,6 @@ internal sealed class AddOrRemoveMessageChannelLikeCommandHandler(
         if (message is null)
         {
             return Result.Failure<int>(Error.Failure(description: "Message was not found"));
-        }
-
-        Result<(bool, bool)> res = await sender.Send(new GetValidChannelQuery(request.Id, request.ChannelId), cancellationToken);
-
-        if (!res.IsSuccess)
-        {
-            return Result.Failure<int>(Error.Failure(description: res.Error!.Description));
-        }
-
-        if (res.TValue.Item2)
-        {
-            return Result.Failure<int>(Error.Failure(description: "This channel is archived. New messages or reactions cannot be added"));
         }
         
         MessageChannelReaction? reaction = await messageChannelReactionRepository.Get(request.Id, request.MessageId);

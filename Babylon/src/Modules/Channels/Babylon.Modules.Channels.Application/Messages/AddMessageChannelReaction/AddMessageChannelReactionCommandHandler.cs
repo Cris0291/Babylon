@@ -12,7 +12,6 @@ namespace Babylon.Modules.Channels.Application.Messages.AddMessageChannelReactio
 internal sealed class AddMessageChannelReactionCommandHandler(
     IMessageChannelRepository repository, 
     IMessageChannelReactionRepository messageChannelReactionRepository ,
-    ISender sender,
     IUnitOfWork unitOfWork) : ICommandHandler<AddMessageChannelReactionCommand>
 {
     public async Task<Result> Handle(AddMessageChannelReactionCommand request, CancellationToken cancellationToken)
@@ -22,18 +21,6 @@ internal sealed class AddMessageChannelReactionCommandHandler(
         if (message is null)
         {
             return Result.Failure(Error.Failure(description: "Message was not found"));
-        }
-
-        Result<(bool, bool)> result = await sender.Send(new GetValidChannelQuery(request.Id, request.ChannelId), cancellationToken);
-
-        if (!result.IsSuccess)
-        {
-            return result;
-        }
-
-        if (result.TValue.Item2)
-        {
-            return Result.Failure(Error.Failure(description: "This channel is archived. New messages or reactions cannot be added"));
         }
 
         MessageChannelReaction? reaction = await messageChannelReactionRepository.Get(request.Id, request.MessageId);

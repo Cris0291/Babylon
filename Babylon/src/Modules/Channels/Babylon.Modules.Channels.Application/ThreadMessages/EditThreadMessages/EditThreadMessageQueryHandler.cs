@@ -16,6 +16,11 @@ internal sealed class EditThreadMessageQueryHandler(IMessageThreadChannelReposit
             return Result.Failure(Error.Failure(description: "Requested message was not found"));
         }
         
+        if(!threadMessage.IsMessageFromUser(request.Id))
+        {
+            return Result.Failure(Error.Failure(description: "User can only edit its own messages"));
+        }
+        
         threadMessage.Edit(request.Message);
 
         await unitOfWork.SaveChangesAsync(cancellationToken);

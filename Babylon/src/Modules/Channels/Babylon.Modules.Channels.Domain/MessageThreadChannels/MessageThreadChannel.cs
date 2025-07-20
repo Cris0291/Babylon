@@ -42,5 +42,10 @@ public sealed class MessageThreadChannel
     {
         Message = message;
     }
+    
+    public bool IsMessageFromUser(Guid id)
+    {
+        return Id == id;
+    }
 }
     

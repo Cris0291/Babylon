@@ -2,12 +2,13 @@
 using Babylon.Common.Application.Data;
 using Babylon.Common.Application.Messaging;
 using Babylon.Common.Domain;
+using Babylon.Modules.Channels.Application.Channels.GetChannelStateAccess;
 using Dapper;
 
 namespace Babylon.Modules.Channels.Application.Members.GetValidThreadChannel;
-internal sealed class GetValidThreadChannelQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetValidThreadChannelQuery, (bool,bool)>
+internal sealed class GetValidThreadChannelQueryHandler(IDbConnectionFactory dbConnectionFactory) : IQueryHandler<GetValidThreadChannelQuery, ChannelAccessStateDto>
 {
-    public async Task<Result<(bool, bool)>> Handle(GetValidThreadChannelQuery request, CancellationToken cancellationToken)
+    public async Task<Result<ChannelAccessStateDto>> Handle(GetValidThreadChannelQuery request, CancellationToken cancellationToken)
     {
         await using DbConnection connection = await dbConnectionFactory.OpenConnectionAsync();
 
@@ -46,24 +47,7 @@ internal sealed class GetValidThreadChannelQueryHandler(IDbConnectionFactory dbC
             """;
 
         (bool isAuthorized, bool existChannel, bool isBlocked, bool isMute, bool isArchived, bool existThread) = await connection.QuerySingleAsync<(bool IsAuthorized, bool ExistChannel, bool IsBlocked, bool IsMute, bool IsArchived, bool ExistThread)>(sql, new { request.ChannelId, request.Id, request.ThreadChannelId });
-        
-        if (!existChannel)
-        {
-            return Result.Failure<(bool, bool)>(Error.Failure(description: "Requested channel was not found"));
-        }
-        if (!existThread)
-        {
-            return Result.Failure<(bool, bool)>(Error.Failure(description: "Requested thread channel was not found"));
-        }
-        if (!isAuthorized)
-        {
-            return Result.Failure<(bool, bool)>(Error.Failure(description: "User is not authorized to access this channel"));
-        }
-        if (!isBlocked)
-        {
-            return Result.Failure<(bool, bool)>(Error.Failure(description: "User is blocked from this channel"));
-        }
 
-        return Result.Success((isMute, isArchived));
+        return Result.Success(new ChannelAccessStateDto(isArchived, isBlocked, isMute, existChannel, isAuthorized, existThread));
     }
 }
