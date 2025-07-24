@@ -6,6 +6,7 @@ using Babylon.Modules.Channels.Domain.MessageChannels;
 using Babylon.Modules.Channels.Domain.MessageThreadChannels;
 using Babylon.Modules.Channels.Domain.ThreadChannels;
 using Babylon.Modules.Channels.Infrastructure.Channels;
+using Babylon.Modules.Channels.Infrastructure.DirectedChannels;
 using Babylon.Modules.Channels.Infrastructure.Members;
 using Babylon.Modules.Channels.Infrastructure.MessageChannels;
 using Babylon.Modules.Channels.Infrastructure.MessageThreadChannels;
@@ -38,6 +39,7 @@ public sealed class ChannelsDbContext(DbContextOptions<ChannelsDbContext> option
         modelBuilder.ApplyConfiguration(new ThreadChannelMemberConfiguration());
         modelBuilder.ApplyConfiguration(new MessageChannelReactionConfiguration());
         modelBuilder.ApplyConfiguration(new MessageThreadChannelReactionConfiguration());
+        modelBuilder.ApplyConfiguration(new DirectedChannelMemberConfiguration());
         modelBuilder.HasDefaultSchema(Schemas.Channels);
     }
 }
