@@ -28,4 +28,10 @@ public static class ApiEndpoints
 
         public const string RegisterUser = $"{UserBase}/register";
     }
+    public static class DirectChannels
+    {
+        private const string DirectChannelBase = $"{Base}/direct-channels";
+
+        public const string CreateDirectChannel = DirectChannelBase;
+    }
 }
