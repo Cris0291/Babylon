@@ -5,11 +5,13 @@ using Babylon.Common.Presentation.Endpoints;
 using Babylon.Modules.Channels.Application.Abstractions.Data;
 using Babylon.Modules.Channels.Application.Abstractions.Services;
 using Babylon.Modules.Channels.Domain.Channels;
+using Babylon.Modules.Channels.Domain.DirectedChannels;
 using Babylon.Modules.Channels.Domain.Members;
 using Babylon.Modules.Channels.Domain.MessageChannels;
 using Babylon.Modules.Channels.Infrastructure.Abstractions.Services;
 using Babylon.Modules.Channels.Infrastructure.Channels;
 using Babylon.Modules.Channels.Infrastructure.Database;
+using Babylon.Modules.Channels.Infrastructure.DirectedChannels;
 using Babylon.Modules.Channels.Infrastructure.Inbox;
 using Babylon.Modules.Channels.Infrastructure.Members;
 using Babylon.Modules.Channels.Infrastructure.MessageChannels;
@@ -56,6 +58,7 @@ public static class ChannelsModule
         services.AddScoped<IChannelMemberRepository, ChannelMemberRepository>();
         services.AddScoped<IMessageChannelRepository, MessageChannelRepository>();
         services.AddSingleton<IUserConnectionService, UserConnectionService>();
+        services.AddScoped<IDirectedChannelRepository, DirectedChannelRepository>();
 
         services.Configure<OutboxOptions>(configuration.GetSection("Channels:Outbox"));
 

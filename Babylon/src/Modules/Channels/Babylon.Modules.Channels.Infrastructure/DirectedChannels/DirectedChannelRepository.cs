@@ -6,8 +6,12 @@ namespace Babylon.Modules.Channels.Infrastructure.DirectedChannels;
 
 internal sealed class DirectedChannelRepository(ChannelsDbContext dbContext) : IDirectedChannelRepository
 {
-    public async Task<DirectedChannel?> Get(Guid creator)
+    public async Task<DirectedChannel?> Get(Guid creator, Guid participant)
     {
-        await dbContext.DirectedChannels.SingleOrDefaultAsync(x => x.);
+        return await dbContext.DirectedChannels.SingleOrDefaultAsync(x => x.Creator == creator && x.Participant == participant);
+    }
+    public async Task Create(DirectedChannel directedChannel)
+    {
+        await dbContext.AddAsync(directedChannel);
     }
 }
