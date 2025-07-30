@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Babylon.Common.Presentation")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d2c05b9372081529e337df00543d818f5f8e71d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71adbb9b7dbe866be672459e1829aed59e3797e9")]
 [assembly: System.Reflection.AssemblyProductAttribute("Babylon.Common.Presentation")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Babylon.Common.Presentation")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -33,13 +33,13 @@ public sealed class ChannelHub(ISender sender, IEventBus bus, IUserConnectionSer
             throw new HubException("Unable to connect to requested channel or thread");
         }
 
-        Guid channelId = Guid.TryParse((string)httpContext.Request.RouteValues["id"], out Guid id) ? id : throw new InvalidCastException("Given channel id was not correct");
+        Guid channelId = Guid.TryParse((string)httpContext.Request.RouteValues["id"], out Guid id) ? id : throw new HubException("Given channel id was not correct");
 
         string groupName = $"{channelId}";
 
         string userId = Context.User?.FindFirst("sub")?.Value;
 
-        Guid uId =  Guid.TryParse(userId, out Guid usId) ? usId : throw new InvalidOperationException("User id could not be found");
+        Guid uId =  Guid.TryParse(userId, out Guid usId) ? usId : throw new HubException("User id could not be found");
 
         (bool isMute, bool isArchived) = await ValidateChannelAccess(channelId, uId);
         
