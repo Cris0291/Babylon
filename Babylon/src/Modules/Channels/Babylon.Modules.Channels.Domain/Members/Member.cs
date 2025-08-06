@@ -8,7 +8,12 @@ public sealed class Member
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public string Email { get; private set; }
+    
     public string Role { get; private set; }
+
+    public ICollection<Member> BlockedMembers { get; private set; } = new List<Member>();
+
+    public ICollection<Member> BlockedByMembers { get; private set; } = new List<Member>();
     public static Member Create(Guid id, string email, string firstName, string lastName)
     {
         return new Member
