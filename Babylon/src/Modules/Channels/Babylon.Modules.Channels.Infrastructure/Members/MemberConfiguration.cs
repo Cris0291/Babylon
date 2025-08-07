@@ -31,8 +31,8 @@ internal sealed class MemberConfiguration : IEntityTypeConfiguration<Member>
                 join =>
                 {
                     join.HasKey("BlockerId", "BlockedId");
-                    join.Property<DateTime>("CreaatedAt")
-                        .HasDefaultValueSql()
+                    join.Property<DateTime>("CreatedAt")
+                        .HasDefaultValueSql("SYSUTCDATETIME()");
                 }
             );
     }

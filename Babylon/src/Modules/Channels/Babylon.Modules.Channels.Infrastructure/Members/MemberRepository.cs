@@ -15,4 +15,9 @@ internal sealed class MemberRepository(ChannelsDbContext dbContext) : IMemberRep
     {
         await dbContext.AddAsync(member);
     }
+    
+    public async Task<bool> IsBlockedMember()
+    {
+        
+    }
 }
