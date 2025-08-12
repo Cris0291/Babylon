@@ -10,9 +10,7 @@ public sealed class Member
     public string Email { get; private set; }
     
     public string Role { get; private set; }
-
     public ICollection<Member> BlockedMembers { get; private set; } = new List<Member>();
-
     public ICollection<Member> BlockedByMembers { get; private set; } = new List<Member>();
     public static Member Create(Guid id, string email, string firstName, string lastName)
     {
@@ -24,6 +22,17 @@ public sealed class Member
             FirstName = firstName,
             LastName = lastName,
         };
+    }
+    public bool IsBlockedMember(Guid participant)
+    {
+        Member? blocked = BlockedMembers.SingleOrDefault(m => m.Id == participant);
+        return blocked != null;
+    }
+
+    public bool IsBlockedByMember(Guid participant)
+    {
+        Member? blockedBy = BlockedByMembers.SingleOrDefault(m => m.Id == participant);
+        return blockedBy != null;
     }
 }
     

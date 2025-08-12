@@ -16,8 +16,27 @@ internal sealed class MemberRepository(ChannelsDbContext dbContext) : IMemberRep
         await dbContext.AddAsync(member);
     }
     
-    public async Task<bool> IsBlockedMember()
+    public async Task<bool> IsBlockedMember(Guid main, Guid participant)
     {
+        Member? mainMember = await dbContext.Members
+            .Include(m => m.BlockedByMembers)
+            .Include(m => m.BlockedMembers)
+            .SingleOrDefaultAsync(m => m.Id == main);
         
+        if(mainMember == null)
+        {
+            throw new InvalidOperationException("Member was not found");
+        }
+
+        bool isBlocked = mainMember.IsBlockedMember(participant);
+
+        bool isBlockedBy = mainMember.IsBlockedByMember(participant);
+
+        if (isBlockedBy || isBlocked)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
