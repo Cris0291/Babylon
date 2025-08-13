@@ -3,4 +3,5 @@ public interface IMemberRepository
 {
     Task<bool> Exist(Guid MemberId);
     Task Insert(Member member);
+    Task<bool> IsBlockedMember(Guid main, Guid participant);
 }

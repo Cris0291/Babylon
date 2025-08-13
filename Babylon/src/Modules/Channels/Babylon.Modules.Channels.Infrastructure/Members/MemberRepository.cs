@@ -37,6 +37,6 @@ internal sealed class MemberRepository(ChannelsDbContext dbContext) : IMemberRep
             return true;
         }
 
-        return false;
+        return false; 
     }
 }
