@@ -18,4 +18,9 @@
 	  <ProjectReference Include="..\Babylon.Modules.Channels.Presentation\Babylon.Modules.Channels.Presentation.csproj" />
 	</ItemGroup>
 
+	
+	<ItemGroup>
+	  <Folder Include="MessageDirectedChannels\" />
+	</ItemGroup>
+
 </Project>
