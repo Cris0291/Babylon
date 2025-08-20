@@ -1,4 +1,5 @@
 using Babylon.Modules.Channels.Domain.DirectedChannels;
+using Babylon.Modules.Channels.Domain.MessageDIrectedChannels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,6 +9,6 @@ internal sealed class DirectedChannelConfiguration : IEntityTypeConfiguration<Di
 {
     public void Configure(EntityTypeBuilder<DirectedChannel> builder)
     {
-        throw new NotImplementedException();
+        builder.HasMany<MessageDirectedChannel>().WithOne().HasForeignKey(x => x.DirectedChannelId);
     }
 }
