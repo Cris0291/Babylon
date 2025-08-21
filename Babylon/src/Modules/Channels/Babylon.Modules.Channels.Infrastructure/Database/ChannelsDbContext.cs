@@ -3,6 +3,7 @@ using Babylon.Modules.Channels.Domain.Channels;
 using Babylon.Modules.Channels.Domain.DirectedChannels;
 using Babylon.Modules.Channels.Domain.Members;
 using Babylon.Modules.Channels.Domain.MessageChannels;
+using Babylon.Modules.Channels.Domain.MessageDIrectedChannels;
 using Babylon.Modules.Channels.Domain.MessageThreadChannels;
 using Babylon.Modules.Channels.Domain.ThreadChannels;
 using Babylon.Modules.Channels.Infrastructure.Channels;
@@ -26,10 +27,13 @@ public sealed class ChannelsDbContext(DbContextOptions<ChannelsDbContext> option
     internal DbSet<ThreadChannel> ThreadChannels { get; set; }
     internal DbSet<ThreadChannelMember> ThreadChannelMembers { get; set; }
     internal DbSet<MessageThreadChannelReaction> MessageThreadChannelReactions { get; set; }
-    
     internal DbSet<DirectedChannel> DirectedChannels { get; set; }
     
     internal DbSet<DirectedChannelMember> DirectedChannelMembers { get; set;  }
+    
+    internal DbSet<MessageDirectedChannel> MessageDirectedChannels { get; set; }
+    
+    internal DbSet<MessageDirectedChannelReaction> MessageDirectedChannelReactions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
