@@ -1,13 +1,17 @@
+using Babylon.Common.Application.Caching;
 using Babylon.Common.Domain;
 using Babylon.Modules.Channels.Application.Abstractions.Services;
+using Babylon.Modules.Channels.Application.Channels.GetChannelMessages;
+using Babylon.Modules.Channels.Application.DirectedChannels.GetDirectedChannelMessages;
 using Babylon.Modules.Channels.Application.Members.GetBlockedMember;
+using Babylon.Modules.Channels.Domain.DirectedChannels;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Babylon.Modules.Channels.Presentation.Hubs;
 
-public sealed  class DirectedChannelHub(ISender sender, IUserConnectionService connectionService) : Hub
+public sealed  class DirectedChannelHub(ISender sender, IUserConnectionService connectionService, ICacheService cacheService) : Hub
 {
     public override async Task OnConnectedAsync()
     {
@@ -43,5 +47,28 @@ public sealed  class DirectedChannelHub(ISender sender, IUserConnectionService c
        connectionService.AddConnection(uId, Context.ConnectionId);
 
        await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
+
+       Result<IEnumerable<MessageResponse>> messages = await sender.Send(new GetDirectedChannelMessagesQuery(uId, directedChannelId));
+       
+       await Clients.Caller.SendAsync("LoadDirectedMessages", new {Messages = messages.TValue,});
+
+       await base.OnConnectedAsync();
     }
+
+    public async Task SendDirectMessage(MessageRequest request)
+    {
+        
+    }
+
+    private async Task ValidateBlockedMember(Guid directedChannelId, Guid mainId, Guid participantId)
+    {
+        DirectedChannelAccessStateDto? cacheResult = await cacheService.GetAsync<DirectedChannelAccessStateDto>($"directedChannelState-{directedChannelId}-{mainId}-{participantId}");
+
+        if (cacheResult == null)
+        {
+            Result<bool> result = await sender.Send(new GetBlockedMemberQuery(mainId, participantId));
+            
+        }
+    }
+    public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid Id, string UserName, string Message, DateTime PublicationDate, string Avatar);
 }
