@@ -32,17 +32,7 @@ public sealed  class DirectedChannelHub(ISender sender, IUserConnectionService c
 
        Guid participantId = Guid.TryParse(httpContext.Request.Query["participant"], out Guid pId) ? pId : throw new HubException("Participant id could not be found");
 
-       Result<bool> result = await sender.Send(new GetBlockedMemberQuery(uId, participantId));
-       
-       if(!result.IsSuccess)
-       {
-           throw new HubException(result.Error?.Description);
-       }
-
-       if(result.TValue)
-       {
-           throw new HubException("You are not allow to send messages to target user. Either you were blocked or you block the user");
-       }
+       await ValidateBlockedMember(directedChannelId, uId, participantId);
        
        connectionService.AddConnection(uId, Context.ConnectionId);
 
@@ -57,7 +47,11 @@ public sealed  class DirectedChannelHub(ISender sender, IUserConnectionService c
 
     public async Task SendDirectMessage(MessageRequest request)
     {
+        string groupName = $"{request.DirectedChannelId}";
         
+        await ValidateBlockedMember(request.DirectedChannelId, request.Id, request.ParticipantId);
+        
+        await Clients.Group(groupName).SendAsync("ReceiveDirectMessage", request);
     }
 
     private async Task ValidateBlockedMember(Guid directedChannelId, Guid mainId, Guid participantId)
@@ -67,8 +61,18 @@ public sealed  class DirectedChannelHub(ISender sender, IUserConnectionService c
         if (cacheResult == null)
         {
             Result<bool> result = await sender.Send(new GetBlockedMemberQuery(mainId, participantId));
-            
+            if(!result.IsSuccess)
+            {
+                throw new HubException(result.Error?.Description);
+            }
+            cacheResult = new DirectedChannelAccessStateDto(result.TValue);
+            await cacheService.SetAsync($"directedChannelState-{directedChannelId}-{mainId}-{participantId}", cacheResult);
+        }
+
+        if (cacheResult.IsBlock)
+        {
+            throw new HubException("You are not allow to send messages to target user. Either you were blocked or you block the user");
         }
     }
-    public sealed record MessageRequest(Guid ChannelId, string ChannelName, Guid Id, string UserName, string Message, DateTime PublicationDate, string Avatar);
+    public sealed record MessageRequest(Guid DirectedChannelId, string DirectedChannelName, Guid Id, string UserName, string Message, DateTime PublicationDate, string Avatar, Guid ParticipantId);
 }
